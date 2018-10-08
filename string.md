@@ -1,6 +1,6 @@
 # String
 
-#### 28. Implement strStr\(\)
+### 28. Implement strStr\(\)
 
 实现 strstr\(\)函数
 

@@ -1,7 +1,5 @@
 # LinkList
 
-
-
 ###  21. Merge Two Sorted Lists
 
 合并两个有序的链表。
