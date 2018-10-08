@@ -1,5 +1,7 @@
 # Table of contents
 
 * [Initial page](README.md)
-* [LeetCode](afdsa.md)
+* [Math](math.md)
+* [LeetCode](leetcode.md)
+* [Untitled](untitled.md)
 
