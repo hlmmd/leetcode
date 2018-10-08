@@ -2,5 +2,5 @@
 
 * [Initial page](README.md)
 * [Math](math.md)
-* [Untitled](untitled.md)
+* [Stack and Queue](untitled.md)
 
