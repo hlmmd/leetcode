@@ -36,3 +36,30 @@ public:
 };
 ```
 
+###  83. Remove Duplicates from Sorted List
+
+ Given a sorted linked list, delete all duplicates such that each element appear only _once_.
+
+给定一个有序的链表，删除其中重复的元素。
+
+比较当前结点和下一结点的val即可，如果相同则跳过下一结点。
+
+```cpp
+class Solution
+{
+  public:
+    ListNode *deleteDuplicates(ListNode *head)
+    {
+        ListNode *p1 = head;
+        while (p1 && p1->next)
+        {
+            if (p1->val == p1->next->val)
+                p1->next = p1->next->next;
+            else
+                p1 = p1->next;
+        }
+        return head;
+    }
+};
+```
+
