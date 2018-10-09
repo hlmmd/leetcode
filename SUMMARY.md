@@ -6,4 +6,5 @@
 * [Stack and Queue](stack-and-queue.md)
 * [LinkList](linklist.md)
 * [String](string.md)
+* [Tree](tree.md)
 
