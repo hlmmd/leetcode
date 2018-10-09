@@ -6,7 +6,7 @@
 
 官方网站：
 
-{% embed data="{\"url\":\"https://nodejs.org/en/\",\"type\":\"link\",\"title\":\"Node.js\",\"icon\":{\"type\":\"icon\",\"url\":\"https://nodejs.org/static/favicon.png\",\"width\":32,\"height\":32,\"aspectRatio\":1},\"thumbnail\":{\"type\":\"thumbnail\",\"url\":\"https://nodejs.org/static/images/logo-hexagon-card.png\",\"width\":224,\"height\":256,\"aspectRatio\":1.1428571428571428}}" %}
+[https://nodejs.org/en/](https://nodejs.org/en/)
 
 直接安装即可。
 
@@ -25,7 +25,7 @@ gitbook update
 
 官网：
 
-{% embed data="{\"url\":\"https://calibre-ebook.com/download\",\"type\":\"link\",\"title\":\"calibre - Download calibre\",\"description\":\"calibre: The one stop solution for all your e-book needs. Comprehensive e-book software.\",\"icon\":{\"type\":\"icon\",\"url\":\"https://calibre-ebook.com/favicon.png\",\"aspectRatio\":0}}" %}
+[https://calibre-ebook.com/download](https://calibre-ebook.com/download)
 
 直接安装即可。
 
