@@ -1,6 +1,6 @@
 # Math
 
-###  70. Climbing Stairs
+### 70. Climbing Stairs
 
 You are climbing a stair case. It takes _n_ steps to reach to the top.
 
