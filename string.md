@@ -6,7 +6,7 @@
 
 当needle字符串为空的时候，返回0。
 
-基本解法：滑动窗口。
+基本解法：brute force 滑动窗口。
 
 ```cpp
 class Solution {
@@ -34,5 +34,5 @@ public:
 };
 ```
 
-KMP算法：
+此外还有KMP算法、BM算法、Sunday算法用于解决该问题。
 
