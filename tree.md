@@ -68,3 +68,106 @@ class Solution
 };
 ```
 
+###  107. Binary Tree Level Order Traversal II
+
+求一棵树的层序遍历，并将结果存放在数组中。
+
+层序遍历非递归解法需借助队列。
+
+对于每一层的结点，依次出队列，判断其左右子结点是否为空，不为空则入队，作为下一层需要遍历的结点。要注意队列的size是一直改变的，所以在循环判断时，要提前获取qe的size，表示当前层结点的个数。最后的结果还需要反转。
+
+```cpp
+class Solution
+{
+  public:
+    vector<vector<int>> levelOrderBottom(TreeNode *root)
+    {
+        vector<vector<int>> ret;
+        if (root == NULL)
+            return ret;
+        queue<TreeNode *> qe;
+        qe.push(root);
+        while (!qe.empty())
+        {
+            vector<int> t;
+            int size = qe.size();
+            for (int i = 0; i < size; i++)
+            {
+                TreeNode *p = qe.front();
+                qe.pop();
+                if (p->left)
+                    qe.push(p->left);
+                if (p->right)
+                    qe.push(p->right);
+                t.push_back(p->val);
+            }
+            ret.push_back(t);
+        }
+
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
+```
+
+###  108. Convert Sorted Array to Binary Search Tree
+
+将一个有序数组转化为一棵平衡二叉树。
+
+递归解决，具体方法是：树的root结点应该是数组的中心，这样才能够转化成平衡树，确定了中心点后，将数组划分成两部分，递归解决。
+
+```cpp
+class Solution
+{
+  public:
+	TreeNode *helper(int left, int right, vector<int> &nums)
+	{
+		if (left > right)
+			return NULL;
+		int mid = (left + right) / 2;
+		TreeNode *p = new TreeNode(nums[mid]);
+
+		p->left = helper(left, mid - 1, nums);
+		p->right = helper(mid + 1, right, nums);
+		return p;
+	}
+
+	TreeNode *sortedArrayToBST(vector<int> &nums)
+	{
+		TreeNode *ret;
+		ret = helper(0, nums.size() - 1, nums);
+		return ret;
+	}
+};
+```
+
+###  110. Balanced Binary Tree
+
+判断一棵树是否是平衡二叉树。
+
+Depth辅助函数，求出一棵树的高度。判断每个结点的左子树和右子树的差值是否&lt;=1
+
+```cpp
+class Solution
+{
+  public:
+	int Depth(TreeNode *root)
+	{
+		if (root == NULL)
+			return 0;
+		return 1 + max(Depth(root->left), Depth(root->right));
+	}
+
+	bool isBalanced(TreeNode *root)
+	{
+		if (root == NULL)
+			return true;
+
+		int left = Depth(root->left);
+		int right = Depth(root->right);
+
+		return abs(left - right) <= 1 && isBalanced(root->left) && isBalanced(root->right);
+	}
+};
+```
+
