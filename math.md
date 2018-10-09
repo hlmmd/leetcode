@@ -31,3 +31,25 @@ class Solution
 };
 ```
 
+###  118. Pascal's Triangle
+
+杨辉三角问题。也可以通过组合来求解。
+
+```cpp
+class Solution {
+public:
+	vector<vector<int> > generate( int numRows )
+	{
+		vector<vector<int> > ret;
+		for ( int i = 0; i < numRows; i++ )
+		{
+			vector<int> temp( i + 1, 1 );
+			for ( int j = 1; j <= i - 1; j++ )
+				temp[j] = ret[i - 1][j - 1] + ret[i - 1][j];
+			ret.push_back( temp );
+		}
+		return(ret);
+	}
+};
+```
+
