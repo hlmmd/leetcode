@@ -81,3 +81,31 @@ class Solution
 };
 ```
 
+###  121. Best Time to Buy and Sell Stock
+
+买入、出售股票的最好时机（至多只有一次机会）
+
+记住股票的最低点即可。如果价格低于最低点，则刷新最低点，如果高于最低点，那么求出利润，并与最大利润相比较即可。
+
+```cpp
+class Solution
+{
+  public:
+	int maxProfit(vector<int> &prices)
+	{
+		if (prices.size() == 0)
+			return 0;
+		int minval = prices[0];
+		int ret = 0;
+		for (int i = 1; i < prices.size(); i++)
+		{
+			if (prices[i] <= minval)
+				minval = prices[i];
+			else
+				ret = prices[i] - minval > ret ? prices[i] - minval : ret;
+		}
+		return ret;
+	}
+};
+```
+

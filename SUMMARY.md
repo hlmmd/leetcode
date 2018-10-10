@@ -7,4 +7,5 @@
 * [LinkList](linklist.md)
 * [String](string.md)
 * [Tree](tree.md)
+* [Bit operation](bit-operation.md)
 
