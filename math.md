@@ -53,3 +53,31 @@ public:
 };
 ```
 
+###  119. Pascal's Triangle II
+
+只求一行，要求空间复杂度O\(k\)
+
+注意在循环求下一行的值时，从右往左求即可，否则值会被覆盖。
+
+当然用组合公式也可以。
+
+```cpp
+class Solution
+{
+  public:
+	vector<int> getRow(int rowIndex)
+	{
+		vector<int> ret(rowIndex + 1, 0);
+		ret[0] = 1;
+		for (int i = 1; i <= rowIndex; i++)
+		{
+			for (int j = i; j > 0; j--)
+			{
+				ret[j] = ret[j] + ret[j - 1];
+			}
+		}
+		return ret;
+	}
+};
+```
+
