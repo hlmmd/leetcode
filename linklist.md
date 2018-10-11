@@ -93,5 +93,41 @@ class Solution
 };
 ```
 
+###  160. Intersection of Two Linked Lists
 
+找出两个链表的交点。如果没有交点，则返回NULL
+
+For example, the following two linked lists:
+
+```text
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗            
+B:     b1 → b2 → b3
+```
+
+begin to intersect at node c1.
+
+假设存在交点，A的链表长度为l1+l3，B的长度为l2+l3 （l3为两个链表的公共部分）。那么，如果我们用两个不同的指针p1，p2 分别遍历链表，并且在p1遍历完A后，接着遍历B链表，p2指针做类似的操作，那么在p1，p2第一次相遇的时候，就是在交点，因为两个指针都移动了l1+l2+l3的距离。如果p1p2都是NULL，说明没有交点。
+
+```cpp
+class Solution
+{
+  public:
+	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+	{
+
+		if (headA == NULL || headB == NULL)
+			return NULL;
+		ListNode *p1 = headA, *p2 = headB;
+		while ((p1 || p2) && p1 != p2)
+		{
+			p1 = p1 ? p1->next : headB;
+			p2 = p2 ? p2->next : headA;
+		}
+		return p1;
+	}
+};
+```
 
