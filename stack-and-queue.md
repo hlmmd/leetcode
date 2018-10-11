@@ -41,3 +41,40 @@ public:
 };
 ```
 
+###  155. Min Stack
+
+ Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+设计一个栈，能够返回最小值。使用两个栈，一个专门存储最小值。
+
+```cpp
+class MinStack
+{
+  private:
+	stack<int> s1;
+	stack<int> s2;
+
+  public:
+	void push(int x)
+	{
+		s1.push(x);
+		if (s2.empty() || x <= getMin())
+			s2.push(x);
+	}
+	void pop()
+	{
+		if (s1.top() == getMin())
+			s2.pop();
+		s1.pop();
+	}
+	int top()
+	{
+		return s1.top();
+	}
+	int getMin()
+	{
+		return s2.top();
+	}
+};
+```
+
