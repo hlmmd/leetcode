@@ -109,3 +109,26 @@ class Solution
 };
 ```
 
+###  171. Excel Sheet Column Number
+
+将数字转化为excel表格的列。即从A到Z再到AA，ZZ……
+
+```cpp
+class Solution {
+public:
+	string convertToTitle( int n )
+	{
+		string ret = "";
+		while ( n )
+		{
+			n--;
+			char temp = n % 26 + 'A';
+			ret	= temp + ret;
+			n	/= 26;
+		}
+
+		return(ret);
+	}
+};
+```
+
