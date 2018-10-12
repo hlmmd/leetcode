@@ -36,3 +36,62 @@ public:
 
 此外还有KMP算法、BM算法、Sunday算法用于解决该问题。
 
+###  205. Isomorphic Strings
+
+Given two strings **s** and **t**, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in **s** can be replaced to get **t**.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+
+**Example 1:**
+
+```text
+Input: s = "egg", t = "add"
+Output: true
+```
+
+**Example 2:**
+
+```text
+Input: s = "foo", t = "bar"
+Output: false
+```
+
+**Example 3:**
+
+```text
+Input: s = "paper", t = "title"
+Output: true
+```
+
+判断一个字符串s能否通过对字符进行一一映射变换得到字符串t。
+
+记录每个字符对应的映射值，初值为0。如果双方的映射都是0，那么说明这两个字符还没有建立过映射关系。否则，就要检查是否满足两条映射关系，如果不满足，说明不满足一一映射条件。
+
+```cpp
+class Solution
+{
+  public:
+	bool isIsomorphic(string s, string t)
+	{
+		if (s.length() != t.length())
+			return false;
+
+		vector<int> pa(128, 0);
+		vector<int> pb(128, 0);
+		for (int i = 0; s[i]; i++)
+		{
+			if (pa[s[i]] == 0 && pb[t[i]] == 0)
+			{
+				pa[s[i]] = t[i];
+				pb[t[i]] = s[i];
+			}
+			else if (pa[s[i]] != t[i] || pb[t[i]] != s[i])
+				return false;
+		}
+		return true;
+	}
+};
+```
+
