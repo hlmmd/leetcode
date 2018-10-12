@@ -163,3 +163,39 @@ class Solution
 };
 ```
 
+### 206. Reverse Linked List
+
+Reverse a singly linked list.
+
+**Example:**
+
+```text
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+```
+
+转置一个链表。
+
+需要用到三个指针，一个指向前一个结点，一个指向当前结点，一个指向下一个结点。即pre，cur，next。
+
+对于当前结点，转置之后，cur-&gt;next 应该指向 pre，那么如果不用next指针保存原本的cur-&gt;next值，那就会造成链表丢失。pre值用来记录前一个结点，可以方便直接给cur-&gt;next赋值。当完成一个结点的转置工作后，当前pre变成了cur，cur变成了next。
+
+```cpp
+class Solution
+{
+  public:
+	ListNode *reverseList(ListNode *head)
+	{
+		ListNode *cur = head, *next, *pre = NULL;
+		while (cur)
+		{
+			next = cur->next;
+			cur->next = pre;
+			pre = cur;
+			cur = next;
+		}
+		return pre;
+	}
+};
+```
+
