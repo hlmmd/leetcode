@@ -85,5 +85,37 @@ class Solution
 };
 ```
 
-###  
+###   169. Majority Element
+
+Given an array of size n, find the majority element. The majority element is the element that appears **more than** `⌊ n/2 ⌋` times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+求一个数组中出现次数大于n/2的数（假定必定存在）
+
+因为这个数必定存在，所以可以记录当前数出现的次数，如果下一个数与之不同，则count--，相同则count++，当count==0时，说明之前的数都不一定是最多的数，重新赋值。
+
+如果这个数不一定存在，则不能使用该算法。
+
+参考:**Boyer-Moore Voting Algorithm**
+
+```cpp
+class Solution
+{
+  public:
+	int majorityElement(vector<int> &nums)
+	{
+		int count = 0;
+		int val;
+		for (auto num : nums)
+		{
+			val = (count == 0) ? num : val;
+			num == val ? count++ : count--;
+		}
+		return val;
+	}
+};
+```
+
+
 
