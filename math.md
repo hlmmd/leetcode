@@ -186,3 +186,34 @@ class Solution
 };
 ```
 
+###  204. Count Primes
+
+ Count the number of prime numbers less than a non-negative number, **n**.
+
+计算小于n的素数个数。
+
+先假定每一个数都是素数，再用排除法。从2开始，2是素数，但之后所有2的倍数都不是素数，可以一一排除。接着排除3的倍数、5的倍数，这样就排除了所有的合数，只留下素数。
+
+```cpp
+class Solution
+{
+  public:
+	int countPrimes(int n)
+	{
+		int count = 0;
+		vector<bool> IsPrime(n, true);
+
+		for (int i = 2; i < n; i++)
+		{
+			if (IsPrime[i])
+			{
+				count++;
+				for (int j = i + i; j < n; j += i)
+					IsPrime[j] = false;
+			}
+		}
+		return count;
+	}
+};
+```
+
