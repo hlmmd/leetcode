@@ -171,3 +171,50 @@ class Solution
 };
 ```
 
+###  226. Invert Binary Tree
+
+Invert a binary tree.
+
+**Example:**
+
+Input:
+
+```text
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+```
+
+Output:
+
+```text
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+```
+
+反转一颗二叉树。使用类似交换整数数值的操作即可。要用一个临时指针用于存储。
+
+```cpp
+class Solution
+{
+  public:
+	TreeNode *invertTree(TreeNode *root)
+	{
+
+		if (root == NULL)
+			return NULL;
+
+		TreeNode *t = root->left;
+		root->left = invertTree(root->right);
+		root->right = invertTree(t);
+
+		return root;
+	}
+};
+```
+

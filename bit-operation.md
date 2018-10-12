@@ -28,3 +28,16 @@ class Solution
 };
 ```
 
+###  231. Power of Two
+
+运用结论 \(n&\(n-1\)\)==0
+
+```cpp
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        return n>0 && (n&(n-1))==0;
+    }
+};
+```
+
