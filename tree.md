@@ -1,6 +1,6 @@
 # Tree
 
-###  100. Same Tree
+##  100. Same Tree
 
 判断两个树是否相同。
 
@@ -22,7 +22,7 @@ class Solution
 };
 ```
 
-###  101. Symmetric Tree
+##  101. Symmetric Tree
 
 判断一棵树是否是左右对称的。
 
@@ -51,7 +51,7 @@ class Solution
 };
 ```
 
-###  104. Maximum Depth of Binary Tree
+##  104. Maximum Depth of Binary Tree
 
 求一棵树的最大深度，递归。首先要判断root是否为NULL，然后返回左右子树较大者+1
 
@@ -68,7 +68,7 @@ class Solution
 };
 ```
 
-###  107. Binary Tree Level Order Traversal II
+##  107. Binary Tree Level Order Traversal II
 
 求一棵树的层序遍历，并将结果存放在数组中。
 
@@ -110,7 +110,7 @@ class Solution
 };
 ```
 
-###  108. Convert Sorted Array to Binary Search Tree
+##  108. Convert Sorted Array to Binary Search Tree
 
 将一个有序数组转化为一棵平衡二叉树。
 
@@ -141,7 +141,7 @@ class Solution
 };
 ```
 
-###  110. Balanced Binary Tree
+##  110. Balanced Binary Tree
 
 判断一棵树是否是平衡二叉树。
 
@@ -171,7 +171,7 @@ class Solution
 };
 ```
 
-###  226. Invert Binary Tree
+##  226. Invert Binary Tree
 
 Invert a binary tree.
 

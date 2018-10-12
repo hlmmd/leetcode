@@ -1,6 +1,6 @@
 # Math
 
-### 70. Climbing Stairs
+## 70. Climbing Stairs
 
 You are climbing a stair case. It takes _n_ steps to reach to the top.
 
@@ -31,7 +31,7 @@ class Solution
 };
 ```
 
-###  118. Pascal's Triangle
+##  118. Pascal's Triangle
 
 杨辉三角问题。也可以通过组合来求解。
 
@@ -53,7 +53,7 @@ public:
 };
 ```
 
-###  119. Pascal's Triangle II
+##  119. Pascal's Triangle II
 
 只求一行，要求空间复杂度O\(k\)
 
@@ -81,7 +81,7 @@ class Solution
 };
 ```
 
-###  121. Best Time to Buy and Sell Stock
+##  121. Best Time to Buy and Sell Stock
 
 买入、出售股票的最好时机（至多只有一次机会）
 
@@ -109,7 +109,7 @@ class Solution
 };
 ```
 
-###  171. Excel Sheet Column Number
+##  171. Excel Sheet Column Number
 
 将数字转化为excel表格的列。即从A到Z再到AA，ZZ……
 
@@ -132,7 +132,7 @@ public:
 };
 ```
 
-###  202. Happy Number
+##  202. Happy Number
 
 A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 \(where it will stay\), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
 
@@ -186,7 +186,7 @@ class Solution
 };
 ```
 
-###  204. Count Primes
+##  204. Count Primes
 
  Count the number of prime numbers less than a non-negative number, **n**.
 

@@ -1,6 +1,6 @@
 # Bit operation
 
-###  136. Single Number
+##  136. Single Number
 
  Given a **non-empty** array of integers, every element appears _twice_ except for one. Find that single one.
 
@@ -28,7 +28,7 @@ class Solution
 };
 ```
 
-###  231. Power of Two
+##  231. Power of Two
 
 运用结论 \(n&\(n-1\)\)==0
 

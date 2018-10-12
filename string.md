@@ -1,6 +1,6 @@
 # String
 
-### 28. Implement strStr\(\)
+## 28. Implement strStr\(\)
 
 实现 strstr\(\)函数
 
@@ -36,7 +36,7 @@ public:
 
 此外还有KMP算法、BM算法、Sunday算法用于解决该问题。
 
-###  205. Isomorphic Strings
+##  205. Isomorphic Strings
 
 Given two strings **s** and **t**, determine if they are isomorphic.
 
