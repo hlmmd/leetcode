@@ -1,10 +1,5 @@
 # LinkList
 
-```cpp
-
-
-```
-
 ###  21. Merge Two Sorted Lists
 
 合并两个有序的链表。
@@ -127,6 +122,43 @@ class Solution
 			p2 = p2 ? p2->next : headA;
 		}
 		return p1;
+	}
+};
+```
+
+###  203. Remove Linked List Elements
+
+Remove all elements from a linked list of integers that have value **val**.
+
+**Example:**
+
+```text
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+```
+
+删除链表中值为val的元素。
+
+要注意处理表头。
+
+```cpp
+class Solution
+{
+  public:
+	ListNode *removeElements(ListNode *head, int val)
+	{
+
+		while (head && head->val == val)
+			head = head->next;
+
+		ListNode *p = head;
+		while (p && p->next)
+		{
+			while (p->next && p->next->val == val)
+				p->next = p->next->next;
+			p = p->next;
+		}
+		return head;
 	}
 };
 ```
