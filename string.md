@@ -95,3 +95,66 @@ class Solution
 };
 ```
 
+##  242. Valid Anagram
+
+判断两个字符串是否同构。统计每个字符的个数即可。
+
+```cpp
+class Solution {
+public:
+	bool isAnagram( string s, string t )
+	{
+		if ( s.length() != t.length() )
+			return(false);
+		vector<int>	c1( 26, 0 );
+		vector<int>	c2( 26, 0 );
+		for ( auto ch : s )
+			c1[ch - 'a']++;
+		for ( auto ch : t )
+			c2[ch - 'a']++;
+		for ( int i = 0; i < c1.size(); i++ )
+			if ( c1[i] != c2[i] )
+				return(false);
+
+		return(true);
+	}
+};
+```
+
+## 257. Binary Tree Paths
+
+求二叉树所有从根结点到叶子结点的路径。
+
+DFS递归即可。
+
+```cpp
+class Solution {
+public:
+	vector<string> ret;
+	vector<string> binaryTreePaths( TreeNode* root )
+	{
+		string temp;
+		if ( root == NULL )
+			return(ret);
+		helper( root, temp );
+		return(ret);
+	}
+
+
+	void helper( TreeNode* root, string temp )
+	{
+		temp += to_string( root->val );
+		if ( root->left == NULL && root->right == NULL )
+		{
+			ret.push_back( temp );
+			return;
+		}
+		temp += "->";
+		if ( root->left )
+			helper( root->left, temp );
+		if ( root->right )
+			helper( root->right, temp );
+	}
+};
+```
+

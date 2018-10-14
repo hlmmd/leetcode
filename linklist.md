@@ -199,3 +199,54 @@ class Solution
 };
 ```
 
+##  234. Palindrome Linked List
+
+ Given a singly linked list, determine if it is a palindrome.
+
+判断一个链表是否是回文序列
+
+先用slow，fast两指针，找到链表的中部。然后，将链表的后半部分转置（206题），再比较得到的两个链表即可。
+
+```cpp
+class Solution {
+public:
+
+	ListNode *reverseList( ListNode *head )
+	{
+		ListNode *cur = head, *next, *pre = NULL;
+		while ( cur )
+		{
+			next		= cur->next;
+			cur->next	= pre;
+			pre		= cur;
+			cur		= next;
+		}
+		return(pre);
+	}
+
+
+	bool isPalindrome( ListNode* head )
+	{
+		if ( head == NULL || head->next == NULL )
+			return(true);
+		ListNode* slow	= head;
+		ListNode* fast	= head;
+		while ( fast->next != NULL && fast->next->next != NULL )
+		{
+			slow	= slow->next;
+			fast	= fast->next->next;
+		}
+		slow->next	= reverseList( slow->next );
+		slow		= slow->next;
+		while ( slow != NULL )
+		{
+			if ( head->val != slow->val )
+				return(false);
+			head	= head->next;
+			slow	= slow->next;
+		}
+		return(true);
+	}
+};
+```
+
