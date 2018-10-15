@@ -217,3 +217,49 @@ class Solution
 };
 ```
 
+##  303. Range Sum Query - Immutable
+
+Given an integer array nums, find the sum of the elements between indices i and j \(i ≤ j\), inclusive.
+
+**Example:**  
+
+
+```text
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+```
+
+利用 a\[i\]+a\[i+1\]+...+a\[j\] = a\[0\]+...+a\[j\]-\(a\[0\]+...+a\[i-1\]\)=s\[j\]-s\[i-1\]
+
+可以在初始化的时候保存从0-size的累加和。
+
+```cpp
+class NumArray
+{
+  private:
+	vector<int> sum;
+
+  public:
+	NumArray(vector<int> nums)
+	{
+
+		sum.push_back(0);
+		int temp = 0;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			temp += nums[i];
+			sum.push_back(temp);
+		}
+	}
+
+	int sumRange(int i, int j)
+	{
+
+		return sum[j + 1] - sum[i];
+	}
+};
+```
+

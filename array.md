@@ -115,5 +115,32 @@ class Solution
 };
 ```
 
+##  283. Move Zeroes
+
+ Given an array `nums`, write a function to move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.
+
+将一个数组中所有的0移动到最后，剩下的数字保留原顺序。
+
+记录0的个数count，因为0会被移动到后面，所以所有不为0的数nums\[i\]，都会向前移动count个。
+
+```cpp
+class Solution
+{
+  public:
+	void moveZeroes(vector<int> &nums)
+	{
+		int count = 0;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			nums[i - count] = nums[i];
+			if (nums[i] == 0)
+				count++;
+			if (count)
+				nums[i] = 0;
+		}
+	}
+};
+```
+
 
 
