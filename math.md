@@ -263,3 +263,26 @@ class NumArray
 };
 ```
 
+##  367. Valid Perfect Square
+
+求一个数是否是平方数。牛顿法。
+
+```cpp
+class Solution
+{
+  public:
+	bool isPerfectSquare(int num)
+	{
+
+		long x = num;
+		while (x * x > num)
+		{
+			x = (x + num / x) >> 1;
+		}
+		return x * x == num;
+	}
+};
+```
+
+
+

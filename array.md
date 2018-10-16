@@ -142,5 +142,41 @@ class Solution
 };
 ```
 
+##  350. Intersection of Two Arrays II
 
+Given two arrays, write a function to compute their intersection.
+
+**Example 1:**
+
+```text
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+```
+
+用一个unordered\_map存储，先统计nums1所有数出现个数，再比较nums2。
+
+```cpp
+class Solution
+{
+public:
+	vector<int> intersect(vector<int> &nums1, vector<int> &nums2)
+	{
+		vector<int> ret;
+		unordered_map<int, int> map;
+		for (int i = 0; i < nums1.size(); i++)
+			map[nums1[i]]++;
+		for (int i = 0; i < nums2.size(); i++)
+		{
+			if (map[nums2[i]] > 0)
+			{
+				map[nums2[i]]--;
+				ret.push_back(nums2[i]);
+			}
+		}
+
+		return ret;
+	}
+};
+
+```
 
