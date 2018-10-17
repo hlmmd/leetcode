@@ -284,5 +284,33 @@ class Solution
 };
 ```
 
+## 400. Nth Digit
 
+ Find the nth digit of the infinite integer sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...
+
+1~num的数列，求第n个数字（10分为两个数字，1和0）。
+
+先要确定第n的数字对应的num是一个几位数。根据1位数有 9 \*1 ，2位数有 2\* 90,n位数有n\*9\*10^\(n-1\)个数，可以确定是一个几位数。然后再确定是哪一个数，根据\(n-1\)/base的值加上n位数第一个数，就可以得到结果。然后再通过\(n-1\)%base可以得到是这个数的哪一位。
+
+```cpp
+class Solution
+{
+  public:
+	int findNthDigit(int n)
+	{
+		long long base = 1;
+		long long ten = 1;
+		while (9 * base * ten < n)
+		{
+			n -= 9 * base * ten;
+			base++;
+			ten *= 10;
+		}
+		int num = ten;
+		num += (n - 1) / base;
+		string temp = to_string(num);
+		return temp[(n - 1) % base] - '0';
+	}
+};
+```
 
