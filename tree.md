@@ -246,5 +246,32 @@ public:
 };
 ```
 
+##  404. Sum of Left Leaves
 
+求所有左叶子结点的和。
+
+首先，肯定要通过递归遍历整颗数。然后，要判断是不是一个左叶子结点，如果是，就加上val
+
+```cpp
+
+class Solution
+{
+  public:
+	int sumOfLeftLeaves(TreeNode *root)
+	{
+
+		int ret = 0;
+
+		if (root == NULL)
+			return 0;
+		if (root->left && root->left->left == NULL && root->left->right == NULL)
+			ret += root->left->val;
+		else
+			ret += sumOfLeftLeaves(root->left);
+
+		ret += sumOfLeftLeaves(root->right);
+		return ret;
+	}
+};
+```
 

@@ -71,7 +71,31 @@ class Solution
 };
 ```
 
+##  405. Convert a Number to Hexadecimal
 
+将十进制转换成十六进制。
 
+从比特位考虑，每4个比特位对应一个16进制数，所以用0xf与上num，就能得到末位的16进制数，然后再将num右移，可以得到倒数第二位，以此类推，直到Num为0或者全部转换。
 
+```cpp
+
+class Solution
+{
+  public:
+	const string HEX = "0123456789abcdef";
+	string toHex(int num)
+	{
+		if (num == 0)
+			return "0";
+		string result;
+		int count = 0;
+		while (num && count++ < 8)
+		{
+			result = HEX[(num & 0xf)] + result;
+			num >>= 4;
+		}
+		return result;
+	}
+};
+```
 
