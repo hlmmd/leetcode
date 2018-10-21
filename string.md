@@ -234,3 +234,49 @@ class Solution
 };
 ```
 
+##  438. Find All Anagrams in a String
+
+ Given a string **s** and a **non-empty** string **p**, find all the start indices of **p**'s anagrams in **s**.
+
+求s的所有子串中有多少与p同构。
+
+[https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem](https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem.)
+
+首先，如何判断两个字符串同构，242题。
+
+然后用滑动窗口，每次移动一位，调整cs的计数，与cp比较。
+
+```cpp
+class Solution {
+public:
+	vector<int> findAnagrams( string s, string p )
+	{
+		vector<int>	ret;
+		vector<int>	cs( 26, 0 );
+		vector<int>	cp( 26, 0 );
+		if ( s.length() < p.length() )
+			return(ret);
+		for ( int i = 0; p[i]; i++ )
+		{
+			cp[p[i] - 'a']++;
+			cs[s[i] - 'a']++;
+		}
+
+		if ( cp == cs )
+			ret.push_back( 0 );
+
+		for ( int i = p.length(); i < s.length(); i++ )
+		{
+			cs[s[i] - 'a']++;
+			cs[s[i - p.length()] - 'a']--;
+			if ( cs == cp )
+				ret.push_back( i - p.length() + 1 );
+		}
+
+		return(ret);
+	}
+};
+```
+
+
+
