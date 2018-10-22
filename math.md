@@ -314,3 +314,31 @@ class Solution
 };
 ```
 
+##  458. Poor Pigs
+
+ There are 1000 buckets, one and only one of them contains poison, the rest are filled with water. They all look the same. If a pig drinks that poison it will die within 15 minutes. What is the minimum amount of pigs you need to figure out which bucket contains the poison within one hour.
+
+有1000个水桶，其中只有一桶水是有毒的。一只猪会在喝了水之后的15分钟死亡，问最少需要多少头猪能够在1小时之内找到有毒的水桶。
+
+这可以看成一个编码问题，给定的测试时间和猪的死亡时间确定了编码的维度，本题是60/15+1 = 5。而多少头猪则代表码长，水桶数量是要表示的数。5^4&lt;1000 &lt; 5^5，所以至少需要5头猪。
+
+```cpp
+class Solution
+{
+  public:
+	int poorPigs(int buckets, int minutesToDie, int minutesToTest)
+	{
+		int pigs = 0;
+		int base = (minutesToTest / minutesToDie + 1);
+		int count = 1;
+		while (count < buckets)
+		{
+			count *= base;
+			pigs++;
+		}
+
+		return pigs;
+	}
+};
+```
+
