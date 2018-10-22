@@ -180,3 +180,31 @@ public:
 
 ```
 
+##  455. Assign Cookies
+
+分配饼干，有g个小朋友，每个人需要g\[i\]大小的饼干才能满足，饼干s块，每块大小s\[i\]。问怎样分配才能满足最多的人。
+
+贪心算法。将g，s两个数组排序，将最小能满足需求的饼干分配给最小的小朋友。
+
+```cpp
+class Solution
+{
+  public:
+	int findContentChildren(vector<int> &g, vector<int> &s)
+	{
+
+		std::sort(g.begin(), g.end());
+		std::sort(s.begin(), s.end());
+
+		int i = 0, j = 0;
+		while (i < g.size() && j < s.size())
+		{
+			if (g[i] <= s[j])
+				i++;
+			j++;
+		}
+		return i;
+	}
+};
+```
+
