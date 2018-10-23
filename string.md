@@ -278,5 +278,35 @@ public:
 };
 ```
 
+##  459. Repeated Substring Pattern
 
+字符串s可以由其子串重复得到。s = s.substr\(0,l\)\* \(s.length\(\)/l\)
+
+子串的长度一定是s的因数。
+
+```cpp
+class Solution
+{
+  public:
+	bool repeatedSubstringPattern(string s)
+	{
+
+		int length = s.length();
+		if (length == 0 || length == 1)
+			return false;
+		for (int i = 1; i <= s.length() / 2; i++)
+		{
+			if (length % i == 0)
+			{
+				string temp;
+				for (int j = 0; j < length / i; j++)
+					temp += s.substr(0, i);
+				if (temp == s)
+					return true;
+			}
+		}
+		return false;
+	}
+};
+```
 
