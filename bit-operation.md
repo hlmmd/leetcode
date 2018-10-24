@@ -99,3 +99,53 @@ class Solution
 };
 ```
 
+##  461. Hamming Distance
+
+求汉明距离。
+
+```cpp
+class Solution
+{
+  public:
+	int hammingDistance(int x, int y)
+	{
+
+		int ret = 0;
+		int v = x ^ y;
+		for (int i = 0; i < 32; i++)
+		{
+			ret += v & 1;
+			v >>= 1;
+		}
+		return ret;
+	}
+};
+```
+
+##  476. Number Complement
+
+ Given a positive integer, output its complement number. The complement strategy is to flip the bits of its binary representation.
+
+给一个正整数，求它的complement number（不考虑前导零）
+
+ 5 is 101 \(no leading zero bits\), and its complement is 010. 
+
+先要求出有多少个前导零，用全1（~0）作为mask，mask&num如果不为零，说明num中存在1，将mask左移，即mask前半部分都是1，后半部分都是0，如果mask&num为0，说明mask中1的个数与num前导零的个数相同。最后，在将mask和num求反，二者相与即可得到答案。
+
+```cpp
+class Solution
+{
+  public:
+	int findComplement(int num)
+	{
+
+		int mask = ~0;
+
+		while (mask & num)
+			mask <<= 1;
+
+		return ~mask & ~num;
+	}
+};
+```
+
