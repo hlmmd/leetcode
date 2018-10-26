@@ -208,3 +208,40 @@ class Solution
 };
 ```
 
+##  532. K-diff Pairs in an Array
+
+ Given an array of integers and an integer **k**, you need to find the number of **unique** k-diff pairs in the array. Here a **k-diff** pair is defined as an integer pair \(i, j\), where **i** and **j** are both numbers in the array and their [absolute difference](https://en.wikipedia.org/wiki/Absolute_difference) is **k**.
+
+用set保存pair中较小值，满足unique特性。用unordered\_map保存array，查找有没有相差k的数。
+
+```cpp
+class Solution
+{
+  public:
+	int findPairs(vector<int> &nums, int k)
+	{
+		if (k < 0)
+		{
+			return 0;
+		}
+		unordered_set<int> starters;
+		unordered_map<int, int> indices;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (indices.count(nums[i] - k))
+			{
+				starters.insert(nums[i] - k);
+			}
+			if (indices.count(nums[i] + k))
+			{
+				starters.insert(nums[i]);
+			}
+
+			indices[nums[i]] += 1;
+		}
+
+		return starters.size();
+	}
+};
+```
+

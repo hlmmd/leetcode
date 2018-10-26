@@ -275,3 +275,97 @@ class Solution
 };
 ```
 
+##  530. Minimum Absolute Difference in BST
+
+二叉搜索树结点最小绝对值差。利用中序遍历可以得到一个有序的数列，而最小的差一定是两个相邻数的差，所以采用中序遍历，每一次记录上一个结点的值pre和最小差值min\_dif，再用当前结点值减去上一个结点值，得到一个可能的min\_dif，用min进行比较。
+
+```cpp
+class Solution
+{
+  public:
+	int min_dif = INT_MAX;
+	int pre = -1;
+	int getMinimumDifference(TreeNode *root)
+	{
+		if (root->left)
+			getMinimumDifference(root->left);
+
+		if (pre != -1)
+			min_dif = min(min_dif, abs(root->val - pre));
+		pre = root->val;
+
+		if (root->right)
+			getMinimumDifference(root->right);
+
+		return min_dif;
+	}
+};
+```
+
+##  538. Convert BST to Greater Tree
+
+Given a Binary Search Tree \(BST\), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus sum of all keys greater than the original key in BST.
+
+把二叉搜索树的所有结点加上比该结点大的所有结点值。
+
+递归，按右子树、根节点、左子树的顺序，记录sum。
+
+```cpp
+class Solution
+{
+  public:
+	int sum = 0;
+	TreeNode *convertBST(TreeNode *root)
+	{
+		if (!root)
+			return root;
+		if (root->right)
+			convertBST(root->right);
+
+		root->val += sum;
+		sum = root->val;
+		if (root->left)
+			convertBST(root->left);
+
+		return root;
+	}
+};
+```
+
+##  543. Diameter of Binary Tree
+
+ Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary tree is the length of the **longest**path between any two nodes in a tree. This path may or may not pass through the root.
+
+求二叉树的半径。
+
+通过一个结点的最长路径值等于 左字数的最大深度+ 右字数的最大深度+1
+
+可以递归求每个结点最大深度，并计算半径，得到max
+
+```cpp
+class Solution
+{
+  public:
+	int ret = 0;
+
+	int diameterOfBinaryTree(TreeNode *root)
+	{
+		maxDepth(root);
+		return ret;
+	}
+
+	int maxDepth(TreeNode *root)
+	{
+		if (root == NULL)
+			return 0;
+
+		int left = maxDepth(root->left);
+		int right = maxDepth(root->right);
+
+		ret = max(ret, left + right);
+
+		return max(left, right) + 1;
+	}
+};
+```
+
