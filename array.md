@@ -245,3 +245,39 @@ class Solution
 };
 ```
 
+##  581. Shortest Unsorted Continuous Subarray
+
+
+
+
+
+##  594. Longest Harmonious Subsequence
+
+ We define a harmonious array is an array where the difference between its maximum value and its minimum value is **exactly** 1.
+
+给定一串数字，找出两个相差1的数，使它们的个数和最大。
+
+对每个num计数，再查找有没有num-1，如果有就计算二者的count和，并与返回的最大值比较。
+
+```cpp
+class Solution
+{
+  public:
+	int findLHS(vector<int> &nums)
+	{
+
+		unordered_map<int, int> map;
+
+		for (int i = 0; i < nums.size(); i++)
+			map[nums[i]]++;
+		int ret = 0;
+		for (auto it : map)
+		{
+			if (map.count(it.first - 1) > 0)
+				ret = max(ret, map[it.first - 1] + it.second);
+		}
+		return ret;
+	}
+};
+```
+
