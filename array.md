@@ -281,3 +281,37 @@ class Solution
 };
 ```
 
+##  605. Can Place Flowers
+
+种花问题。保证每朵花都不会与其他的花相邻的前提下，最多能种多少只花。
+
+循环遍历flowerbed，对于每一个为0，即空位，考虑其前后两个位置，都为0时则表明可以种花，将此处赋值为1即可。对头尾两端做特殊处理。
+
+```text
+class Solution {
+public:
+bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+
+        int count = 0;
+        for(int i = 0; i<flowerbed.size(); i++)
+        {
+                if(flowerbed[i]==0)
+                {
+                        int pre  = i==0 ? 0 : flowerbed[i-1];
+                        int next = i==flowerbed.size()-1 ? 0 : flowerbed[i+1];
+                        if(pre==0 && next==0)
+                        {
+                                count++;
+                                flowerbed[i] = 1;
+                        }
+
+
+                }
+
+        }
+        return count>=n;
+
+}
+};
+```
+

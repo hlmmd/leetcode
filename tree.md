@@ -369,3 +369,59 @@ class Solution
 };
 ```
 
+##  606. Construct String from Binary Tree
+
+通过一个二叉树构造字符串。递归，注意处理空的左子树不能全部忽略即可。
+
+```cpp
+class Solution {
+public:
+
+	string str = "";
+	string tree2str( TreeNode* t )
+	{
+		if ( t == NULL )
+			return(str);
+
+		str += to_string( t->val );
+		if ( t->left || t->right )
+		{
+			str += "(";
+			if ( t->left )
+				tree2str( t->left );
+			str += ")";
+		}
+		if ( t->right )
+		{
+			str += "(";
+			tree2str( t->right );
+			str += ")";
+		}
+
+		return(str);
+	}
+};
+```
+
+##  617. Merge Two Binary Trees
+
+合并两个二叉树。
+
+```cpp
+class Solution {
+public:
+	TreeNode* mergeTrees( TreeNode* t1, TreeNode* t2 )
+	{
+		if ( t2 == NULL )
+			return(t1);
+		else if ( t1 == NULL )
+			return(t2);
+
+		t1->val		= t1->val + t2->val;
+		t1->left	= mergeTrees( t1->left, t2->left );
+		t1->right	= mergeTrees( t1->right, t2->right );
+		return(t1);
+	}
+};
+```
+
