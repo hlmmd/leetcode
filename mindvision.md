@@ -22,8 +22,8 @@ MVSDK_API CameraSdkStatus __stdcall CameraSetExposureTime(
 /// \param [in] hCamera 相机的句柄。
 /// \param [in] fExposureTime 曝光时间，单位微秒。
 /// \return 成功返回 CAMERA_STATUS_SUCCESS(0)。
-fExposureTime:0-13925,单位us
-由整数（1-1048565）乘上一个double m_fExpLineTime(13.279352) 得到
+fExposureTime:单位us
+由int（1-1048565）乘上一个double m_fExpLineTime(13.279352) 得到
 
 ```
 
