@@ -18,8 +18,6 @@ MVSDK_API CameraSdkStatus __stdcall CameraSetExposureTime(
     CameraHandle    hCamera, 
     double          fExposureTime
 );
-/// @ingroup API_EXPOSURE
-/// \~chinese
 /// \brief 设置曝光时间。单位为微秒。
 /// \param [in] hCamera 相机的句柄。
 /// \param [in] fExposureTime 曝光时间，单位微秒。
@@ -36,8 +34,6 @@ MVSDK_API CameraSdkStatus __stdcall CameraSetGamma(
     CameraHandle    hCamera, 
     int             iGamma
 );
-/// @ingroup API_ENHANCE
-/// \~chinese
 /// \brief 设定LUT动态生成模式下的Gamma值。
 /// \param [in] hCamera 相机的句柄。
 /// \param [in] iGamma     要设定的Gamma值。
@@ -49,31 +45,27 @@ iGamma: 0-250
 ### 设定对比度:
 
 ```cpp
-/// @ingroup API_ENHANCE
-/// \~chinese
-/// \brief 设定LUT动态生成模式下的对比度值。
-/// \param [in] hCamera 相机的句柄。
-/// \param [in] iContrast  设定的对比度值。
-/// \return 成功返回 CAMERA_STATUS_SUCCESS(0)
 MVSDK_API CameraSdkStatus __stdcall CameraSetContrast(
     CameraHandle    hCamera, 
     int             iContrast
 );
+/// \brief 设定LUT动态生成模式下的对比度值。
+/// \param [in] hCamera 相机的句柄。
+/// \param [in] iContrast  设定的对比度值。
+/// \return 成功返回 CAMERA_STATUS_SUCCESS(0)
 iContrast: 0-200
 ```
 
 ### 设置分辨率：
 
 ```cpp
-/// @ingroup API_ROI
-/// \~chinese
-/// \brief 设置预览的分辨率。
-/// \param [in] hCamera 相机的句柄。
-/// \param [in] pImageResolution 新分辨率。
 MVSDK_API CameraSdkStatus __stdcall CameraSetImageResolution(
     CameraHandle            hCamera, 
     tSdkImageResolution*    pImageResolution
 );
+/// \brief 设置预览的分辨率。
+/// \param [in] hCamera 相机的句柄。
+/// \param [in] pImageResolution 新分辨率。
 
 typedef struct
 {
