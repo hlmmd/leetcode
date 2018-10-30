@@ -342,3 +342,35 @@ class Solution
 };
 ```
 
+## 633. Sum of Square Numbers
+
+判断一个整数c能否拆分成两个数的平方和。
+
+设两个数为left，right且left&lt;=right。left为最小值0，right为最大数sqrt\(c\)+1。
+
+当Left和right的平方和为c，返回true，如果小于c，则增加较小的数left，如果大于c，就减小较大的数。
+
+```cpp
+bool judgeSquareSum(int c)
+{
+
+	int left, right;
+
+	left = 0;
+	right = sqrt(c) + 1;
+	while (left <= right)
+	{
+		if (left * left + right * right == c)
+			return true;
+		if (left * left + right * right < c)
+			left++;
+		else
+			right--;
+	}
+
+	return false;
+}
+```
+
+
+
