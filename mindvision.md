@@ -77,22 +77,22 @@ MVSDK_API CameraSdkStatus __stdcall CameraSetImageResolution(
 
 typedef struct
 {
-  INT     iIndex;				///< \~chinese 索引号，[0,N]表示预设的分辨率(N 为预设分辨率的最大个数，一般不超过20),OXFF 表示自定义分辨率(ROI) 
-  char    acDescription[32];	///< \~chinese 该分辨率的描述信息。仅预设分辨率时该信息有效。自定义分辨率可忽略该信息 
-  UINT    uBinSumMode;			///< \~chinese BIN(求和)的模式,范围不能超过tSdkResolutionRange.uBinSumModeMask 
-  UINT    uBinAverageMode;		///< \~chinese BIN(求均值)的模式,范围不能超过tSdkResolutionRange.uBinAverageModeMask 
-  UINT    uSkipMode;			///< \~chinese 是否SKIP的尺寸，为0表示禁止SKIP模式，范围不能超过tSdkResolutionRange.uSkipModeMask
-  UINT    uResampleMask;		///< \~chinese 硬件重采样的掩码 
-  INT     iHOffsetFOV;			///< \~chinese 采集视场相对于Sensor最大视场左上角的水平偏移 
-  INT     iVOffsetFOV;			///< \~chinese 采集视场相对于Sensor最大视场左上角的垂直偏移 
-  INT     iWidthFOV;			///< \~chinese 采集视场的宽度 
-  INT     iHeightFOV;			///< \~chinese 采集视场的高度 
-  INT     iWidth;				///< \~chinese 相机最终输出的图像的宽度 
-  INT     iHeight;				///< \~chinese 相机最终输出的图像的高度 
-  INT     iWidthZoomHd;			///< \~chinese 硬件缩放的宽度,不需要进行此操作的分辨率，此变量设置为0. 
-  INT     iHeightZoomHd;		///< \~chinese 硬件缩放的高度,不需要进行此操作的分辨率，此变量设置为0. 
-  INT     iWidthZoomSw;			///< \~chinese 软件缩放的宽度,不需要进行此操作的分辨率，此变量设置为0. 
-  INT     iHeightZoomSw;		///< \~chinese 软件缩放的高度,不需要进行此操作的分辨率，此变量设置为0.
+  INT     iIndex;				/// 索引号，[0,N]表示预设的分辨率(N 为预设分辨率的最大个数，一般不超过20),OXFF 表示自定义分辨率(ROI) 
+  char    acDescription[32];	/// 该分辨率的描述信息。仅预设分辨率时该信息有效。自定义分辨率可忽略该信息 
+  UINT    uBinSumMode;			/// BIN(求和)的模式,范围不能超过tSdkResolutionRange.uBinSumModeMask 
+  UINT    uBinAverageMode;		/// BIN(求均值)的模式,范围不能超过tSdkResolutionRange.uBinAverageModeMask 
+  UINT    uSkipMode;			/// 是否SKIP的尺寸，为0表示禁止SKIP模式，范围不能超过tSdkResolutionRange.uSkipModeMask
+  UINT    uResampleMask;		/// 硬件重采样的掩码 
+  INT     iHOffsetFOV;			/// 采集视场相对于Sensor最大视场左上角的水平偏移 
+  INT     iVOffsetFOV;			/// 采集视场相对于Sensor最大视场左上角的垂直偏移 
+  INT     iWidthFOV;			/// 采集视场的宽度 
+  INT     iHeightFOV;			/// 采集视场的高度 
+  INT     iWidth;				/// 相机最终输出的图像的宽度 
+  INT     iHeight;				/// 相机最终输出的图像的高度 
+  INT     iWidthZoomHd;			/// 硬件缩放的宽度,不需要进行此操作的分辨率，此变量设置为0. 
+  INT     iHeightZoomHd;		/// 硬件缩放的高度,不需要进行此操作的分辨率，此变量设置为0. 
+  INT     iWidthZoomSw;			/// 软件缩放的宽度,不需要进行此操作的分辨率，此变量设置为0. 
+  INT     iHeightZoomSw;		/// 软件缩放的高度,不需要进行此操作的分辨率，此变量设置为0.
 } tSdkImageResolution;
 
 设置分辨率前先调用CameraGetImageResolution来获取当前的分辨率信息
