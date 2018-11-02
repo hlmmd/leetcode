@@ -247,9 +247,39 @@ class Solution
 
 ##  581. Shortest Unsorted Continuous Subarray
 
+ Given an integer array, you need to find one **continuous subarray** that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order, too.
 
+最直接的方法就是先将数组排序，找到头和尾第一个与排序后结果不相同的数，计算下标差。复杂度O\(n\)。
 
+从左至右遍历，找到最大值和最后一个小于max的数，记为end下标
 
+从右至左遍历，找到最小值和最后一个大于Min的数，记为start下标
+
+再设置合适的初值（数组有序时返回0），使end-start+1=0
+
+```cpp
+class Solution
+{
+  public:
+    int findUnsortedSubarray(vector<int> &nums)
+    {
+        int maxnum = nums[0];
+        int minnum = nums[nums.size() - 1];
+        int end = -1, start = 0;
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            maxnum = max(maxnum, nums[i]);
+            if (maxnum > nums[i])
+                end = i;
+            minnum = min(minnum, nums[nums.size() - 1 - i]);
+            if (minnum < nums[nums.size() - 1 - i])
+                start = nums.size() - 1 - i;
+        }
+        return end - start + 1;
+    }
+};
+```
 
 ##  594. Longest Harmonious Subsequence
 
@@ -287,31 +317,91 @@ class Solution
 
 循环遍历flowerbed，对于每一个为0，即空位，考虑其前后两个位置，都为0时则表明可以种花，将此处赋值为1即可。对头尾两端做特殊处理。
 
-```text
-class Solution {
-public:
-bool canPlaceFlowers(vector<int>& flowerbed, int n) {
-
+```cpp
+class Solution
+{
+  public:
+    bool canPlaceFlowers(vector<int> &flowerbed, int n)
+    {
         int count = 0;
-        for(int i = 0; i<flowerbed.size(); i++)
+        for (int i = 0; i < flowerbed.size(); i++)
         {
-                if(flowerbed[i]==0)
+            if (flowerbed[i] == 0)
+            {
+                int pre = i == 0 ? 0 : flowerbed[i - 1];
+                int next = i == flowerbed.size() - 1 ? 0 : flowerbed[i + 1];
+                if (pre == 0 && next == 0)
                 {
-                        int pre  = i==0 ? 0 : flowerbed[i-1];
-                        int next = i==flowerbed.size()-1 ? 0 : flowerbed[i+1];
-                        if(pre==0 && next==0)
-                        {
-                                count++;
-                                flowerbed[i] = 1;
-                        }
-
-
+                    count++;
+                    flowerbed[i] = 1;
                 }
-
+            }
         }
-        return count>=n;
+        return count >= n;
+    }
+};
+```
 
-}
+##  665. Non-decreasing Array
+
+对于一个数组，能否修改&lt;=1个数能够使数组变成非减数组。nums\[i\]&lt;=nums\[i+1\]
+
+当出现nums\[i\]&gt;nums\[i+1\]时，标志位置1，再次出现则返回false。
+
+对于i==0时，可以不修改num\[i+1\]的值（对后续判断无影响）
+
+i&gt;=1时，将nums\[i+1\]置为最小满足要求的值，即Num\[i\]。
+
+```cpp
+class Solution
+{
+  public:
+    bool checkPossibility(vector<int> &nums)
+    {
+        if (nums.size() == 0)
+            return true;
+        bool adj = false;
+        for (int i = 0; i < nums.size() - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                if (i >= 1 && nums[i + 1] <= nums[i - 1])
+                    nums[i + 1] = nums[i];
+                if (adj)
+                    return false;
+                adj = true;
+            }
+        }
+        return true;
+    }
+};
+```
+
+##  674. Longest Continuous Increasing Subsequence
+
+最长递增子序列。
+
+当nums\[i\]&gt;nums\[i-1\]时，len++，否则len重置为1。
+
+```cpp
+class Solution
+{
+  public:
+    int findLengthOfLCIS(vector<int> &nums)
+    {
+        int ret = 0;
+        int len = 1;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (i == 0)
+                ret = len;
+            else if (nums[i] > nums[i - 1])
+                ret = max(++len, ret);
+            else
+                len = 1;
+        }
+        return ret;
+    }
 };
 ```
 
