@@ -425,3 +425,26 @@ public:
 };
 ```
 
+##  669. Trim a Binary Search Tree
+
+给一颗二叉搜索树，将其按一定的区间\[L,R\]进行修剪。判断当前结点的值，如果为NULL，返回NULL。如果小于新区间的最小值，则返回右子树的修剪。大于区间的最大值，则返回左子树的修剪。如果在区间内，则该结点不变，修改遍历修剪左右子树。
+
+```cpp
+class Solution
+{
+public:
+	TreeNode *trimBST(TreeNode *root, int L, int R)
+	{
+		if (root == NULL)
+			return NULL;
+		if (root->val < L)
+			return trimBST(root->right, L, R);
+		if (root->val > R)
+			return trimBST(root->left, L, R);
+		root->left = trimBST(root->left, L, R);
+		root->right = trimBST(root->right, L, R);
+		return root;
+	}
+};
+```
+
