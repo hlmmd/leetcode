@@ -149,3 +149,54 @@ class Solution
 };
 ```
 
+##  693. Binary Number with Alternating Bits
+
+一个数的二进制是0、1相间的。
+
+如果满足条件，那么这个数n ，和n右移一位n&gt;&gt;1的异或结果应该是前几位全0之后全1，即00000...1111...
+
+满足这个条件的数又满足 t&\(t+1\)==0
+
+```cpp
+class Solution
+{
+  public:
+	bool hasAlternatingBits(int n)
+	{
+		int t = n ^ n >> 1;
+		return !(t & (t + 1));
+	}
+};
+```
+
+## 696. Count Binary Substrings
+
+数字符串的子串中，01个数相同的子串个数，且是连续的0和连续的1。
+
+```cpp
+class Solution
+{
+  public:
+	int countBinarySubstrings(string s)
+	{
+		int ret = 0;
+		int pre = 0, len = 1;
+		for (int i = 0; i < s.length(); i++)
+		{
+			if (i < s.length() - 1 && s[i + 1] == s[i])
+				len++;
+			else
+			{
+				ret += min(pre, len);
+				pre = len;
+				len = 1;
+			}
+		}
+
+		return ret;
+	}
+};
+```
+
+
+
