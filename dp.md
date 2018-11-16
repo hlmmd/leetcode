@@ -63,5 +63,28 @@ class Solution
 };
 ```
 
+##  746. Min Cost Climbing Stairs
 
+爬楼梯，一次可以上一层或者两层。每层楼需要花费cost\[i\]，问爬到顶所需要的最小cost。
+
+DP问题，对于任意一层楼梯，它要么从第n-2层爬上来，要么从第n-1层爬上来，取二者中较小的即可。
+
+```cpp
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        
+        vector<int> dp(cost.size()+1,0);
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        for(int i = 2;i<cost.size();i++)
+        {
+            dp[i] = min(dp[i-2],dp[i-1])+cost[i];
+            
+        }
+        return min( dp[cost.size()-2], dp[cost.size()-1]);
+        
+    }
+};
+```
 
