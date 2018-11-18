@@ -310,3 +310,33 @@ class Solution
 };
 ```
 
+##  821. Shortest Distance to a Character
+
+一个字符串各个字符到字符C的最短距离。
+
+字符串中的C字符距离为0，其他的字符分两次求解，即左右两侧分别求解，取较小值。
+
+从左到右，看左边一位的值+1是否更小，从右到左，看右边一位的值+1是否更小。
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> shortestToChar(string S, char C)
+    {
+        int n = S.size();
+        vector<int> ret(n, n);
+        for (int i = 0; i < n; i++)
+            if (S[i] == C)
+                ret[i] = 0;
+
+        for (int i = 1; i < n; i++)
+            ret[i] = min(ret[i], ret[i - 1] + 1);
+
+        for (int i = n - 2; i >= 0; i--)
+            ret[i] = min(ret[i], ret[i + 1] + 1);
+        return ret;
+    }
+};
+```
+
