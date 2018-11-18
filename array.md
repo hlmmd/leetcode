@@ -432,3 +432,28 @@ class Solution
 };
 ```
 
+##  867. Transpose Matrix
+
+转置矩阵。
+
+```cpp
+class Solution
+{
+  public:
+    vector<vector<int>> transpose(vector<vector<int>> &A)
+    {
+
+        vector<vector<int>> ret(A[0].size(), vector<int>(A.size(), 0));
+        for (int i = 0; i < A.size(); i++)
+        {
+            for (int j = 0; j < A[0].size(); j++)
+            {
+                ret[j][i] = A[i][j];
+            }
+        }
+
+        return ret;
+    }
+};
+```
+

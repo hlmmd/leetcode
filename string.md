@@ -340,3 +340,46 @@ class Solution
 };
 ```
 
+##  859. Buddy Strings
+
+首先，A和B的长度要相等。
+
+如果A和B是相同的字符串，那么要在交换一组字符后仍然保持相同，必须交换的是相同的字符，即需要A中有重复出现的字符。
+
+如果A和B是不同的字符串，那么必定有且有两个不同的字符，且交换后能满足A'=B
+
+```cpp
+class Solution {
+public:
+    bool buddyStrings(string A, string B) {
+        if(A.length()!=B.length())
+            return false;
+        vector<int>  count(26,0);
+        if(A==B){
+            for(int i = 0;i<A.length();i++){
+                count[ A[i]-'a']++;
+                    if(count[A[i]-'a']==2)
+                        return true;
+            }
+            return false;
+        
+        }
+        
+        vector<int> diff;
+        for(int i = 0 ;i<A.length();i++)
+        {
+            if(A[i]!=B[i])
+                diff.push_back(i);
+        }
+        
+        if(diff.size()!=2)
+            return false;
+        
+        if(A[diff[0]]!=B[diff[1]] || A[diff[1]]!=B[diff[0]])
+            return false;
+        else
+            return true;
+    }
+};
+```
+
