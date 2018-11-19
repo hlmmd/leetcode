@@ -448,3 +448,40 @@ public:
 };
 ```
 
+##  872. Leaf-Similar Trees
+
+二叉树的叶子结点从左到右组成一个序列，如果两颗树的序列相同，返回true，否则返回false。
+
+```cpp
+class Solution
+{
+  public:
+    bool leafSimilar(TreeNode *root1, TreeNode *root2)
+    {
+
+        vector<int> ret1;
+        vector<int> ret2;
+        Getleaf(root1, ret1);
+        Getleaf(root2, ret2);
+        if (ret1 == ret2)
+            return true;
+        else
+            return false;
+    }
+
+    void Getleaf(TreeNode *root, vector<int> &leaf)
+    {
+        if (root == NULL)
+            return;
+        if (root->left == NULL && root->right == NULL)
+        {
+            leaf.push_back(root->val);
+            return;
+        }
+
+        Getleaf(root->left, leaf);
+        Getleaf(root->right, leaf);
+    }
+};
+```
+

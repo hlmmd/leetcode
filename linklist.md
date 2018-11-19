@@ -250,3 +250,29 @@ public:
 };
 ```
 
+##  876. Middle of the Linked List
+
+返回Linklist的后半部分。使用快慢指针，fast一次移动2步，slow移动1步，这样当fast移动到链表尾部的时候，slow指针正好处于链表中间。
+
+```cpp
+class Solution
+{
+  public:
+    ListNode *middleNode(ListNode *head)
+    {
+        if (head == NULL || head->next == NULL)
+            return head;
+
+        ListNode *fast = head;
+        ListNode *slow = head;
+
+        do
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+        } while (fast && fast->next);
+        return slow;
+    }
+};
+```
+
