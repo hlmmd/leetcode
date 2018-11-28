@@ -391,3 +391,44 @@ class Solution
 };
 ```
 
+## Medium
+
+##  36. Valid Sudoku
+
+判断一个数独是否合法。即每一行，每一列，和9个九宫格里面1-9都不重复。
+
+定义三个数组分别来记录这三种情况。读入一个数后，就将对应的三个条件的used数组置为1，表示该数字已经出现过了，如果之后再出出现，就发生了重复，不满足要求，返回false。
+
+```cpp
+class Solution
+{
+  public:
+    bool isValidSudoku(vector<vector<char>> &board)
+    {
+
+        vector<vector<int>> used1(9, vector<int>(9, 0));
+        vector<vector<int>> used2(9, vector<int>(9, 0));
+        vector<vector<int>> used3(9, vector<int>(9, 0));
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] != '.')
+                {
+                    int num = board[i][j] - '1';
+                    int pos = i / 3 * 3 + j / 3;
+
+                    if (used1[i][num] || used2[j][num] || used3[pos][num])
+                        return false;
+
+                    used1[i][num] = used2[j][num] = used3[pos][num] = 1;
+                }
+            }
+        }
+
+        return true;
+    }
+};
+```
+

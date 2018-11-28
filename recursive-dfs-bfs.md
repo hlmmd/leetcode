@@ -57,3 +57,46 @@ class Solution
 };
 ```
 
+## Medium
+
+##  46. Permutations
+
+给出一个元素互不相同的数组的全排列。
+
+递归。每次给temp添加一个不重复的整数，继续递归，在外部再讲这个整数pop出去，来完成一次完整的递归操作。当temp数组和nums数组size相同时，递归达到了边界条件，记录此时的temp并返回。
+
+```cpp
+class Solution
+{
+  public:
+    vector<vector<int>> ret;
+
+    void get(vector<int> &temp, vector<int> &nums)
+    {
+        if (temp.size() == nums.size())
+        {
+            ret.push_back(temp);
+            return;
+        }
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (find(temp.begin(), temp.end(), nums[i]) != temp.end())
+                continue;
+
+            temp.push_back(nums[i]);
+            get(temp, nums);
+            temp.pop_back();
+        }
+        return;
+    }
+
+    vector<vector<int>> permute(vector<int> &nums)
+    {
+        vector<int> temp;
+        get(temp, nums);
+        return ret;
+    }
+};
+```
+

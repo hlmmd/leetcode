@@ -276,3 +276,32 @@ class Solution
 };
 ```
 
+## Medium
+
+##  24. Swap Nodes in Pairs
+
+交换链表中每两个结点。申请一个头结点，方便处理head为NULL的情况。
+
+```cpp
+class Solution
+{
+  public:
+    ListNode *swapPairs(ListNode *head)
+    {
+
+        ListNode *dummy = new ListNode(0), *p = dummy;
+        dummy->next = head;
+        while (p->next && p->next->next)
+        {
+            ListNode *p2 = p->next;
+            p->next = p2->next;
+            p2->next = p2->next->next;
+            p->next->next = p2;
+
+            p = p->next->next;
+        }
+        return dummy->next;
+    }
+};
+```
+
