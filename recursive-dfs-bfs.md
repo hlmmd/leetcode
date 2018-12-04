@@ -100,3 +100,53 @@ class Solution
 };
 ```
 
+##  131. Palindrome Partitioning
+
+把一个字符串分成由回文串组成的分割。
+
+```cpp
+class Solution
+{
+  public:
+    vector<vector<string>> ret;
+
+    vector<vector<string>> partition(string s)
+    {
+        vector<string> temp;
+        helper(s, 0, temp);
+        return ret;
+    }
+
+    bool IsPalindrome(string s, int left, int right)
+    {
+        while (left <= right)
+        {
+            if (s[left] != s[right])
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    void helper(string s, int start, vector<string> &temp)
+    {
+        if (start == s.length())
+        {
+            ret.push_back(temp);
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++)
+        {
+            if (IsPalindrome(s, start, i))
+            {
+                temp.push_back(s.substr(start, i - start + 1));
+                helper(s, i + 1, temp);
+                temp.pop_back();
+            }
+        }
+    }
+};
+```
+

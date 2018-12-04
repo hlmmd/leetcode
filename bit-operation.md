@@ -198,5 +198,34 @@ class Solution
 };
 ```
 
+## Medium
 
+##  201. Bitwise AND of Numbers Range
+
+当m和n不同时，连续AND操作一定会最后一位变成0。
+
+所以我们持续将m n 右移，直到mn相等，此时AND的结果就是m，再将m左移回原来的数值。
+
+```cpp
+class Solution
+{
+  public:
+    int rangeBitwiseAnd(int m, int n)
+    {
+
+        if (m == 0)
+            return 0;
+
+        int factor = 1;
+        while (m != n)
+        {
+            m >>= 1;
+            n >>= 1;
+            factor <<= 1;
+        }
+
+        return m * factor;
+    }
+};
+```
 

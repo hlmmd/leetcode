@@ -88,3 +88,50 @@ public:
 };
 ```
 
+##  139. Word Break
+
+单词拆分，看一个字符串能不能由字典中的字符串组成。
+
+动态规划，只需要确定存不存在一个分割，而不需要求出所有分割，所以不需要递归求解所有的解，只需要用一个数组来表示能不能分割即可。用dp\[i\]表示\[0,i\]子串能否分割。那么在求dp\[i+1\]时，只要考虑\[0,i\]中dp\[i\]为true的作为分割的起点，从字典查找能否构成\[0,i+1\]子串。
+
+因为要多次在字典中查找是否有相应的单词，所以可以将字典存放在unordered\_set中来将查找用时缩减到O\(1\)
+
+```cpp
+class Solution
+{
+  public:
+    bool wordBreak(string s, unordered_set<string> &dict)
+    {
+        if (dict.size() == 0)
+            return false;
+
+        vector<bool> dp(s.size() + 1, false);
+        dp[0] = true;
+
+        for (int i = 1; i <= s.size(); i++)
+        {
+            for (int j = i - 1; j >= 0; j--)
+            {
+                if (dp[j])
+                {
+                    string word = s.substr(j, i - j);
+                    if (dict.find(word) != dict.end())
+                    {
+                        dp[i] = true;
+                    }
+                }
+            }
+        }
+
+        return dp[s.size()];
+    }
+
+    bool wordBreak(string s, vector<string> &wordDict)
+    {
+
+        unordered_set<string> dict(wordDict.begin(), wordDict.end());
+        return wordBreak(s, dict);
+    }
+};
+```
+

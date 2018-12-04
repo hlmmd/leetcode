@@ -485,3 +485,30 @@ class Solution
 };
 ```
 
+## Medium
+
+##  199. Binary Tree Right Side View
+
+二叉树的右视图，即每一层从右往左看能看到的第一个结点值构成的序列。
+
+递归整个树（根-&gt;右-&gt;左），将第一个结点的值放入返回值中。通过返回数组大小和层数来判断是不是最右边的结点。
+
+```cpp
+class Solution {
+public:
+    void recursion(TreeNode *root, int level, vector<int> &res)
+    {
+        if(root==NULL) return ;
+        if(res.size()<level) res.push_back(root->val);
+        recursion(root->right, level+1, res);
+        recursion(root->left, level+1, res);
+    }
+    
+    vector<int> rightSideView(TreeNode *root) {
+        vector<int> res;
+        recursion(root, 1, res);
+        return res;
+    }
+};
+```
+

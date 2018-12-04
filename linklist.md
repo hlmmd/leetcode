@@ -305,3 +305,67 @@ class Solution
 };
 ```
 
+##  148. Sort List
+
+链表排序（归并）
+
+```cpp
+class Solution
+{
+  public:
+    ListNode *sortList(ListNode *head)
+    {
+        if (head == NULL || head->next == NULL)
+            return head;
+        ListNode *slow = head, *fast = head;
+        ListNode *pre;
+        while (fast != NULL && fast->next != NULL)
+        {
+            pre = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        pre->next = NULL;
+
+        ListNode *l1 = sortList(head);
+
+        ListNode *l2 = sortList(slow);
+        return Merge(l1, l2);
+    }
+
+    ListNode *Merge(ListNode *l1, ListNode *l2)
+    {
+        ListNode *l = new ListNode(0);
+
+        ListNode *p;
+        p = l;
+
+        while (l1 && l2)
+        {
+            if (l1->val < l2->val)
+            {
+                p->next = l1;
+                l1 = l1->next;
+            }
+            else
+            {
+                p->next = l2;
+                l2 = l2->next;
+            }
+            p = p->next;
+        }
+
+        if (l1)
+        {
+            p->next = l1;
+        }
+        if (l2)
+        {
+            p->next = l2;
+        }
+
+        return l->next;
+    }
+};
+```
+
