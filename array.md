@@ -515,5 +515,36 @@ class Solution
 };
 ```
 
+##  179. Largest Number
 
+对一个数列重新排序，使其合并后的值最大
+
+```cpp
+class Solution
+{
+  public:
+    static int compare(int a, int b)
+    {
+        string sa = to_string(a);
+        string sb = to_string(b);
+
+        return sa + sb > sb + sa;
+    }
+
+    string largestNumber(vector<int> &nums)
+    {
+
+        std::sort(nums.begin(), nums.end(), compare);
+        if (nums[0] == 0)
+            return "0";
+        string ret = "";
+        for (int i = 0; i < nums.size(); i++)
+        {
+            ret += to_string(nums[i]);
+        }
+
+        return ret;
+    }
+};
+```
 
