@@ -135,3 +135,47 @@ class Solution
 };
 ```
 
+##  221. Maximal Square
+
+给一个矩阵的1和0（char），找出其中最大的正方形。
+
+很明显要用动态规划。多申请一行一列以便编码，matrix\[i\]\[j\]对应dp\[i+1\]\[j+1\]
+
+如果一个matrix\[i\]\[j\]是0，那么对应的dp必然为0
+
+如果是1，那么dp\[i+1\]\[j+1\]的值要根据其上方、左边、左上方三个点的值来确定。取最小值再加1即可。取最小值保证了加上这个i,j点后，任然是正方形。
+
+即
+
+```cpp
+dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + 1;
+```
+
+```cpp
+class Solution
+{
+  public:
+    int maximalSquare(vector<vector<char>> &matrix)
+    {
+        if (matrix.size() == 0 || matrix[0].size() == 0)
+            return 0;
+        int ret = 0;
+        vector<vector<int>> dp(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+
+        for (int i = 1; i <= matrix.size(); i++)
+        {
+            for (int j = 1; j <= matrix[0].size(); j++)
+            {
+                if (matrix[i - 1][j - 1] == '1')
+                {
+                    dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                    ret = max(ret, dp[i][j]);
+                }
+            }
+        }
+
+        return ret * ret;
+    }
+};
+```
+
