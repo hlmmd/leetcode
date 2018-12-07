@@ -548,3 +548,39 @@ class Solution
 };
 ```
 
+##  209. Minimum Size Subarray Sum
+
+长度最小的和大于sum的子串。
+
+两个指针，一头一尾，和到sum时前移头指针，不到sum时后移尾指针。记录最大值。
+
+```cpp
+class Solution
+{
+  public:
+    int minSubArrayLen(int s, vector<int> &nums)
+    {
+
+        if (nums.size() == 0)
+            return 0;
+
+        int i = 0, j = 0, sum = 0, minval = INT_MAX;
+
+        while (j < nums.size())
+        {
+            sum += nums[j++];
+
+            while (sum >= s)
+            {
+                minval = min(minval, j - i);
+                sum -= nums[i++];
+            }
+        }
+
+        return minval == INT_MAX ? 0 : minval;
+
+        return 0;
+    }
+};
+```
+

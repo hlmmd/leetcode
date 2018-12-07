@@ -179,3 +179,41 @@ class Solution
 };
 ```
 
+##  221. Maximal Square
+
+在一个矩阵的0,1中找到最大的全1正方形。
+
+动态规划，在外围增加1行1列0来方便编写代码。那么matrix\[i-1\]\[j-1\]就对应dp\[i\]\[j\]
+
+如果matrix\[i-1\]\[j-1\]是0，那么dp\[i\]\[j\]就是0。
+
+如果是1，那么就是在其上方、左边、左上方选择最小的dp值再加1。
+
+```cpp
+class Solution
+{
+  public:
+    int maximalSquare(vector<vector<char>> &matrix)
+    {
+        if (matrix.size() == 0 || matrix[0].size() == 0)
+            return 0;
+        int ret = 0;
+        vector<vector<int>> dp(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+
+        for (int i = 1; i <= matrix.size(); i++)
+        {
+            for (int j = 1; j <= matrix[0].size(); j++)
+            {
+                if (matrix[i - 1][j - 1] == '1')
+                {
+                    dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                    ret = max(ret, dp[i][j]);
+                }
+            }
+        }
+
+        return ret * ret;
+    }
+};
+```
+

@@ -432,3 +432,28 @@ class Solution
 };
 ```
 
+##  223. Rectangle Area
+
+给定两个矩形（左下、右上坐标），计算重叠后的面积。
+
+计算重叠部分面积，如果为0那么直接相加两个矩形面积，如果不为0，再减去重叠部分面积。
+
+```cpp
+class Solution
+{
+  public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H)
+    {
+
+        int x1 = max(A, E);
+        int x2 = min(C, G);
+        int y1 = max(B, F);
+        int y2 = min(D, H);
+        if (x1 >= x2 || y1 >= y2)
+            return (C - A) * (D - B) + (G - E) * (H - F);
+        else
+            return (C - A) * (D - B) + (G - E) * (H - F) - (x2 - x1) * (y2 - y1);
+    }
+};
+```
+
