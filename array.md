@@ -584,3 +584,64 @@ class Solution
 };
 ```
 
+##  238. Product of Array Except Self
+
+求对一个数组中某一位数字，除了该数字外的所有数的乘积。
+
+  一个数的左边所有数相乘，再乘上右边数相乘。可以减少计算次数
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> productExceptSelf(vector<int> &nums)
+    {
+
+        vector<int> ret(nums.size(), 1);
+        int temp = 1;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            ret[i] = temp;
+            temp *= nums[i];
+        }
+        temp = 1;
+        for (int i = nums.size() - 1; i >= 0; i--)
+        {
+            ret[i] *= temp;
+            temp *= nums[i];
+        }
+        return ret;
+    }
+};
+```
+
+##  240. Search a 2D Matrix II
+
+矩阵的每一行每一列都是有序的。
+
+从右上角开始搜索，如果小于目标就往下查找，大于目标往左查找。
+
+```cpp
+class Solution
+{
+  public:
+    bool searchMatrix(vector<vector<int>> &matrix, int target)
+    {
+        if (matrix.size() == 0)
+            return false;
+
+        int i = 0, j = matrix[0].size() - 1;
+        while (i < matrix.size() && j >= 0)
+        {
+            if (matrix[i][j] == target)
+                return true;
+            else if (matrix[i][j] > target)
+                j--;
+            else
+                i++;
+        }
+        return false;
+    }
+};
+```
+

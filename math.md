@@ -457,3 +457,37 @@ class Solution
 };
 ```
 
+##  264. Ugly Number II
+
+所有由2，3，5构成的数组成的递增序列。
+
+```cpp
+class Solution
+{
+  public:
+    int nthUglyNumber(int n)
+    {
+
+        vector<int> ugly(3, 0);
+        vector<int> dp(n, 1);
+
+        for (int i = 1; i < n; i++)
+        {
+            int v2 = dp[ugly[0]] * 2;
+            int v3 = dp[ugly[1]] * 3;
+            int v5 = dp[ugly[2]] * 5;
+            int v = min(v2, min(v3, v5));
+            dp[i] = v;
+            if (v == v2)
+                ugly[0]++;
+            if (v == v3)
+                ugly[1]++;
+            if (v == v5)
+                ugly[2]++;
+        }
+
+        return dp[n - 1];
+    }
+};
+```
+

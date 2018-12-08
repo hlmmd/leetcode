@@ -516,3 +516,7 @@ public:
 
 ##  211. Add and Search Word - Data structure design
 
+##  230. Kth Smallest Element in a BST
+
+##  236. Lowest Common Ancestor of a Binary Tree
+
