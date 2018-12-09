@@ -217,3 +217,26 @@ class Solution
 };
 ```
 
+##  279. Perfect Squares
+
+将一个数分解成多个完全平方数的和，最小需要多少个数。
+
+```cpp
+class Solution
+{
+  public:
+    int numSquares(int n)
+    {
+
+        vector<int> ret(n + 1, 0);
+        for (int i = 1; i <= n; i++)
+        {
+            ret[i] = n;
+            for (int j = 1; (i - j * j) >= 0; j++)
+                ret[i] = min(ret[i], ret[i - j * j] + 1);
+        }
+        return ret[n];
+    }
+};
+```
+
