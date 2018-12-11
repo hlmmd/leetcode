@@ -240,3 +240,42 @@ class Solution
 };
 ```
 
+##  300. Longest Increasing Subsequence
+
+最长递增子序列
+
+注意子序列和子串的区别。
+
+动态规划，dp\[i\]表示\[0,i\]子串的最长子序列长度。
+
+对于dp\[i\]，循环遍历0~i-1，如果nums\[j\]&lt;nums\[i\]，即能满足递增条件，就比较dp\[i\]和dp\[j\]的大小，如果dp\[i\] &lt;= dp\[j\]就可以更新dp\[i\]的值。
+
+```cpp
+class Solution
+{
+  public:
+	int lengthOfLIS(vector<int> &nums)
+	{
+
+		if (nums.size() == 0)
+			return 0;
+
+		vector<int> dp(nums.size(), 1);
+		int ret = 1;
+		for (int i = 1; i < nums.size(); i++)
+		{
+
+			for (int j = 0; j < i; j++)
+			{
+				if (nums[j] < nums[i] && (dp[i] <= dp[j]))
+					dp[i] = dp[j] + 1;
+			}
+			if (ret < dp[i])
+				ret = dp[i];
+		}
+
+		return ret;
+	}
+};
+```
+
