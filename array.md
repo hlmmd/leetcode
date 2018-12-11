@@ -680,3 +680,52 @@ class Solution
 };
 ```
 
+##  304. Range Sum Query 2D - Immutable
+
+给一个数组，求一块矩形区域内的所有数的和。
+
+```text
++---------------+   +--------------+   +---------------+   +--------------+   +--------------+
+|               |   |         |    |   |   |           |   |         |    |   |   |          |
+|   (r1,c1)     |   |         |    |   |   |           |   |         |    |   |   |          |
+|   +------+    |   |         |    |   |   |           |   +---------+    |   +---+          |
+|   |      |    | = |         |    | - |   |           | - |      (r1,c2) | + |   (r1,c1)    |
+|   |      |    |   |         |    |   |   |           |   |              |   |              |
+|   +------+    |   +---------+    |   +---+           |   |              |   |              |
+|        (r2,c2)|   |       (r2,c2)|   |   (r2,c1)     |   |              |   |              |
++---------------+   +--------------+   +---------------+   +--------------+   +--------------+
+```
+
+```cpp
+class NumMatrix
+{
+  public:
+    vector<vector<int>> sum;
+
+    NumMatrix(vector<vector<int>> matrix)
+    {
+        if (matrix.size() == 0 || matrix[0].size() == 0)
+            return;
+        sum = vector<vector<int>>(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+
+        for (int i = 1; i <= matrix.size(); i++)
+        {
+            int linesum = 0;
+
+            for (int j = 1; j <= matrix[0].size(); j++)
+            {
+                linesum += matrix[i - 1][j - 1];
+                sum[i][j] = sum[i - 1][j] + linesum;
+            }
+        }
+    }
+
+    int sumRegion(int row1, int col1, int row2, int col2)
+    {
+
+        return sum[row2 + 1][col2 + 1] - sum[row2 + 1][col1] - sum[row1][col2 + 1] + sum[row1][col1];
+    }
+};
+
+```
+
