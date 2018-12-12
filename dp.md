@@ -279,3 +279,47 @@ class Solution
 };
 ```
 
+##  309. Best Time to Buy and Sell Stock with Cooldown
+
+在有冷却的情况下（卖出股票后第二天不能买入）最佳买卖股票的时机。
+
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75928/Share-my-DP-solution-\(By-State-Machine-Thinking\)
+
+动态规划，为了方便理解，引入状态机。S0表示没有购买股票，S1表示购买股票，S2表示卖出股票。
+
+那么有S0\[i\] = S0\[i-1\] \(Rest\)，或者S0\[i\] = S2\[i-1\]\(Cooldown\),取较大值。S1,S2同理
+
+S1\[i\] = max\(S0\[i-1\],S1\[i-1\]-prices\[i\]\)
+
+S2 = S1\[i-1\]+prices\[i\]
+
+![&#x72B6;&#x6001;&#x673A;&#x793A;&#x610F;&#x56FE;](.gitbook/assets/image%20%282%29.png)
+
+最后的结果必然在S0（没有买股票）和S2（刚卖出股票）二者之间，取较大值即可。
+
+```cpp
+class Solution
+{
+  public:
+	int maxProfit(vector<int> &prices)
+	{
+
+		if (prices.size() <= 0)
+			return 0;
+		vector<int> s0(prices.size(), 0);
+		vector<int> s1(prices.size(), 0);
+		vector<int> s2(prices.size(), 0);
+
+		s1[0] = -prices[0];
+		s2[0] = INT_MIN;
+		for (int i = 1; i < prices.size(); i++)
+		{
+			s0[i] = max(s0[i - 1], s2[i - 1]);
+			s1[i] = max(s1[i - 1], s0[i - 1] - prices[i]);
+			s2[i] = s1[i - 1] + prices[i];
+		}
+		return max(s0[prices.size() - 1], s2[prices.size() - 1]);
+	}
+};
+```
+
