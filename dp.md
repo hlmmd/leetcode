@@ -330,22 +330,23 @@ class Solution
 动态规划，dp\[i\]表示i个找零需要最少硬币数。初值设为amount+1，不要设为INT\_MAX，测试时会有边界值故意引发溢出问题。dp\[i\] = min\( dp\[i\], dp\[i-coins\[j\]\]+1\)
 
 ```cpp
-class Solution {
-public:
-    int coinChange(vector<int>& coins, int amount) {        
-        vector<int> dp(amount+1,amount+1);
-        dp[0] = 0;
-        for(int i = 1;i<=amount;i++)
-        {
-            for(int j = 0 ;j<coins.size()  ;j++)
-            {
-                if(i>=coins[j])
-                    dp[i] = min( dp[i],  dp[i-coins[j]]+1);                
-            }            
-        }        
-        return dp[amount]== (amount+1)?-1:dp[amount];
-        
-    }
+class Solution
+{
+  public:
+	int coinChange(vector<int> &coins, int amount)
+	{
+		vector<int> dp(amount + 1, amount + 1);
+		dp[0] = 0;
+		for (int i = 1; i <= amount; i++)
+		{
+			for (int j = 0; j < coins.size(); j++)
+			{
+				if (i >= coins[j])
+					dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+			}
+		}
+		return dp[amount] == (amount + 1) ? -1 : dp[amount];
+	}
 };
 ```
 

@@ -731,3 +731,26 @@ class NumMatrix
 
 ##  307. Range Sum Query - Mutable
 
+##  334. Increasing Triplet Subsequence
+
+长度为3的递增子序列
+
+用c1和c2来记录当前最小和第二小的数，如果两个判断条件都不满足，说明在之前存在两个较小的数，能够组成递增子序列。
+
+```text
+bool increasingTriplet(vector<int> &nums)
+{
+	int c1 = INT_MAX, c2 = INT_MAX;
+	for (int x : nums)
+	{
+		if (x <= c1)
+			c1 = x; 
+		else if (x <= c2)
+			c2 = x; 
+		else
+			return true; 
+	}
+	return false;
+}
+```
+
