@@ -754,3 +754,46 @@ bool increasingTriplet(vector<int> &nums)
 }
 ```
 
+##  347. Top K Frequent Elements
+
+求数组中出现次数最多的前K个数。
+
+先运用unordered\_map统计各个元素出现次数，再用桶排序将元素按个数进行排序，最后再讲结果放入数组中返回。
+
+```cpp
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        
+        
+        unordered_map<int,int> m ;
+        
+        
+        for (auto num : nums)
+            ++m[num];
+        
+        vector<vector<int>> buckets(nums.size() + 1); 
+        for (auto p : m)
+            buckets[p.second].push_back(p.first);
+        
+        vector<int> ans;
+        for (int i = buckets.size() - 1; i >= 0 && ans.size() < k; --i) {
+            for (int num : buckets[i]) {
+                ans.push_back(num);
+                if (ans.size() == k)
+                    break;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+##  373. Find K Pairs with Smallest Sums
+
+
+
+
+
+
+
