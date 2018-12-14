@@ -352,3 +352,34 @@ class Solution
 
 ##  368. Largest Divisible Subset
 
+##  377. Combination Sum IV
+
+给一个target和一个数组nums，使用nums中的数对target进行拆分，求拆分的个数。不同的顺序算作不同的拆分。
+
+动态规划，dp\[i\]表示对i的拆分的个数。对于一个i，遍历nums中的数，如果num==i，那么dp\[i\]++，因为存在一个个数为1，数值为i的拆分。如果Num&gt;i，那么拆分不存在。如果num&lt;i，那么我们将num作为拆分的最后一个数，则前面只需要满足是i-num的拆分即可，存在dp\[i-num\]个。对每个num累加即可。
+
+```cpp
+class Solution
+{
+  public:
+	int combinationSum4(vector<int> &nums, int target)
+	{
+
+		vector<int> dp(target + 1, 0);
+
+		for (int i = 1; i < dp.size(); i++)
+		{
+			for (auto num : nums)
+			{
+				if (num == i)
+					dp[i]++;
+				else if (num < i)
+					dp[i] += dp[i - num];
+			}
+		}
+
+		return dp[target];
+	}
+};
+```
+
