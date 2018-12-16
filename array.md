@@ -793,7 +793,66 @@ public:
 
 ##  380. Insert Delete GetRandom O\(1\)
 
+##  386. Lexicographical Numbers
 
+将1-n按字典序排序。
 
+cur从1开始，每次获取下一个cur。如果cur\*10&lt;=n，那么cur\*10肯定是下一个数，否则，就将cur+1，并且通过/10将其恢复至个位数以满足字典序。此外，要考虑cur超过n的情况，进行处理即可。
 
+```cpp
+class Solution
+{
+  public:
+    vector<int> lexicalOrder(int n)
+    {
+        vector<int> res(n);
+        int cur = 1;
+        for (int i = 0; i < n; i++)
+        {
+            res[i] = cur;
+            if (cur * 10 <= n)
+                cur *= 10;
+            else
+            {
+                if (cur >= n)
+                    cur /= 10;
+                cur++;
+                while (!(cur % 10))
+                    cur /= 10;
+            }
+        }
+        return res;
+    }
+};
+```
+
+直接使用dfs，方法简单易懂，但复杂度较高
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> ret;
+    vector<int> lexicalOrder(int n)
+    {
+
+        for (int i = 1; i <= 9; i++)
+        {
+            dfs(n, i);
+        }
+        return ret;
+    }
+
+    void dfs(int n, int t)
+    {
+        if (t > n)
+            return;
+        ret.push_back(t);
+        t *= 10;
+        for (int i = 0; i <= 9; i++)
+            if (t + i <= n)
+                dfs(n, t + i);
+    }
+};
+```
 
