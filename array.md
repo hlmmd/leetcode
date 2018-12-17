@@ -856,3 +856,24 @@ class Solution
 };
 ```
 
+##  390. Elimination Game
+
+在进行了第一次消除后，全部只剩偶数，除2后，得到1-n/2的序列。
+
+那么，从右往左消除的时候，得到的就是从左到右消除的镜像操作。
+
+即得到 1+n/2 - lastRemaining\(n / 2\)
+
+再乘以2回复原来的数值。
+
+```cpp
+class Solution
+{
+  public:
+	int lastRemaining(int n)
+	{
+		return n == 1 ? 1 : 2 * (1 + n / 2 - lastRemaining(n / 2));
+	}
+};
+```
+
