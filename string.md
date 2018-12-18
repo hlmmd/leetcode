@@ -405,3 +405,48 @@ public:
 };
 ```
 
+##  394. Decode String
+
+解码。字母分大小写。
+
+先读字母，直接加到ret中，再读数字，运用atoi将其转为整数，运用重复count次字符串。然后找到'\['对应的'\]'，对两个括号内的字符串进行递归解码，在解码'\]'后的字符串。
+
+```cpp
+class Solution
+{
+  public:
+	string decodeString(string s)
+	{
+		if (s.length() == 0)
+			return "";
+		string ret;
+
+		int i = 0;
+		string temp;
+		while (s[i] >= 'a' && s[i] <= 'z' || s[i] >= 'A' && s[i] <= 'Z')
+			ret += s[i++];
+		while (s[i] >= '0' && s[i] <= '9')
+			temp += s[i++];
+		int count = atoi(temp.c_str());
+		if (count == 0)
+			return ret;
+		int start = i, end;
+
+		int c = 1;
+		while (c != 0 && s[i++])
+		{
+			if (s[i] == '[')
+				c++;
+			else if (s[i] == ']')
+				c--;
+		}
+		end = i;
+		string ds = decodeString(s.substr(start + 1, end - start - 1));
+		for (int i = 0; i < count; i++)
+			ret += ds;
+		ret += decodeString(s.substr(end + 1));
+		return ret;
+	}
+};
+```
+
