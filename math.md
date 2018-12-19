@@ -524,3 +524,39 @@ class Solution
 };
 ```
 
+##  413. Arithmetic Slices
+
+求一个数列中有多少个等差数列子列。
+
+找到一个等差数列，求其长度，就能够算出有多少个子列。
+
+```cpp
+class Solution
+{
+  public:
+	int numberOfArithmeticSlices(vector<int> &A)
+	{
+		if (A.size() <= 2)
+			return 0;
+		int ret = 0;
+		int length = 2;
+		for (int i = 0; i < A.size() - 2; i++)
+		{
+			if (A[i + 2] - A[i + 1] == A[i + 1] - A[i])
+			{
+				length++;
+			}
+			else
+			{
+				ret += (length - 2) * (length - 1) / 2;
+
+				length = 2;
+			}
+		}
+
+		return ret + (length - 2) * (length - 1) / 2;
+		;
+	}
+};
+```
+
