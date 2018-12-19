@@ -452,3 +452,45 @@ class Solution
 
 ##  395. Longest Substring with At Least K Repeating Characters
 
+
+
+## 402. Remove K Digits
+
+删除K个数字后，剩下的字符串表示的数字最小。
+
+当一个位数的数满足num\[i\]&gt;num\[i+1\]的时候，这个数是需要被删除的，因为只有删除这个数才能满足得到的数字最小。如果循环到最后一位，则其和尾0比较，会被删除。
+
+删除完之后，先去除前导零，然后判断是否是空串，空串返回0，不是空串返回数值。
+
+```cpp
+class Solution
+{
+  public:
+	string removeKdigits(string num, int k)
+	{
+
+		string ret;
+
+		while (k > 0)
+		{
+			int i = 0;
+
+			while (num[i] <= num[i + 1])
+				i++;
+			num.erase(i, 1);
+			k--;
+		}
+
+		int index = 0;
+		while (num[index] == '0')
+			index++;
+		if (index == num.size())
+			return "0";
+		else
+			return num.substr(index, num.size() - index);
+
+		return num;
+	}
+};
+```
+
