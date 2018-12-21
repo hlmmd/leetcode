@@ -383,3 +383,59 @@ class Solution
 };
 ```
 
+##  416. Partition Equal Subset Sum
+
+给一组数，问能否将其拆分为两个和相等的集合。即存不存在一个子集，和为sum的一半。
+
+可以使用DFS、DP、Bit op等方法来解决。
+
+DFS代码会运行超时，不符合要求。
+
+DP：dp\[i\]表示是否存在一个子集的和为i。那么dp\[i\] = dp\[i\] \|\| dp\[i-num\]，注意要先对nums进行循环，因为是子集，元素不能重复使用。i要从sum开始递减遍历，否则会对结果产生影响
+
+```cpp
+class Solution
+{
+  public:
+	bool ret = false;
+	bool canPartition(vector<int> &nums)
+	{
+
+		int sum = 0;
+		for (int i = 0; i < nums.size(); i++)
+			sum += nums[i];
+		if (sum == 0 || sum & 1 != 0)
+			return false;
+		sum /= 2;
+
+		vector<int> dp(sum + 1, 0);
+		dp[0] = 1;
+		for (auto num : nums)
+			for (int i = sum; i >= num; i--)
+				dp[i] = dp[i] || dp[i - num];
+		return dp[sum];
+	}
+};
+```
+
+BIT:
+
+ bits的第i位为1的话表示此数组里面存在组合使得该组合的和为i。  
+此处采用归纳法简单的分析下算法：  
+1.假设n之前的子列里面存在1~m,k~L……之间和的组合  
+2.填加了数字n之后，将会存在\(1+n\)~\(m+n\),\(k+n\)~\(L+n\)……之间和的组合（只要在上面的组合里面添加当前的元素n即可），在标记bits里面相当于将bits向左边移动n位，即bits &lt;&lt; n  
+3.故目前为止，存在1~m,k~L……以及\(1+n\)~\(m+n\),\(k+n\)~\(L+n\)……之间和的组合  
+4.故bits \|= bits &lt;&lt; n
+
+```cpp
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        bitset<10001> bits(1);
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        for (auto n : nums) bits |= bits << n;
+        return !(sum & 1) && bits[sum >> 1];
+    }
+};
+```
+
