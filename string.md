@@ -496,3 +496,35 @@ class Solution
 
 ##  424. Longest Repeating Character Replacement
 
+修改不超过k个字符后，能得到的最长的相同字符字符串。
+
+滑动窗口，i表示末尾，逐步后移，如果不满足最多k个字符的需求，就将start前移，更新count。
+
+```cpp
+class Solution
+{
+  public:
+	int characterReplacement(string s, int k)
+	{
+
+		int maxcount = 0;
+		int ret = 0;
+		vector<int> count(26, 0);
+		int start = 0;
+		for (int i = 0; i < s.length(); i++)
+		{
+			maxcount = max(maxcount, ++count[s[i] - 'A']);
+
+			while (i - start + 1 - maxcount > k)
+			{
+				count[s[start] - 'A']--;
+				start++;
+			}
+
+			ret = max(ret, i - start + 1);
+		}
+		return ret;
+	}
+};
+```
+
