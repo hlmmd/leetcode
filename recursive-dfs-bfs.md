@@ -156,5 +156,61 @@ class Solution
 
 ## 433.Minimum Genetic Mutation
 
+BFS。
 
+首先将基因库bank转换为unordered\_map，以便计数（查看是否存在对应的变异基因）。
+
+使用队列用于BFS，记录下一个循环需要遍历的基因。首先，将start进队，当队列非空的时候，退出循环，并返回-1，表示没找到（在循环内判断是否找到end，直接返回）。
+
+循环内，将队列中的所有元素逐一出队，如果有end就返回dist。不然就进行遍历，找寻当一个基因发生突变后，存在于bank中的基因。遍历操作先将被遍历的基因踢出map中，避免重复遍历，再对基因逐一遍历字符串，再将其修改为AGCT，如果能在map中找到，就进行将其添加到队列中进行遍历。
+
+```cpp
+class Solution
+{
+  public:
+	int minMutation(string start, string end, vector<string> &bank)
+	{
+		queue<string> toVisit;
+		unordered_set<string> dict(bank.begin(), bank.end());
+		int dist = 0;
+
+		if (!dict.count(end))
+			return -1;
+
+		toVisit.push(start);
+		while (!toVisit.empty())
+		{
+			int n = toVisit.size();
+			for (int i = 0; i < n; i++)
+			{
+				string str = toVisit.front();
+				toVisit.pop();
+				if (str == end)
+					return dist;
+				addWord(str, dict, toVisit);
+			}
+			dist++;
+		}
+		return -1;
+	}
+
+	void addWord(string word, unordered_set<string> &dict, queue<string> &toVisit)
+	{
+		dict.erase(word);
+		for (int i = 0; i < word.size(); i++)
+		{
+			char tmp = word[i];
+			for (char c : string("ACGT"))
+			{
+				word[i] = c;
+				if (dict.count(word))
+				{
+					toVisit.push(word);
+				}
+			}
+			word[i] = tmp;
+		}
+	}
+};
+```
 
