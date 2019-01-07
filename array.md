@@ -879,3 +879,32 @@ class Solution
 
 ##   406. Queue Reconstruction by Height
 
+##  435. Non-overlapping Intervals
+
+求有多少个不重复的集合。首先将集合按照start的大小排序，然后比较相邻的两个集合。如果后一个的start小于前一个的end，说明有重叠，计数+1，再判断end的大小。取较大的作为pre
+
+```cpp
+class Solution
+{
+  public:
+	int eraseOverlapIntervals(vector<Interval> &intervals)
+	{
+		auto comp = [](const Interval &i1, const Interval &i2) { return i1.start < i2.start; };
+		sort(intervals.begin(), intervals.end(), comp);
+		int res = 0, pre = 0;
+		for (int i = 1; i < intervals.size(); i++)
+		{
+			if (intervals[i].start < intervals[pre].end)
+			{
+				res++;
+				if (intervals[i].end < intervals[pre].end)
+					pre = i;
+			}
+			else
+				pre = i;
+		}
+		return res;
+	}
+};
+```
+
