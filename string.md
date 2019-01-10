@@ -528,3 +528,51 @@ class Solution
 };
 ```
 
+##  451. Sort Characters By Frequency
+
+根据字符出现频率重新组成字符串。首先用一个map来记录各个字符出现了多少次，然后将unordered\_map转换为vector进行排序，排完序后按照个数的多少进行输出。
+
+```cpp
+class Solution
+{
+  public:
+	struct compare
+	{
+		bool operator()(pair<char, int> p1, pair<char, int> p2)
+		{
+			if (p1.second == p2.second)
+				return p1.first < p2.first;
+			return p1.second > p2.second;
+		}
+	};
+
+	string frequencySort(string s)
+	{
+		unordered_map<char, int> frequencymap;
+		string output;
+		int i, j;
+		for (i = 0; i < s.length(); i++)
+			frequencymap[s[i]]++;
+
+		auto cmp = [](pair<char, int> p1, pair<char, int> p2) {
+            if (p1.second == p2.second) 
+          return p1.first < p2.first;    
+         return p1.second > p2.second; };
+
+		vector<pair<char, int>> array(frequencymap.begin(), frequencymap.end());
+		//sort(array.begin(), array.end(),compare());
+		sort(array.begin(), array.end(), cmp);
+		for (i = 0; i < array.size(); i++)
+		{
+			for (j = 0; j < array[i].second; j++)
+			{
+				output.push_back(array[i].first);
+			}
+		}
+		return output;
+	}
+};
+```
+
+
+
