@@ -76,3 +76,28 @@ class MinStack
 };
 ```
 
+##  456. 132 Pattern
+
+重点是要找到s3,s3位于S1和S2之间，即第二大的数。使用一个栈来存储s3，从后忘前遍历数组，如果nums\[i\] 大于栈顶，就更新s3的值，如果nums\[i\]&lt;s3，即s1&lt;s3，那么必然存在s1&lt;s3&lt;s2。
+
+```cpp
+bool find132pattern(vector<int> &nums)
+{
+	int s3 = INT_MIN;
+	stack<int> st;
+	for (int i = nums.size() - 1; i >= 0; i--)
+	{
+		if (nums[i] < s3)
+			return true;
+		else
+			while (!st.empty() && nums[i] > st.top())
+			{
+				s3 = st.top();
+				st.pop();
+			}
+		st.push(nums[i]);
+	}
+	return false;
+}
+```
+
