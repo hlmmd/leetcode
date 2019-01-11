@@ -540,12 +540,9 @@ class Solution
 	{
 		bool operator()(pair<char, int> p1, pair<char, int> p2)
 		{
-			if (p1.second == p2.second)
-				return p1.first < p2.first;
 			return p1.second > p2.second;
 		}
 	};
-
 	string frequencySort(string s)
 	{
 		unordered_map<char, int> frequencymap;
@@ -553,12 +550,7 @@ class Solution
 		int i, j;
 		for (i = 0; i < s.length(); i++)
 			frequencymap[s[i]]++;
-
-		auto cmp = [](pair<char, int> p1, pair<char, int> p2) {
-            if (p1.second == p2.second) 
-          return p1.first < p2.first;    
-         return p1.second > p2.second; };
-
+		auto cmp = [](pair<char, int> p1, pair<char, int> p2) { return p1.second > p2.second; };
 		vector<pair<char, int>> array(frequencymap.begin(), frequencymap.end());
 		//sort(array.begin(), array.end(),compare());
 		sort(array.begin(), array.end(), cmp);

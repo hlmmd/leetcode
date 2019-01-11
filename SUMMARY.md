@@ -12,4 +12,5 @@
 * [Recursive/DFS/BFS](recursive-dfs-bfs.md)
 * [MindVision](mindvision.md)
 * [Graph](graph.md)
+* [Array2](array2.md)
 
