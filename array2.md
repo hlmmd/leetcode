@@ -32,3 +32,34 @@ class Solution
 };
 ```
 
+##  462. Minimum Moves to Equal Array Elements II
+
+这是一道数学问题。
+
+![](.gitbook/assets/image%20%284%29.png)
+
+答案是中位数。证明如下
+
+![](.gitbook/assets/image%20%283%29.png)
+
+```cpp
+class Solution
+{
+  public:
+	int minMoves2(vector<int> &nums)
+	{
+		sort(nums.begin(), nums.end());
+		int m = nums[(nums.size() - 1) / 2];
+		int count = 0;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (nums[i] < m)
+				count += m - nums[i];
+			else
+				count += nums[i] - m;
+		}
+		return count;
+	}
+};
+```
+
