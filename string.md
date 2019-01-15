@@ -566,5 +566,34 @@ class Solution
 };
 ```
 
+##  467. Unique Substrings in Wraparound String
 
+26个字母，对于某一个字符，其所 对应的子串个数是确定的（由于不考虑重复出现的），所以我们只需要计算每一个字符对应的最大子串。而最大子串由最大长度决定，所以每次考虑字符p\[i\]是最后一个字母，如果能保持连续，就更新当前的长度curlen，并和之前的值比较，取较大值。
+
+```cpp
+class Solution
+{
+  public:
+    int findSubstringInWraproundString(string p)
+    {
+        if (p.length() == 0)
+            return 0;
+        vector<int> count(26, 0);
+        int curlen = 1;
+        for (int i = 0; i < p.length(); i++)
+        {
+            if (i > 0 && (p[i] == (p[i - 1] + 1) || p[i] == (p[i - 1] - 25)))
+                curlen++;
+            else
+                curlen = 1;
+
+            count[p[i] - 'a'] = max(count[p[i] - 'a'], curlen);
+        }
+        int ret = 0;
+        for (int i = 0; i < 26; i++)
+            ret += count[i];
+        return ret;
+    }
+};
+```
 
