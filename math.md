@@ -560,3 +560,23 @@ class Solution
 };
 ```
 
+##  470. Implement Rand10\(\) Using Rand7\(\)
+
+如何用rand7\(\)得到rand10\(\)。通过rand7可以得到rand49。对于rand49，我们进行判断，只取0-39，这样得到的是rand40，而rand40%4即可得到0-9，再加1即是rand10\(\)。
+
+```cpp
+class Solution
+{
+public:
+	int rand10()
+	{
+		int result = 40;
+		while (result >= 40)
+		{
+			result = 7 * (rand7() - 1) + (rand7() - 1);
+		}
+		return result % 10 + 1;
+	}
+};
+```
+
