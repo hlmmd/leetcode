@@ -255,3 +255,68 @@ public:
 };
 ```
 
+##  473. Matchsticks to Square
+
+用火柴棍拼成一个正方形，要求每一个都使用到。
+
+明显的DFS。
+
+首先，将所有的长度累加，判断是不是4的倍数，并除以4计算得到每条边的边长。然后定义一个数组用于存储4条边的长度，接下来开始对nums数组中每一条边进行DFS递归。
+
+DFS函数中，先进行判断，如果四条边相等且所有火柴棍都被使用了，则返回true。
+
+不满足条件，则一次将当前这根火柴棍加入到各个边中，继续递归。
+
+如果直接这么做，会超时，所以必须要进行一定的优化。首先，对Nums进行从大到小排序。这样在进行DFS时会省去很多时间。
+
+其次，如果当前的边长加上nums\[index\]后超出计算得到的Len,就直接返回，因为不会满足条件。
+
+最后，如果sidesLength\[i\]和之前的sidesLength\[j\]的值相同，那么这两种情况是等价的（四条边是没有区别的）。
+
+```cpp
+class Solution
+{
+	bool dfs(vector<int> &sidesLength, const vector<int> &matches, int index, const int target)
+	{
+		if (index == matches.size())
+			return sidesLength[0] == sidesLength[1] &&
+				   sidesLength[1] == sidesLength[2] &&
+				   sidesLength[2] == sidesLength[3];
+		for (int i = 0; i < 4; ++i)
+		{
+			if (sidesLength[i] + matches[index] > target) 
+				continue;
+			int j = i;
+			while (--j >= 0)
+				if (sidesLength[i] == sidesLength[j])
+					break;
+			if (j != -1)
+				continue;
+			sidesLength[i] += matches[index];
+			if (dfs(sidesLength, matches, index + 1, target))
+				return true;
+			sidesLength[i] -= matches[index];
+		}
+		return false;
+	}
+
+  public:
+	bool makesquare(vector<int> &nums)
+	{
+		if (nums.size() < 4)
+			return false;
+		int sum = 0;
+		for (const int val : nums)
+		{
+			sum += val;
+		}
+		if (sum % 4 != 0)
+			return false;
+		auto comp = [](const int &l, const int &r) { return l > r; };
+		sort(nums.begin(), nums.end(), comp);
+		vector<int> sidesLength(4, 0);
+		return dfs(sidesLength, nums, 0, sum / 4);
+	}
+};
+```
+
