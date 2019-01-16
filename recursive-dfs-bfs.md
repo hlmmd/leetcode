@@ -214,3 +214,44 @@ class Solution
 };
 ```
 
+##  ****_464. Can I Win_
+
+给定一个上限maxChoosableInteger，即只能从\[1,maxChoosableInteger\]中选择，且不能重复。谁先到达&gt;=desiredTotal即可获胜。这是一个可以用DFS解决的问题
+
+因为不能重复使用任何一个数，所以我们用一个整数，用第i个bit位来表示第i个数有没有被使用。每一次往下层DFS时，就遍历所有i个数，如果对应bit位已经被置位1，说明已经使用过该数，则跳过。当累加的数值&gt;=desiredTotal时，即达到了胜利条件，但此时要注意判断是否是自己胜利，如果是自己胜利，那么在这一步之前，对手是无法达到胜利的。最后，用空间换时间，使用一个vector来保存已经访问过的状态，在DFS前先判断是否访问过该状态。
+
+```cpp
+class Solution
+{
+public:
+	bool canIWin(int maxChoosableInteger, int desiredTotal)
+	{
+		if (maxChoosableInteger >= desiredTotal)
+			return true;
+		int sum = ((maxChoosableInteger + 1) * maxChoosableInteger) >> 1;
+		if (sum < desiredTotal)
+			return false;
+		mp = vector<int>(1 << maxChoosableInteger, -1);
+		return canWin(0, maxChoosableInteger, desiredTotal);
+	}
+	vector<int> mp;
+	bool canWin(int used, const int &maxChoosableInteger, int desiredTotal)
+	{
+		if (mp[used] != -1)
+			return mp[used];
+		for (int i = maxChoosableInteger, bits = 1 << (maxChoosableInteger - 1); i >= 1; --i, bits >>= 1)
+		{
+			if ((used & bits) != 0)
+				continue;
+			if (i >= desiredTotal || !canWin(used | bits, maxChoosableInteger, desiredTotal - i))
+			{
+				mp[used] = 1;
+				return true;
+			}
+		}
+		mp[used] = 0;
+		return false;
+	}
+};
+```
+
