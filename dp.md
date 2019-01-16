@@ -439,3 +439,38 @@ public:
 };
 ```
 
+##  474. Ones and Zeroes
+
+给定一些0，1字符串组和m个0，n个1，求由这些01能构成最多多少个字符串组中的字符串。
+
+动态规划，用dp\[i\]\[j\]表示i个0，j个1能够构成的字符串个数。要注意要从上往下递归，否则之前的运算的结果会影响后面的递归运算值。dp\[i\]\[j\] = max\(dp\[i\]\[j\], dp\[i - c\[0\]\]\[j - c\[1\]\] + 1\);即当前ij最大值要么不变，要么是去掉0、1个数后+1
+
+```cpp
+class Solution
+{
+  public:
+	int findMaxForm(vector<string> &strs, int m, int n)
+	{
+
+		vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+
+		for (int i = 0; i < strs.size(); i++)
+		{
+			vector<int> c(2, 0);
+			for (char ch : strs[i])
+				c[ch - '0']++;
+
+			for (int i = m; i >= c[0]; i--)
+			{
+				for (int j = n; j >= c[1]; j--)
+				{
+					dp[i][j] = max(dp[i][j], dp[i - c[0]][j - c[1]] + 1);
+				}
+			}
+		}
+
+		return dp[m][n];
+	}
+};
+```
+
