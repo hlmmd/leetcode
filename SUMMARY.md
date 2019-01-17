@@ -14,3 +14,7 @@
 * [Graph](graph.md)
 * [Array2](array2.md)
 
+## 重构
+
+* [第一章](zhong-gou/di-yi-zhang.md)
+
