@@ -320,3 +320,39 @@ class Solution
 };
 ```
 
+##  491. Increasing Subsequences
+
+求一个序列的所有递增子序列。明显DFS。
+
+在DFS时，添加三个判断条件，首先，如果当前序列为空或者Nums\[i\]&gt;=序列最后一个数，即满足递增。其次，这个数之前没有被DFS过，否则在经历了整个DFS过程后，产生的temp序列一定是相同的，会导致重复。所以使用一个set来存储nums\[i\]，判断是否重复。
+
+```cpp
+class Solution
+{
+public:
+	vector<vector<int>> ret;
+	vector<vector<int>> findSubsequences(vector<int> &nums)
+	{
+		vector<int> temp;
+		dfs(nums, temp, 0);
+		return ret;
+	}
+	void dfs(vector<int> &nums, vector<int> &temp, int index)
+	{
+		if (temp.size() > 1)
+			ret.push_back(temp);
+		unordered_set<int> hash;
+		for (int i = index; i < nums.size(); ++i)
+		{
+			if ((temp.size() == 0 || nums[i] >= temp[temp.size() - 1]) && hash.find(nums[i]) == hash.end())
+			{
+				temp.push_back(nums[i]);
+				dfs(nums, temp, i + 1);
+				temp.pop_back();
+				hash.insert(nums[i]);
+			}
+		}
+	}
+};
+```
+
