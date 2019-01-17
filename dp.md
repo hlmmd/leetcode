@@ -476,3 +476,43 @@ class Solution
 
 ##  486. Predict the Winner
 
+##  494. Target Sum
+
+将这个问题进行等价转换再分析。即将数组分成两个集合，P和N，他们的和分别记为sum\(P\)和sum\(N\)。
+
+那么问题就转换成了
+
+sum\(P\)-sum\(N\) = target
+
+两边加上sum\(P\)+sum\(N\) ，即数组累加和sum，得到
+
+2\*sum\(p\) = target+ sum
+
+所以，只需要求一个集合P，使得sum\(p\) = \(target+sum\)/2。
+
+那么问题就转化为类似将数组分为相同的两个集合\(416. Partition Equal Subset Sum\)
+
+```cpp
+class Solution
+{
+  public:
+    int findTargetSumWays(vector<int> &nums, int s)
+    {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        return sum < s || (s + sum) & 1 ? 0 : subsetSum(nums, (s + sum) >> 1);
+    }
+
+    int subsetSum(vector<int> &nums, int s)
+    {
+        int dp[s + 1] = {0};
+        dp[0] = 1;
+        for (int n : nums)
+            for (int i = s; i >= n; i--)
+                dp[i] += dp[i - n];
+        return dp[s];
+    }
+};
+```
+
+
+
