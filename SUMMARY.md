@@ -17,4 +17,6 @@
 ## 重构
 
 * [第一章](zhong-gou/di-yi-zhang.md)
+* [第二章 重构原则](zhong-gou/di-er-zhang-zhong-gou-yuan-ze.md)
+* [第三章 代码的坏味道](zhong-gou/di-san-zhang-dai-ma-de-huai-wei-dao.md)
 
