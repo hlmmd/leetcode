@@ -101,3 +101,32 @@ bool find132pattern(vector<int> &nums)
 }
 ```
 
+##  503. Next Greater Element II
+
+使用堆栈。对于一个数，先将其入栈，下次循环开始时，先判断栈顶的数（即前一个数）是否比当前数num要小，如果小则next\[s.top\(\)\] = num;即num是其下一个数。因为原数组连成一个圈，所以i从0循环到2n，并做模运算。
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> nextGreaterElements(vector<int> &nums)
+    {
+        int n = nums.size();
+        vector<int> next(n, -1);
+        stack<int> s;
+        for (int i = 0; i < n * 2; i++)
+        {
+            int num = nums[i % n];
+            while (!s.empty() && nums[s.top()] < num)
+            {
+                next[s.top()] = num;
+                s.pop();
+            }
+            if (i < n)
+                s.push(i);
+        }
+        return next;
+    }
+};
+```
+
