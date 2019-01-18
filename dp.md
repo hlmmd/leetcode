@@ -548,3 +548,36 @@ class Solution
 };
 ```
 
+##  518. Coin Change 2
+
+找零问题。给一个amount和一些硬币的面额coins，在硬币可以无限用的情况下，有多少种组合成amount的组合。
+
+dp\[i\]：组成i块钱的组合个数。
+
+那么，dp\[i\]等于dp\[i-coins\[j\]\]，即去掉一个硬币后的DP值的累加。
+
+```cpp
+class Solution
+{
+  public:
+	int change(int amount, vector<int> &coins)
+	{
+		vector<int> dp(amount + 1, 0);
+		dp[0] = 1;
+		for (int j = 0; j < coins.size(); j++)
+		{
+			for (int i = 1; i <= amount; i++)
+			{
+				if (i - coins[j] >= 0)
+				{
+					dp[i] += dp[i - coins[j]];
+				}
+			}
+		}
+		return dp[amount];
+	}
+};
+```
+
+
+
