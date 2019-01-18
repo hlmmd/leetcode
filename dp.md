@@ -514,5 +514,37 @@ class Solution
 };
 ```
 
+##  516. Longest Palindromic Subsequence
 
+最长回文子序列长度。
+
+dp\[i\]\[j\]，i表示子序列的开始下标，j表示结束下标。
+
+那么如果s\[i\]==s\[j\]，这满足了构成回文序列的条件，可以在s\[i+1\]\[j-1\]的基础上添加这两个字符，所以s\[i\]\[j\] = s\[i+1\]\[j-1\]+2
+
+如果不满足，则dp\[i\]\[j\] = max\(dp\[i + 1\]\[j\], dp\[i\]\[j - 1\]\);
+
+```cpp
+class Solution
+{
+  public:
+	int longestPalindromeSubseq(string s)
+	{
+		vector<vector<int>> dp(s.length(), vector<int>(s.length(), 0));
+
+		for (int i = s.length() - 1; i >= 0; i--)
+		{
+			dp[i][i] = 1;
+			for (int j = i + 1; j < s.length(); j++)
+			{
+				if (s[i] == s[j])
+					dp[i][j] = dp[i + 1][j - 1] + 2;
+				else
+					dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+			}
+		}
+		return dp[0][s.length() - 1];
+	}
+};
+```
 
