@@ -356,3 +356,60 @@ public:
 };
 ```
 
+##  542. 01 Matrix
+
+一个01矩阵，求1到其最近的0需要多少步。
+
+BFS。初始化时，将所有的0的点的坐标加入队列等待遍历，将所有的1设为INT\_MAX表示无限大，以方便之后的计算。
+
+在循环中，不许要一个used数组之类的来记录结点是否被遍历过，只要比较结点当前值是否比周围的值+1要大，如果大就更新更新这个值，持续这样的操作，最后才能得到正确的结果。
+
+```cpp
+class Solution
+{
+  public:
+    vector<pair<int, int>> dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    vector<vector<int>> updateMatrix(vector<vector<int>> &matrix)
+    {
+        if (matrix.empty())
+            return matrix;
+        int m = matrix.size();
+        int n = matrix[0].size();
+        queue<pair<int, int>> q;
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    q.push({i, j});
+                }
+                else
+                {
+                    matrix[i][j] = INT_MAX;
+                }
+            }
+        }
+        while (!q.empty())
+        {
+            auto xy = q.front();
+            q.pop();
+            int i = xy.first, j = xy.second;
+            for (auto d : dir)
+            {
+                int ii = i + d.first, jj = j + d.second;
+                if (ii < m && ii >= 0 && jj < n && jj >= 0)
+                {
+                    if (matrix[ii][jj] >= matrix[i][j] + 1)
+                    {
+                        matrix[ii][jj] = matrix[i][j] + 1;
+                        q.push({ii, jj});
+                    }
+                }
+            }
+        }
+        return matrix;
+    }
+};
+```
+
