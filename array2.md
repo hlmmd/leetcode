@@ -96,3 +96,42 @@ class Solution
 };
 ```
 
+##  540. Single Element in a Sorted Array
+
+一个有序的数组中，有一个数出现了一次，其他都出现了两次。找出这个数。要求O\(logn\)
+
+使用二分法，但要注意在确定上下界的时候，一定要去掉重复的两个数，否则留下一个数会导致子序列中出现两个只出现一次的数，导致出错。
+
+```cpp
+class Solution
+{
+  public:
+    int singleNonDuplicate(vector<int> &nums)
+    {
+
+        int n = nums.size(), left = 0, right = n - 1;
+        while (left < right)
+        {
+            int mid = left + (right - left) / 2;
+            if (mid % 2 == 0)
+            {
+                if (nums[mid] == nums[mid - 1])
+                    right = mid - 2;
+                else if (nums[mid] == nums[mid + 1])
+                    left = mid + 2;
+                else
+                    return nums[mid];
+            }
+            else
+            {
+                if (nums[mid] == nums[mid - 1])
+                    left = mid + 1;
+                else if (nums[mid] == nums[mid + 1])
+                    right = mid - 1;
+            }
+        }
+        return nums[left];
+    }
+};
+```
+
