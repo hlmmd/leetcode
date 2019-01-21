@@ -135,3 +135,25 @@ class Solution
 };
 ```
 
+##  554. Brick Wall
+
+砖墙，切一条线，要求横穿的砖要最少，不考虑头尾。
+
+对每一行砖进行求和，并用map来保存各个和的值，map\[sum\]有多少，说明在sum处有多少砖重合，切一刀穿过的砖头只有wall.size\(\)-map\[sum\]。
+
+```cpp
+class Solution
+{
+  public:
+	int leastBricks(vector<vector<int>> &wall)
+	{
+		unordered_map<int, int> edges;
+		auto min_bricks = wall.size();
+		for (auto row : wall)
+			for (auto i = 0, width = 0; i < row.size() - 1; ++i) // skip last brick
+				min_bricks = min(min_bricks, wall.size() - (++edges[width += row[i]]));
+		return min_bricks;
+	}
+};
+```
+
