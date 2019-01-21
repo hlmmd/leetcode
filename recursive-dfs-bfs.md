@@ -46,9 +46,11 @@ class Solution
 
 			int tx = x + dx[i];
 			int ty = y + dy[i];
-			if (tx >= 0 && tx < grid.size() && ty >= 0 && ty < grid[0].size() && grid[tx][ty] == 1)
+			if (tx >= 0 && tx < grid.size() && ty >= 0 && ty < grid[0].size()
+			 && grid[tx][ty] == 1)
 				ret += helper(grid, tx, ty);
-			else if (tx < 0 || tx >= grid.size() || ty < 0 || ty >= grid[0].size() || grid[tx][ty] == 0)
+			else if (tx < 0 || tx >= grid.size() || ty < 0 || ty >= grid[0].size()
+			 || grid[tx][ty] == 0)
 
 				ret++;
 		}
@@ -239,11 +241,13 @@ public:
 	{
 		if (mp[used] != -1)
 			return mp[used];
-		for (int i = maxChoosableInteger, bits = 1 << (maxChoosableInteger - 1); i >= 1; --i, bits >>= 1)
+		for (int i = maxChoosableInteger, bits = 1 << (maxChoosableInteger - 1);
+		 i >= 1; --i, bits >>= 1)
 		{
 			if ((used & bits) != 0)
 				continue;
-			if (i >= desiredTotal || !canWin(used | bits, maxChoosableInteger, desiredTotal - i))
+			if (i >= desiredTotal ||
+			 !canWin(used | bits, maxChoosableInteger, desiredTotal - i))
 			{
 				mp[used] = 1;
 				return true;
@@ -276,7 +280,8 @@ DFS函数中，先进行判断，如果四条边相等且所有火柴棍都被�
 ```cpp
 class Solution
 {
-	bool dfs(vector<int> &sidesLength, const vector<int> &matches, int index, const int target)
+	bool dfs(vector<int> &sidesLength, const vector<int> &matches,
+	 int index, const int target)
 	{
 		if (index == matches.size())
 			return sidesLength[0] == sidesLength[1] &&
@@ -344,7 +349,8 @@ public:
 		unordered_set<int> hash;
 		for (int i = index; i < nums.size(); ++i)
 		{
-			if ((temp.size() == 0 || nums[i] >= temp[temp.size() - 1]) && hash.find(nums[i]) == hash.end())
+			if ((temp.size() == 0 || nums[i] >= temp[temp.size() - 1])
+			 && hash.find(nums[i]) == hash.end())
 			{
 				temp.push_back(nums[i]);
 				dfs(nums, temp, i + 1);
@@ -412,4 +418,47 @@ class Solution
     }
 };
 ```
+
+##  547. Friend Circles
+
+如果A和B是朋友，B和C是朋友，那么A和C就是间接朋友，属于一个朋友圈
+
+先给出所有人的关系，求有多少个朋友圈。
+
+DFS，一次遍历每一个人，并用visited数组来记录是否访问过某人的信息，只要有朋友关系且之前没有访问过，就展开递归。
+
+```cpp
+class Solution
+{
+  public:
+	int findCircleNum(vector<vector<int>> &M)
+	{
+		if (M.empty())
+			return 0;
+		int n = M.size();
+		vector<bool> visited(n, false);
+		int groups = 0;
+		for (int i = 0; i < visited.size(); i++)
+		{
+			groups += !visited[i] ? dfs(i, M, visited), 1 : 0;
+		}
+		return groups;
+	}
+
+  private:
+	void dfs(int i, vector<vector<int>> &M, vector<bool> &visited)
+	{
+		visited[i] = true;
+		for (int j = 0; j < visited.size(); j++)
+		{
+			if (i != j && M[i][j] && !visited[j])
+			{
+				dfs(j, M, visited);
+			}
+		}
+	}
+};
+```
+
+
 
