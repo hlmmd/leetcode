@@ -25,4 +25,5 @@
 * [第七章 在对象之间搬移特性](zhong-gou/di-qi-zhang-zai-dui-xiang-zhi-jian-ban-yi-te-xing.md)
 * [第八章 重新组织数据](zhong-gou/di-ba-zhang-zhong-xin-zu-zhi-shu-ju.md)
 * [第九章 简化条件表达式](zhong-gou/di-jiu-zhang-jian-hua-tiao-jian-biao-da-shi.md)
+* [第十章 简化函数调用](zhong-gou/di-shi-zhang-jian-hua-han-shu-tiao-yong.md)
 
