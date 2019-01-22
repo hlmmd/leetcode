@@ -597,3 +597,5 @@ class Solution
 };
 ```
 
+##  567. Permutation in String
+

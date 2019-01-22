@@ -23,4 +23,5 @@
 * [第五章 重构列表](zhong-gou/di-wu-zhang-zhong-gou-lie-biao.md)
 * [重新组织函数](zhong-gou/zhong-xin-zu-zhi-han-shu.md)
 * [第七章 在对象之间搬移特性](zhong-gou/di-qi-zhang-zai-dui-xiang-zhi-jian-ban-yi-te-xing.md)
+* [第八章 重新组织数据](zhong-gou/di-ba-zhang-zhong-xin-zu-zhi-shu-ju.md)
 

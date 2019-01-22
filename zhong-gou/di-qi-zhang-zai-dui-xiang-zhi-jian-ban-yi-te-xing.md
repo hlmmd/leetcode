@@ -6,3 +6,11 @@
 
 使用另一个对象的次数比自己所属对象还多，可能需要搬移。
 
+7.2 Move Field
+
+7.3 Extract Class
+
+7.4 Inline Class
+
+7.5 Hide Delegate
+
