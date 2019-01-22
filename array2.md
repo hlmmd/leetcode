@@ -157,3 +157,31 @@ class Solution
 };
 ```
 
+##  560. Subarray Sum Equals K
+
+求有多少个子串和为K。
+
+用Unordered\_map记录sum\(0,i-1\)的值，在计算出新的sum\(0,i\)后，查找map中是否有和为sum-k的数，如果有。那么sum\(i,j\)为K。
+
+```cpp
+class Solution
+{
+  public:
+	int subarraySum(vector<int> &nums, int k)
+	{
+
+		unordered_map<int, int> map;
+		int sum = 0, ret = 0;
+		map[0] = 1;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			sum += nums[i];
+			if (map.find(sum - k) != map.end())
+				ret += map[sum - k];
+			map[sum]++;
+		}
+		return ret;
+	}
+};
+```
+
