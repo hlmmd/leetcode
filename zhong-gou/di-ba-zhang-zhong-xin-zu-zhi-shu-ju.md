@@ -12,3 +12,13 @@
 
 8.4 Change Reference to Value 将引用对象改为值对象
 
+8.5 Replace Array with Objects 以对象取代数组
+
+数组中的元素各自代表不同的东西。对数组中每一个元素，以一个字段来表示。
+
+8.9 以字面常量取代魔法数
+
+8.10 Encapsulate Field 封装字段
+
+将public 字段申明为private
+
