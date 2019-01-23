@@ -580,3 +580,28 @@ public:
 };
 ```
 
+##  611. Valid Triangle Number
+
+先将数组排序，然后固定首和尾。设三个数下标为i,x,j因为有序，所以只需要考虑nums\[i\]+nums\[x\]&gt;nums\[j\]即可，另外两条一定满足。固定i，j，计算x的个数。
+
+```cpp
+class Solution {
+public:
+    int triangleNumber(vector<int>& nums) {
+        vector<int> snums(nums);
+        sort(snums.begin(), snums.end());
+        int count = 0;
+        for ( int n = nums.size(), k = n - 1; k > 1; --k ) {
+            int i = 0, j = k - 1;
+            while ( i < j ) {
+                if ( snums[i] + snums[j] > snums[k] )
+                    count += --j - i + 1;
+                else
+                    ++i;
+            }
+        }
+        return count;
+    }
+};
+```
+
