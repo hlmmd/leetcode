@@ -605,3 +605,36 @@ public:
 };
 ```
 
+##  621. Task Scheduler
+
+任务安排。
+
+先按任务类型分类统计，同时找到最多的任务，记为count。将所有的任务重新排序，每一组n+1个任务（包含空闲），这样可以组成count-1个n+1任务的队列，共计（count-1\)\*\(n+1\)个。最后一列，就是所有有count个的任务。
+
+![](.gitbook/assets/tu-pian.png)
+
+```cpp
+class Solution
+{
+  public:
+    int leastInterval(vector<char> &tasks, int n)
+    {
+        unordered_map<char, int> mp;
+        int count = 0;
+        for (auto e : tasks)
+        {
+            mp[e]++;
+            count = max(count, mp[e]);
+        }
+
+        int ans = (count - 1) * (n + 1);
+        for (auto e : mp)
+            if (e.second == count)
+                ans++;
+        return max((int)tasks.size(), ans);
+    }
+};
+```
+
+
+

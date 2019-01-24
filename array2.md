@@ -213,3 +213,32 @@ class Solution
 };
 ```
 
+##  646. Maximum Length of Pair Chain
+
+首先，将所有的组合按第二个数的大小排序，然后使用贪心算法即可。
+
+```cpp
+class Solution
+{
+  public:
+    int findLongestChain(vector<vector<int>> &pairs)
+    {
+        int ret = 0;
+        auto comp = [](vector<int> p1, vector<int> p2) { return p1[1] < p2[1]; };
+        sort(pairs.begin(), pairs.end(), comp);
+        for (int i = 0, pre = 0; i < pairs.size(); i++)
+        {
+            if (i == 0 || pairs[pre][1] < pairs[i][0])
+            {
+                ret++;
+                pre = i;
+            }
+        }
+
+        return ret;
+    }
+};
+```
+
+
+

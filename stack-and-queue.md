@@ -130,3 +130,7 @@ class Solution
 };
 ```
 
+##  622. Design Circular Queue
+
+##  641. Design Circular Deque
+
