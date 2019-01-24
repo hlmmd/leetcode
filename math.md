@@ -636,5 +636,31 @@ class Solution
 };
 ```
 
+##  650. 2 Keys Keyboard
 
+复制粘贴操作。
+
+将n分成d分，每份为n/d，次过程需要1次copy+\(d-1\)次paste，即d次操作。但在此前要获得n/d。
+
+继续求min\(n/d\)即可。
+
+```cpp
+class Solution
+{
+  public:
+    int minSteps(int n)
+    {
+        int s = 0;
+        for (int d = 2; d <= n; d++)
+        {
+            while (n % d == 0)
+            {
+                s += d;
+                n /= d;
+            }
+        }
+        return s;
+    }
+};
+```
 
