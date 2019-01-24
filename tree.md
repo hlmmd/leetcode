@@ -536,3 +536,11 @@ public:
 
 ##  623. Add One Row to Tree
 
+##  652. Find Duplicate Subtrees
+
+##  654. Maximum Binary Tree
+
+##  655. Print Binary Tree
+
+##  662. Maximum Width of Binary Tree
+
