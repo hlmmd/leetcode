@@ -664,3 +664,42 @@ class Solution
 };
 ```
 
+##  670. Maximum Swap
+
+求在最多交换一个数的两个位之后，能得到最大的值。
+
+首先，记录一下各个数字出现的最右边的下标。设当前数为nums\[i\]，要交换后变大，那么首先是要满足被交换数&gt;nums\[i\]，对于相同的两个被交换数，肯定是与较右的一个交换能够得到更大的值。所以用一个数组来记录最右边的数的下标即可。
+
+```cpp
+class Solution
+{
+  public:
+	int maximumSwap(int num)
+	{
+
+		string nums = to_string(num);
+		vector<int> last(10, 0);
+		for (int i = 0; i < nums.size(); i++)
+		{
+			last[nums[i] - '0'] = i;
+		}
+
+		for (int i = 0; i < nums.length(); i++)
+		{
+			for (int d = 9; d > nums[i] - '0'; d--)
+			{
+				if (last[d] > i)
+				{
+					char temp = nums[i];
+					nums[i] = nums[last[d]];
+					nums[last[d]] = temp;
+					return atoi(nums.c_str());
+				}
+			}
+		}
+
+		return num;
+	}
+};
+```
+
