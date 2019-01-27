@@ -242,3 +242,44 @@ class Solution
 
 ##  659. Split Array into Consecutive Subsequences
 
+贪心算法。先对数组中所有的数进行计数。
+
+再用tails来记录当前序列中末尾为num的序列个数。
+
+对于一个数num，如果能够够成为一个序列的末尾，那么即tails\[num-1\]不为0。一定会接在序列后面，而不会作为新序列的开始，否则组成的这个新序列能够接在前一个数组上。
+
+如果tails\[num-1\]为0，那么这个数只能作为一个新序列的开头，那么cnt\[num+1\],cnt\[num+2\]就不能为0，否则构不成连续的序列。算法中要注意cnt和tails的加减运算。
+
+```cpp
+class Solution
+{
+  public:
+	bool isPossible(vector<int> &nums)
+	{
+		unordered_map<int, int> cnt, tails;
+		for (int &i : nums)
+			cnt[i]++;
+		for (int &i : nums)
+		{
+			if (!cnt[i])
+				continue;
+			cnt[i]--;
+			if (tails[i - 1] > 0)
+			{
+				tails[i - 1]--;
+				tails[i]++;
+			}
+			else if (cnt[i + 1] && cnt[i + 2])
+			{
+				cnt[i + 1]--;
+				cnt[i + 2]--;
+				tails[i + 2]++;
+			}
+			else
+				return false;
+		}
+		return true;
+	}
+};
+```
+
