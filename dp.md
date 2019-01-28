@@ -609,3 +609,50 @@ class Solution
 };
 ```
 
+##  673. Number of Longest Increasing Subsequence
+
+最长递增子序列个数。
+
+使用两个数组，一个记录最长子序列长度,dp\[i\]表示从i位开始最长子序列的长度，
+
+cnt\[i\]表示个数。
+
+```cpp
+class Solution
+{
+  public:
+	int findNumberOfLIS(vector<int> &nums)
+	{
+
+		vector<int> dp(nums.size(), 1);
+		vector<int> cnt(nums.size(), 1);
+		int maxlen = 1;
+
+		int ret = 0;
+		for (int i = nums.size() - 2; i >= 0; i--)
+		{
+			for (int j = i + 1; j < nums.size(); j++)
+			{
+				if (nums[i] < nums[j])
+				{
+					if (dp[j] + 1 > dp[i])
+					{
+						dp[i] = dp[j] + 1;
+						cnt[i] = cnt[j];
+					}
+					else if (dp[j] + 1 == dp[i])
+						cnt[i] += cnt[j];
+
+					maxlen = max(maxlen, dp[i]);
+				}
+			}
+		}
+		for (int i = 0; i < dp.size(); i++)
+			if (maxlen == dp[i])
+				ret += cnt[i];
+
+		return ret;
+	}
+};
+```
+
