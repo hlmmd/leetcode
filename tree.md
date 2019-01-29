@@ -544,3 +544,7 @@ public:
 
 ##  662. Maximum Width of Binary Tree
 
+##  701. Insert into a Binary Search Tree
+
+
+
