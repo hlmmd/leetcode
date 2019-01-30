@@ -686,3 +686,37 @@ class Solution
 };
 ```
 
+##  718. Maximum Length of Repeated Subarray
+
+最长公共子串。
+
+dp\[i\]\[j\]表示A以A\[i\]为结尾，B以B\[j\]为结尾的子串的最长公共子串。
+
+```cpp
+class Solution
+{
+  public:
+    int findLength(vector<int> &A, vector<int> &B)
+    {
+
+        int m = A.size(), n = B.size();
+        if (m == 0 || n == 0)
+            return 0;
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        int ret = 0;
+        for (int i = 0; i <= m; i++)
+            for (int j = 0; j <= n; j++)
+            {
+                if (i != 0 && j != 0)
+                {
+                    dp[i][j] = (A[i - 1] == B[j - 1]) ?
+                     1 + dp[i - 1][j - 1] : 0;
+                    ret = max(ret, dp[i][j]);
+                }
+            }
+
+        return ret;
+    }
+};
+```
+

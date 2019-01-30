@@ -283,3 +283,45 @@ class Solution
 };
 ```
 
+##  713. Subarray Product Less Than K
+
+滑动窗口，当窗口往右扩大一格后，乘积仍然小于K，则cnt += 窗口大小，如果大于等于K，那么久将左边也右移，缩小窗口。
+
+```cpp
+class Solution {
+public:
+    int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+        if (k == 0) return 0;
+        int cnt = 0;
+        int pro = 1;
+        for (int i = 0, j = 0; j < nums.size(); j++) {
+            pro *= nums[j];
+            while (i <= j && pro >= k) {
+                pro /= nums[i++];
+            }
+            cnt += j - i + 1;
+        }
+        return cnt;
+    }
+};
+```
+
+##  714. Best Time to Buy and Sell Stock with Transaction Fee
+
+在收交易费的情况下如何买卖股票。依然使用类似状态机的解法，s0表示手上没有股票，s1表示有股票，则s0-&gt;s1需要买入股票并支付交易费，s1-&gt;s0则卖出股票。
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int s0 = 0, s1 = INT_MIN; 
+        for(int p:prices) {
+            int tmp = s0;
+            s0 = max(s0, s1+p);
+            s1 = max(s1, tmp-p-fee);
+        }
+        return s0;
+    }
+};
+```
+
