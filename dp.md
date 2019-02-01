@@ -720,3 +720,39 @@ class Solution
 };
 ```
 
+##  740. Delete and Earn
+
+动态规划。对于每一个数i，有两种状态，选了或者没选。
+
+根据
+
+ takei = skip + values\[i\]; 
+
+skipi = max\(skip, take\);
+
+计算规则得到最大的值。
+
+```cpp
+class Solution
+{
+  public:
+    int deleteAndEarn(vector<int> &nums)
+    {
+        int n = 10001;
+        vector<int> values(n, 0);
+        for (int num : nums)
+            values[num] += num;
+
+        int take = 0, skip = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int takei = skip + values[i];
+            int skipi = max(skip, take);
+            take = takei;
+            skip = skipi;
+        }
+        return max(take, skip);
+    }
+};
+```
+

@@ -165,3 +165,28 @@ class Solution
 };
 ```
 
+##  739. Daily Temperatures
+
+ret\[i\]是T\[i\]到第一个T\[j\]满足T\[j\]&gt;T\[i\]的距离。
+
+使用栈来保存下标，当T\[i\]比栈顶大的时候，就出栈找到下标，并赋值。
+
+```cpp
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& T) {
+          stack<int> mystack ;
+    vector<int> ret(T.size());
+    for(int i = 0; i < T.size(); i++) {
+        while(!mystack.empty() && T[i] > T[mystack.top()]) {
+            int idx = mystack.top();
+            mystack.pop();
+            ret[idx] = i - idx;
+        }
+        mystack.push(i);
+    }
+    return ret;
+    }
+};
+```
+
