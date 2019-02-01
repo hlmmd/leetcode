@@ -599,3 +599,5 @@ class Solution
 
 ##  567. Permutation in String
 
+##  767. Reorganize String
+

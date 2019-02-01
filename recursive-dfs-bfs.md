@@ -502,3 +502,5 @@ class Solution
 };
 ```
 
+##  752. Open the Lock
+

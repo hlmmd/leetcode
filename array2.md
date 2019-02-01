@@ -325,3 +325,29 @@ public:
 };
 ```
 
+##  763. Partition Labels
+
+先遍历一遍，找到各个字母最后一次出现的下标。
+
+再遍历一次，记录当前遍历到的字母最大下标，如果i ==idx，那么就可以产生一个分割。
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> partitionLabels(string S)
+    {
+        vector<int> res, pos(26, 0);
+        for (auto i = 0; i < S.size(); ++i)
+            pos[S[i] - 'a'] = i;
+        for (auto i = 0, idx = INT_MIN, last_i = 0; i < S.size(); ++i)
+        {
+            idx = max(idx, pos[S[i] - 'a']);
+            if (idx == i)
+                res.push_back(i - exchange(last_i, i + 1) + 1);
+        }
+        return res;
+    }
+};
+```
+
