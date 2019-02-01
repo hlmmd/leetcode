@@ -134,3 +134,34 @@ class Solution
 
 ##  641. Design Circular Deque
 
+##  735. Asteroid Collision
+
+在最左边为负的行星和在右边为正的行星永远不会相撞。
+
+使用一个栈来存储返回数组（不会发生碰撞的行星），当栈为空或者栈顶为负数（不管a\[i\]为正或负，都不会碰撞），当a\[i\]为正时，同样也不会碰撞。
+
+只有当栈顶为正，且a\[i\]为负的时候，才会发生碰撞，那么判断碰撞之后留下的行星，或者全部消失，直接pop
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> asteroidCollision(vector<int> &a)
+    {
+        vector<int> s; 
+        for (int i = 0; i < a.size(); i++)
+        {
+            if (a[i] > 0 || s.empty() || s.back() < 0)
+                s.push_back(a[i]);
+            else if (s.back() <= -a[i])
+            {
+                if (s.back() < -a[i])
+                    i--;   
+                s.pop_back();
+            }                
+        }
+        return s;
+    }
+};
+```
+
