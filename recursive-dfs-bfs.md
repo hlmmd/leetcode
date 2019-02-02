@@ -504,3 +504,47 @@ class Solution
 
 ##  752. Open the Lock
 
+##  785. Is Graph Bipartite?
+
+判断一个图是不是二分图，即可以将定点分为两组，所有的边的两个定点分别在这两组中。
+
+```cpp
+class Solution
+{
+  public:
+    bool isBipartite(vector<vector<int>> &graph)
+    {
+        int n = graph.size();
+        vector<int> colors(n, 0);
+
+        for (int i = 0; i < n; i++)
+        {
+            if (colors[i] != 0)
+                continue;
+            queue<int> q;
+            q.push(i);
+            colors[i] = 1;
+
+            while (!(q.empty()))
+            {
+                int cur = q.front();
+                q.pop();
+                for (auto next : graph[cur])
+                {
+                    if (colors[next] == 0)
+                    {
+                        colors[next] = -colors[cur];
+                        q.push(next);
+                    }
+                    else if (colors[next] != -colors[cur])
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
+```
+
