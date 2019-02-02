@@ -603,3 +603,30 @@ class Solution
 
 ##  792. Number of Matching Subsequences
 
+逐一检查会超时。
+
+将所有的字符串并行比较。先将第一位加入数组中。再遍历S字符串，对每一位字符c，将waiting\[c\]去除，即该字符满足，将其所有的字符串都往后移动一位，并根据首字母放入对应的位置，直到尾零。
+
+```cpp
+class Solution
+{
+  public:
+    int numMatchingSubseq(string S, vector<string> &words)
+    {
+        vector<const char *> waiting[128];
+        for (auto &w : words)
+            waiting[w[0]].push_back(w.c_str());
+        for (char c : S)
+        {
+            auto advance = waiting[c];
+            waiting[c].clear();
+            for (auto it : advance)
+                waiting[*++it].push_back(it);
+        }
+        return waiting[0].size();
+    }
+};
+```
+
+
+
