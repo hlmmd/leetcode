@@ -756,3 +756,7 @@ class Solution
 };
 ```
 
+##  799. Champagne Tower
+
+##  801. Minimum Swaps To Make Sequences Increasing
+
