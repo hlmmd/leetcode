@@ -36,11 +36,11 @@ class Solution
 
 这是一道数学问题。
 
-![](.gitbook/assets/image%20%284%29.png)
+![](.gitbook/assets/image%20%289%29.png)
 
 答案是中位数。证明如下
 
-![](.gitbook/assets/image%20%283%29.png)
+![](.gitbook/assets/image%20%287%29.png)
 
 ```cpp
 class Solution

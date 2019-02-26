@@ -293,7 +293,7 @@ S1\[i\] = max\(S0\[i-1\],S1\[i-1\]-prices\[i\]\)
 
 S2 = S1\[i-1\]+prices\[i\]
 
-![&#x72B6;&#x6001;&#x673A;&#x793A;&#x610F;&#x56FE;](.gitbook/assets/image%20%282%29.png)
+![&#x72B6;&#x6001;&#x673A;&#x793A;&#x610F;&#x56FE;](.gitbook/assets/image%20%283%29.png)
 
 最后的结果必然在S0（没有买股票）和S2（刚卖出股票）二者之间，取较大值即可。
 

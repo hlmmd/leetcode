@@ -72,7 +72,7 @@ Serving book on http://localhost:4000
 
 此时，目录中会多出一个\_book目录，该目录即存放了图书html的目录
 
-![](.gitbook/assets/image.png)
+![](.gitbook/assets/image%20%286%29.png)
 
 ### PDF 文件
 
