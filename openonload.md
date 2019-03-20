@@ -4,7 +4,7 @@
 
 ## 安装依赖库
 
-```text
+```bash
 sudo apt update
 sudo apt install binutils gettext gawk gcc sed make \
 bash  automake autoconf libtool autoconf libcap-dev
@@ -13,7 +13,7 @@ sudo apt-get install linux-headers-$(uname -r)
 
 ## 检查固件版本
 
-```text
+```bash
 ethtool -i <interface>
 qinrui@qinrui:~$ ethtool -i enp3s0f0np0
 driver: sfc
@@ -32,13 +32,13 @@ supports-priv-flags: no
 
 在/scripts目录下执行onload\_install脚本
 
-```text
+```bash
 sudo ./onload_install
 ```
 
 安装完成后，需要加载驱动。
 
-```text
+```bash
 sudo onload_tool reload
 ```
 
@@ -49,29 +49,29 @@ cd src
 make
 ```
 
-\#测试
+# 测试
 
 先修改BIOS设置  
-\* Enable Turbo Boost \(sometimes called Turbo Mode\).  
-\* Enable CStates.  
-\* Disable any of the following settings that are present:  
-\* Virtualization Technology \(also called VT-d/VT-x\)  
-\* IOMMU.
+* Enable Turbo Boost \(sometimes called Turbo Mode\).  
+* Enable CStates.  
+* Disable any of the following settings that are present:  
+ * Virtualization Technology \(also called VT-d/VT-x\)  
+ * IOMMU.
 
 ### 测试命令
 
-```text
+```bash
 sudo onload --profile=latency-best taskset -c 1 ./sfnt-pingpong
 sudo onload --profile=latency-best taskset -c 1 ./sfnt-pingpong \
 --affinity "1;1" tcp 192.168.100.101
 ```
 
-```text
+```bash
 sudo ./sfnt-pingpong
 sudo ./sfnt-pingpong --affinity "1;1" tcp 192.168.100.101
 ```
 
-```text
+```bash
 onload: Warning: CTPIO cut-through is enabled, but the link speed of some adapters could not be determined. If latency-sensitive traffic is using an adapter running at a speed other than 10GbE then use EF_CTPIO_MODE=sf for best results
 
 ```
