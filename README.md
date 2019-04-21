@@ -2,6 +2,8 @@
 
 我好蔡啊。
 
+![](.asset/pics/tcl.jpg)
+
 [leetcode easy medium 题解 ](leetcode_origin)
 
 [leetcode hard 题解 ](leetcode_hard)
