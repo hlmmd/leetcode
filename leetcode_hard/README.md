@@ -1,8 +1,6 @@
 # Hard1
 
-
-
-##  23. Merge k Sorted Lists
+## 23. Merge k Sorted Lists
 
 将多个有序的链表合并成一个有序的链表。
 
@@ -54,15 +52,9 @@ class Solution
 };
 ```
 
-
-
-##  32. Longest Valid Parentheses
+## 32. Longest Valid Parentheses
 
 求最长合法匹配的括号子串。
-
-
-
-
 
 ## 37.Sudoku Solver
 

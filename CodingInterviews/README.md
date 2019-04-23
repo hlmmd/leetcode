@@ -1726,7 +1726,7 @@ class Solution
 };
 ```
 
-## 51 构建乘积数组 
+## 51 构建乘积数组
 
 给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0]\*[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。不能使用除法。
 
@@ -1757,6 +1757,215 @@ class Solution
         for (int i = 1; i < A.size() - 1; i++)
             ret[i] = left[i - 1] * right[i + 1];
         return ret;
+    }
+};
+```
+
+## 52 正则表达式匹配
+
+```text
+请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配
+```
+
+注意处理*，以及dp[i][j]对应的字符是str[i-1]和pattern[j-1]
+
+```cpp
+class Solution
+{
+  public:
+    bool match(char *str, char *pattern)
+    {
+        int m = strlen(str);
+        int n = strlen(pattern);
+        vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
+        dp[0][0] = true;
+
+        for (int i = 1; i <= m; i++)
+            dp[i][0] = false;
+        for (int j = 1; j <= n; j++)
+            dp[0][j] = j > 1 && pattern[j - 1] == '*' && dp[0][j - 2];
+
+        for (int i = 1; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.')
+                    dp[i][j] = dp[i - 1][j - 1];
+                else if (pattern[j - 1] == '*')
+                    dp[i][j] = dp[i][j - 2] || (dp[i - 1][j] && (str[i - 1] == pattern[j - 2] || pattern[j - 2] == '.'));
+            }
+        }
+
+        return dp[m][n];
+    }
+};
+```
+
+## 53 表示字符的字符串
+
+请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。 但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
+
+## 54 字符流中第一个不重复的字符
+
+请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。如果当前字符流没有存在出现一次的字符，返回#字符。
+
+用队列来存储字符串的顺序，用count来记录个数。当队头字符的个数达到2时，就出队。
+
+```cpp
+class Solution
+{
+  public:
+    //Insert one char from stringstream
+
+    queue<char> q;
+    vector<int> count;
+
+    Solution()
+    {
+        count = vector<int>(256, 0);
+    }
+
+    void Insert(char ch)
+    {
+        count[ch]++;
+        q.push(ch);
+        while (!q.empty() && count[q.front()] >= 2)
+            q.pop();
+    }
+    //return the first appearence once char in current stringstream
+    char FirstAppearingOnce()
+    {
+        return q.empty() ? '#' : q.front();
+    }
+};
+```
+
+## 55 链表中环的入口结点
+
+给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。
+
+重点是要找到环的入口。容易证明，当快慢指针第一次相遇的时候，fast到入口的距离和头结点到入口的距离是相等的。利用这一性质，即可以找到入口。
+
+```cpp
+class Solution
+{
+  public:
+    ListNode *EntryNodeOfLoop(ListNode *pHead)
+    {
+        if (pHead == NULL)
+            return NULL;
+        ListNode *fast = pHead, *slow = pHead;
+        do
+        {
+            if (fast == NULL || fast->next == NULL)
+                return NULL;
+            fast = fast->next->next;
+            slow = slow->next;
+        } while (fast != slow);
+        slow = pHead;
+        while (slow != fast)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+        return slow;
+    }
+};
+```
+
+## 56 删除链表中重复的结点
+
+在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+
+申请一个dummy结点。
+
+```cpp
+class Solution
+{
+  public:
+    ListNode *deleteDuplication(ListNode *pHead)
+    {
+        ListNode *dummy = new ListNode(INT_MAX);
+        dummy->next = pHead;
+        ListNode *last = dummy;
+        ListNode *temp = pHead;
+        while (temp && temp->next)
+        {
+            if (temp->val != temp->next->val)
+            {
+                last = temp;
+                temp = temp->next;
+
+                continue;
+            }
+            while (temp && temp->next && temp->val == temp->next->val)
+            {
+                temp->next = temp->next->next;
+            }
+            last->next = temp->next;
+            temp = temp->next;
+        }
+
+        return dummy->next;
+    }
+};
+```
+
+## 57 二叉树的下一个结点
+
+给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+
+分情况，如果有右子树，那么就找到右子树最左的结点。如果没有右子树，就往上找，直到当前结点是父节点的左子树或NULL时，返回。
+
+```cpp
+class Solution
+{
+  public:
+    TreeLinkNode *GetNext(TreeLinkNode *pNode)
+    {
+        if (pNode == NULL)
+            return NULL;
+        if (pNode->right)
+        {
+            TreeLinkNode *p = pNode->right;
+            while (p->left)
+                p = p->left;
+            return p;
+        }
+        else
+        {
+            TreeLinkNode *p = pNode;
+            while (p->next && (p->next->right == p))
+                p = p->next;
+            return p->next;
+        }
+    }
+};
+```
+
+## 58 对称的二叉树
+
+请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+
+```cpp
+class Solution
+{
+  public:
+    bool isSymmetrical(TreeNode *pRoot)
+    {
+        return isMirror(pRoot, pRoot);
+    }
+
+    bool isMirror(TreeNode *root1, TreeNode *root2)
+    {
+        if (root1 == NULL && root2 == NULL)
+            return true;
+        else if (root1 == NULL || root2 == NULL)
+            return false;
+        if (root1->val != root2->val)
+            return false;
+        return isMirror(root1->left, root2->right) && isMirror(root1->right, root2->left);
     }
 };
 ```
