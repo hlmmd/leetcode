@@ -1805,6 +1805,52 @@ class Solution
 
 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。 但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
 
++-号单独考虑，记录e和.只能出现一次。
+
+```cpp
+class Solution
+{
+  public:
+    bool isNumeric(char *string)
+    {
+        if (string == NULL)
+            return false;
+        char *p = string;
+        if (*p == '+' || *p == '-')
+            p++;
+        if (*p == 0)
+            return false;
+        bool hase = false, haspoint = false;
+        while (*p)
+        {
+            if (*p >= '0' && *p <= '9')
+                p++;
+            else if (*p == 'e' || *p == 'E')
+            {
+                if (hase)
+                    return false;
+                p++;
+                hase = true;
+                if (*p == '+' || *p == '-')
+                    p++;
+                if (*p == 0)
+                    return false;
+            }
+            else if (*p == '.')
+            {
+                if (haspoint || hase)
+                    return false;
+                p++;
+                haspoint = true;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+};
+```
+
 ## 54 字符流中第一个不重复的字符
 
 请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。如果当前字符流没有存在出现一次的字符，返回#字符。
@@ -1969,3 +2015,182 @@ class Solution
     }
 };
 ```
+
+## 59 按之字形顺序打印二叉树
+
+请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+
+使用两个栈保存。一个栈保存奇数层，一个栈保存偶数层。左右子树按照不同的顺序进栈。
+
+```cpp
+class Solution
+{
+  public:
+    vector<vector<int>> Print(TreeNode *pRoot)
+    {
+        vector<vector<int>> ret;
+        if (pRoot == NULL)
+            return ret;
+        stack<TreeNode *> q;
+        stack<TreeNode *> s;
+        q.push(pRoot);
+        int level = 1;
+        while (!q.empty() || !s.empty())
+        {
+            vector<int> temp;
+            if (!q.empty())
+            {
+                while (!q.empty())
+                {
+                    TreeNode *p = q.top();
+                    temp.push_back(p->val);
+                    q.pop();
+                    if (p->left)
+                        s.push(p->left);
+                    if (p->right)
+                        s.push(p->right);
+                }
+            }
+            else
+            {
+                while (!s.empty())
+                {
+                    TreeNode *p = s.top();
+                    temp.push_back(p->val);
+                    s.pop();
+                    if (p->right)
+                        q.push(p->right);
+                    if (p->left)
+                        q.push(p->left);
+                }
+            }
+            ret.push_back(temp);
+        }
+        return ret;
+    }
+};
+```
+
+## 60 把二叉树打印成多行
+
+从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+
+```cpp
+class Solution
+{
+  public:
+    vector<vector<int>> Print(TreeNode *pRoot)
+    {
+        vector<vector<int>> ret;
+        if (pRoot == NULL)
+            return ret;
+        queue<TreeNode *> q;
+        q.push(pRoot);
+        while (!q.empty())
+        {
+            int count = q.size();
+            vector<int> temp;
+            for (int i = 0; i < count; i++)
+            {
+                TreeNode *p = q.front();
+                temp.push_back(p->val);
+                q.pop();
+                if (p->left)
+                    q.push(p->left);
+                if (p->right)
+                    q.push(p->right);
+            }
+
+            ret.push_back(temp);
+        }
+        return ret;
+    }
+};
+```
+
+## 61 序列化二叉树
+
+请实现两个函数，分别用来序列化和反序列化二叉树
+
+```cpp
+class Solution
+{
+  public:
+    char a[100000];
+    char *Serialize(TreeNode *root)
+    {
+        ostringstream out;
+        serialize(root, out);
+        strcpy(a, out.str().c_str());
+        return a;
+    }
+    TreeNode *Deserialize(char *str)
+    {
+        string data = str;
+        istringstream in(data);
+        return deserialize(in);
+    }
+
+  private:
+    void serialize(TreeNode *root, ostringstream &out)
+    {
+        if (root)
+        {
+            out << root->val << ' ';
+            serialize(root->left, out);
+            serialize(root->right, out);
+        }
+        else
+        {
+            out << "# ";
+        }
+    }
+
+    TreeNode *deserialize(istringstream &in)
+    {
+        string val;
+        in >> val;
+        if (val == "#")
+            return nullptr;
+        TreeNode *root = new TreeNode(stoi(val));
+        root->left = deserialize(in);
+        root->right = deserialize(in);
+        return root;
+    }
+};
+```
+
+## 62 二叉搜索树的第k个结点
+
+给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）    中，按结点数值大小顺序第三小结点的值为4。
+
+```cpp
+class Solution
+{
+  public:
+    int count;
+    TreeNode *ans;
+    TreeNode *KthNode(TreeNode *pRoot, int k)
+    {
+        count = 0;
+        ans = NULL;
+        Inorder(pRoot, k);
+        return ans;
+    }
+
+    void Inorder(TreeNode *pRoot, int k)
+    {
+        if (pRoot == NULL || count >= k)
+            return;
+        Inorder(pRoot->left, k);
+        count++;
+        if (count == k)
+        {
+            ans = pRoot;
+            return;
+        }
+        Inorder(pRoot->right, k);
+    }
+};
+```
+
