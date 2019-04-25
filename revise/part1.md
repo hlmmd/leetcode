@@ -115,6 +115,31 @@ class Solution
 };
 ```
 
+## 11 二进制中1的个数
+
+输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+
+每次计算n&(n-1)，相当于把n最后一位1清0。计算这样的清零操作执行了多少次即可
+
+```cpp
+class Solution
+{
+  public:
+    int NumberOf1(int n)
+    {
+
+        int count = 0;
+        while (n)
+        {
+            count++;
+            n = n & (n - 1);
+        }
+
+        return count;
+    }
+};
+```
+
 ## 15 反转链表
 
 输入一个链表，反转链表后，输出新链表的表头。
@@ -766,6 +791,120 @@ class Solution
 ```
 
 # leetcode Easy
+
+## [28. Implement strStr()](https://leetcode.com/problems/implement-strstr/)
+
+```cpp
+class Solution
+{
+  public:
+    int strStr(string haystack, string needle)
+    {
+        if (needle.length() == 0)
+            return 0;
+
+        for (int i = 0; haystack[i]; i++)
+        {
+            for (int j = 0;; j++)
+            {
+                if (needle[j] == 0)
+                    return i;
+                if (haystack[i + j] == 0)
+                    return -1;
+                if (haystack[i + j] != needle[j])
+                    break;
+            }
+        }
+
+        return -1;
+    }
+};
+```
+
+## [67. Add Binary](https://leetcode.com/problems/add-binary/)
+
+```cpp
+
+```
+
+## [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/)
+
+```cpp
+int mySqrt(int x)
+{
+
+    if (x == 0)
+        return 0;
+
+    double r = x;
+    while (r * r > x)
+    {
+        r = (int)(r - (r * r - x) / 2 / r);
+    }
+
+    return (int)r;
+}
+```
+
+## [204. Count Primes](https://leetcode.com/problems/count-primes/)
+
+```cpp
+class Solution
+{
+  public:
+    int countPrimes(int n)
+    {
+
+        int count = 0;
+        vector<int> isprime(n, 0);
+
+        for (int i = 2; i < n; i++)
+        {
+
+            if (isprime[i] == 0)
+            {
+                count++;
+                for (int j = i + i; j < n; j = j + i)
+                    isprime[j] = 1;
+            }
+        }
+
+        return count;
+    }
+};
+```
+
+## [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/)
+
+```cpp
+
+```
+
+## [405. Convert a Number to Hexadecimal](https://leetcode.com/problems/convert-a-number-to-hexadecimal)
+
+```cpp
+
+class Solution
+{
+  public:
+    const string HEX = "0123456789abcdef";
+    string toHex(int num)
+    {
+        if (num == 0)
+            return "0";
+        string result;
+        int count = 0;
+        while (num && count++ < 8)
+        {
+            result = HEX[(num & 0xf)] + result;
+            num >>= 4;
+        }
+        return result;
+    }
+};
+```
+
+## 
 
 # leetcode Medium
 
