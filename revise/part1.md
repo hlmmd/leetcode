@@ -908,4 +908,20 @@ class Solution
 
 # leetcode Medium
 
+## [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+
+## [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
+
+## [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
+
+## [15. 3Sum](https://leetcode.com/problems/3sum/)
+
+## [18. 4Sum](https://leetcode.com/problems/4sum/)
+
+## [24. Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)
+
+## [31. Next Permutation](https://leetcode.com/problems/next-permutation/)
+
+## [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
 # leetcode Hard
