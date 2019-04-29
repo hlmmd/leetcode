@@ -187,11 +187,88 @@ private:
 
 ## [448. Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)
 
+O(1)空间，O(n)时间。需要修改数组的值，作为标记。
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> findDisappearedNumbers(vector<int> &nums)
+    {
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+
+            int index = abs(nums[i]) - 1;
+            if (nums[index] > 0)
+                nums[index] = -nums[index];
+        }
+        vector<int> ret;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] > 0)
+                ret.push_back(i + 1);
+        }
+        return ret;
+    }
+};
+```
+
 ## [459. Repeated Substring Pattern](https://leetcode.com/problems/repeated-substring-pattern/)
+
+先求字符串长度，然后求其所有的因数，如果是重复样式，那么子串长度一定能整除原字符串长度。
+
+```cpp
+class Solution
+{
+  public:
+    bool repeatedSubstringPattern(string s)
+    {
+
+        int length = s.length();
+        if (length == 0 || length == 1)
+            return false;
+        for (int i = 1; i <= s.length() / 2; i++)
+        {
+            if (length % i == 0)
+            {
+                string sub;
+                for (int j = 0; j < length / i; j++)
+                {
+                    sub += s.substr(0, i);
+                }
+                if (sub == s)
+                    return true;
+            }
+        }
+        return false;
+    }
+};
+```
 
 ## [461. Hamming Distance](https://leetcode.com/problems/hamming-distance/)
 
-怎么数1的个数
+先将两个数亦或，存在汉明距离的位会被置成1。接下来就是数1的个数（n&(n-1)能将最后一位1变成0）
+
+```cpp
+class Solution
+{
+  public:
+    int hammingDistance(int x, int y)
+    {
+
+        unsigned int v = x ^ y;
+
+        int ret = 0;
+        while (v)
+        {
+            ret++;
+            v &= (v - 1);
+        }
+        return ret;
+    }
+};
+```
 
 ## [463. Island Perimeter](https://leetcode.com/problems/island-perimeter/)
 
