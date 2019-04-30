@@ -270,13 +270,53 @@ class Solution
 };
 ```
 
-## [463. Island Perimeter](https://leetcode.com/problems/island-perimeter/)
-
 ## [476. Number Complement](https://leetcode.com/problems/number-complement/)
+
+先取反，然后通过&运算将前导1置为0。
+
+```cpp
+class Solution
+{
+  public:
+    int findComplement(int num)
+    {
+        unsigned mask = ~0;
+        while (num & mask)
+            mask <<= 1;
+        return ~mask & ~num;
+    }
+};
+```
 
 ## [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
 
-## [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)
+利用最大深度。半径等于左右子树最大深度和+1
+
+```cpp
+class Solution
+{
+  public:
+    int ret = 0;
+
+    int diameterOfBinaryTree(TreeNode *root)
+    {
+        maxDepth(root);
+        return ret;
+    }
+
+    int maxDepth(TreeNode *root)
+    {
+        if (root == NULL)
+            return 0;
+
+        int left = maxDepth(root->left);
+        int right = maxDepth(root->right);
+
+        ret = max(ret, left + right);
+        return max(left, right) + 1;
+    }
+};
+```
 
 ## [581. Shortest Unsorted Continuous Subarray](https://leetcode.com/problems/shortest-unsorted-continuous-subarray/)
 
