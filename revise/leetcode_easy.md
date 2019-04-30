@@ -290,7 +290,13 @@ class Solution
 
 ## [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
 
-利用最大深度。半径等于左右子树最大深度和+1
+最直接的方法就是先将数组排序，找到头和尾第一个与排序后结果不相同的数，计算下标差。复杂度O\(n\)。
+
+从左至右遍历，找到最大值和最后一个小于max的数，记为end下标
+
+从右至左遍历，找到最小值和最后一个大于Min的数，记为start下标
+
+再设置合适的初值（数组有序时返回0），使end-start+1=0
 
 ```cpp
 class Solution
@@ -320,7 +326,63 @@ class Solution
 
 ## [581. Shortest Unsorted Continuous Subarray](https://leetcode.com/problems/shortest-unsorted-continuous-subarray/)
 
+遍历数组，记录最大最小值及其下标。最小值从右往左，最大值从左往右。
+
+```cpp
+class Solution
+{
+  public:
+    int findUnsortedSubarray(vector<int> &nums)
+    {
+
+        int maxnum = nums[0];
+        int minnum = nums[nums.size() - 1];
+        int end = -1, start = 0;
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            maxnum = max(maxnum, nums[i]);
+            if (maxnum > nums[i])
+                end = i;
+            minnum = min(minnum, nums[nums.size() - 1 - i]);
+            if (minnum < nums[nums.size() - 1 - i])
+                start = nums.size() - 1 - i;
+        }
+        return end - start + 1;
+    }
+};
+```
+
 ## [594. Longest Harmonious Subsequence](https://leetcode.com/problems/longest-harmonious-subsequence/)
+
+给定一串数字，找出两个相差1的数，使它们的个数和最大。
+
+对每个num计数，再查找有没有num-1，如果有就计算二者的count和，并与返回的最大值比较。
+
+```cpp
+class Solution
+{
+  public:
+    int findLHS(vector<int> &nums)
+    {
+
+        unordered_map<int, int> map;
+        for (auto num : nums)
+            map[num]++;
+        int ret = 0;
+        for (auto it = map.begin(); it != map.end(); it++)
+        {
+            int pre = it->first - 1;
+            if (map.find(pre) != map.end())
+            {
+                ret = max(ret, map[pre] + it->second);
+            }
+        }
+
+        return ret;
+    }
+};
+```
 
 ## [605. Can Place Flowers](https://leetcode.com/problems/can-place-flowers/)
 
