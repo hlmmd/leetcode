@@ -384,17 +384,249 @@ class Solution
 };
 ```
 
-## [605. Can Place Flowers](https://leetcode.com/problems/can-place-flowers/)
-
-## [617. Merge Two Binary Trees](https://leetcode.com/problems/merge-two-binary-trees/)
-
 ## [665. Non-decreasing Array](https://leetcode.com/problems/non-decreasing-array/)
+
+对于一个数组，能否修改&lt;=1个数能够使数组变成非减数组。nums\[i\]&lt;=nums\[i+1\]
+
+当出现nums\[i\]&gt;nums\[i+1\]时，标志位置1，再次出现则返回false。
+
+对于i==0时，可以不修改num\[i+1\]的值（对后续判断无影响）
+
+i&gt;=1时，将nums\[i+1\]置为最小满足要求的值，即Num\[i\]。
+
+```cpp
+class Solution
+{
+  public:
+    bool checkPossibility(vector<int> &nums)
+    {
+        if (nums.size() == 0)
+            return true;
+        bool adj = false;
+        for (int i = 0; i < nums.size() - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                if (i >= 1 && nums[i + 1] <= nums[i - 1])
+                    nums[i + 1] = nums[i];
+                if (adj)
+                    return false;
+                adj = true;
+            }
+        }
+        return true;
+    }
+};
+```
 
 ## [669. Trim a Binary Search Tree](https://leetcode.com/problems/trim-a-binary-search-tree/)
 
+递归，如果值比L小，就返回右子树的递归，大就返回左子树。
+
+如果在LR中间，就向下递归左右子树。
+
+```cpp
+class Solution
+{
+  public:
+    TreeNode *trimBST(TreeNode *root, int L, int R)
+    {
+        if (root == NULL)
+            return NULL;
+        if (root->val < L)
+            return trimBST(root->right, L, R);
+        if (root->val > R)
+            return trimBST(root->left, L, R);
+        root->left = trimBST(root->left, L, R);
+        root->right = trimBST(root->right, L, R);
+        return root;
+    }
+};
+```
+
 ## [706. Design HashMap](https://leetcode.com/problems/design-hashmap/)
 
+链地址法解决冲突。注意在**remove** list中的数时，需要注意it指针。直接it++会引发错误，因为it已经被erase掉了。
+
+```cpp
+class MyHashMap
+{
+  public:
+    int size = 10000;
+
+    vector<list<pair<int, int>>> map;
+
+    /** Initialize your data structure here. */
+    MyHashMap()
+    {
+        map.resize(size);
+    }
+
+    /** value will always be non-negative. */
+    void put(int key, int value)
+    {
+
+        int pos = key % size;
+
+        for (auto it = map[pos].begin(); it != map[pos].end(); it++)
+        {
+            if (it->first == key)
+            {
+                it->second = value;
+                return;
+            }
+        }
+        map[pos].push_back(pair<int, int>(key, value));
+    }
+
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    int get(int key)
+    {
+        int pos = key % size;
+        for (auto it = map[pos].begin(); it != map[pos].end(); it++)
+        {
+            if (it->first == key)
+            {
+                return it->second;
+            }
+        }
+        return -1;
+    }
+
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    void remove(int key)
+    {
+
+        int pos = key % size;
+
+        for (auto it = map[pos].begin(); it != map[pos].end();)
+        {
+
+            if (it->first == key)
+            {
+                map[pos].erase(it++);
+            }
+            else
+                it++;
+        }
+    }
+};
+```
+
 ## [707. Design Linked List](https://leetcode.com/problems/design-linked-list/)
+
+测试样例在index为负数时有bug。
+
+```cpp
+class MyLinkedList
+{
+
+  public:
+    class LinkNode
+    {
+      public:
+        int val;
+        LinkNode *next;
+        LinkNode() { ; }
+    };
+
+    LinkNode *head;
+    LinkNode *tail;
+    int size;
+
+    /** Initialize your data structure here. */
+    MyLinkedList()
+    {
+        head = new LinkNode();
+        head->next = NULL;
+        tail = head;
+        size = 0;
+    }
+
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    int get(int index)
+    {
+        if (index >= size || index < 0)
+            return -1;
+
+        LinkNode *p = head->next;
+        for (int i = 0; i < index; i++)
+            p = p->next;
+        return p->val;
+    }
+
+    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+    void addAtHead(int val)
+    {
+        LinkNode *temp = new LinkNode();
+        temp->val = val;
+        temp->next = head->next;
+        head->next = temp;
+        if (size == 0)
+            tail = head->next;
+        size++;
+    }
+
+    /** Append a node of value val to the last element of the linked list. */
+    void addAtTail(int val)
+    {
+        LinkNode *temp = new LinkNode();
+        temp->val = val;
+        temp->next = NULL;
+        tail->next = temp;
+        tail = temp;
+        size++;
+    }
+
+    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+    void addAtIndex(int index, int val)
+    {
+        if (index < 0)
+        {
+            addAtHead(val);
+            return;
+        }
+
+        if (index < 0 || index > size)
+            return;
+        LinkNode *p = head;
+        for (int i = 0; i < index; i++)
+        {
+            p = p->next;
+        }
+        LinkNode *temp = new LinkNode();
+        temp->val = val;
+        temp->next = p->next;
+        p->next = temp;
+
+        if (index == size)
+            tail = temp;
+
+        size++;
+    }
+
+    /** Delete the index-th node in the linked list, if the index is valid. */
+    void deleteAtIndex(int index)
+    {
+
+        if (index < 0 || index >= size)
+            return;
+        LinkNode *p = head;
+        for (int i = 0; i < index; i++)
+        {
+            p = p->next;
+        }
+        p->next = p->next->next;
+
+        if (size == index + 1)
+        {
+            tail = p;
+        }
+
+        size--;
+    }
+};
+```
 
 ## [754. Reach a Number](https://leetcode.com/problems/reach-a-number/)
 
