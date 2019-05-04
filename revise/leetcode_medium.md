@@ -2,6 +2,35 @@
 
 ## [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
 
+
+记录每个字符上一次出现的位置，以及开始计算字符串长度的起始位置（起始字符index-1）。如果上一次出现的位置比起始位置大，那么说明这个字符出现了重复，修改start位置，改为上一次出现该字符的位置。将初值都设为-1很有技巧。
+
+```cpp
+class Solution
+{
+  public:
+    int lengthOfLongestSubstring(string s)
+    {
+
+        vector<int> index(128, -1);
+        int start = -1;
+        int ret = 0;
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (index[s[i]] > start)
+            {
+                start = index[s[i]];
+            }
+            ret = max(ret, i - start);
+            index[s[i]] = i;
+        }
+
+        return ret;
+    }
+};
+```
+
+
 ## [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
 
 ## [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
