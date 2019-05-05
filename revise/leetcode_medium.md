@@ -33,6 +33,44 @@ class Solution
 
 ## [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
 
+```cpp
+class Solution
+{
+  public:
+    string longestPalindrome(string s)
+    {
+        int maxlen = 0;
+        int start, end;
+        string ret = s;
+        for (int i = 0; i < s.length(); i++)
+        {
+            int len = max(expendPalindrome(s, i, i), expendPalindrome(s, i, i + 1));
+            //分奇数长度和偶数长度两种情况分开别拓展，取值
+            if (len > maxlen)
+            {
+                maxlen = len;
+                start = i - (len - 1) / 2;
+                ret = s.substr(start, maxlen);
+                //比较得到最长的子串，并计算其起始和终止下标，返回string
+            }
+        }
+
+        return ret;
+    }
+
+    int expendPalindrome(string s, int start, int end)
+    {
+        //左端和右端没到边界且相等，则可以获得一个更长的回文子串
+        while (start >= 0 && end < s.length() && s[start] == s[end])
+        {
+            start--;
+            end++;
+        }
+        return end - start - 1;
+    }
+};
+```
+
 ## [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
 
 ## [15. 3Sum](https://leetcode.com/problems/3sum/)
