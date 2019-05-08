@@ -73,6 +73,35 @@ class Solution
 
 ## [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
 
+给一串高度，选两个组成容器，求容器最大的容积
+
+即 max\(  \(end-start\)\*min\(height\[end\]-height\[start\]\)\)
+
+```cpp
+class Solution
+{
+  public:
+    int maxArea(vector<int> &height)
+    {
+
+        int ret = 0;
+        int start = 0, end = height.size() - 1;
+
+        while (start <= end)
+        {
+            int val = (end - start) * min(height[start], height[end]);
+            ret = max(val, ret);
+            if (height[start] < height[end])
+                start++;
+            else
+                end--;
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [15. 3Sum](https://leetcode.com/problems/3sum/)
 
 ## [18. 4Sum](https://leetcode.com/problems/4sum/)
