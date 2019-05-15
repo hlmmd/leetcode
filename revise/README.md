@@ -39,3 +39,11 @@ priority_queue<int, vector<int>, greater<int>> pq;
 ```
 
 ## Binary Search
+
+## size()
+
+因为size()返回值是unsigned。所以在执行-1操作后，该循环会一直执行。需要先判断size大小再写成这样。
+
+```cpp
+for(int i= 0;i<nums.size()-1;i++)
+```
