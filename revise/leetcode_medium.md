@@ -104,6 +104,51 @@ class Solution
 
 ## [15. 3Sum](https://leetcode.com/problems/3sum/)
 
+三个数字的和为0。转换为two sum，先排序，再固定数，另外两个数的和为-nums[i]。注意处理重复即可。
+
+```cpp
+class Solution
+{
+public:
+    vector<vector<int>> threeSum(vector<int> &nums)
+    {
+        vector<vector<int>> ret;
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            int target = -nums[i];
+            int left = i + 1;
+            int right = nums.size() - 1;
+            while (left < right)
+            {
+                int sum = nums[left] + nums[right];
+                if (sum < target)
+                    left++;
+                else if (sum > target)
+                    right--;
+                else
+                {
+                    vector<int> temp(3);
+                    temp[0] = nums[i];
+                    temp[1] = nums[left];
+                    temp[2] = nums[right];
+                    ret.push_back(temp);
+                    while (left < nums.size() && nums[left] == temp[1])
+                        left++;
+                    while (right >= 0 && nums[right] == temp[2])
+                        right--;
+                }
+            }
+            while (i + 1 < nums.size() && nums[i + 1] == nums[i])
+                i++;
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [18. 4Sum](https://leetcode.com/problems/4sum/)
 
 ## [24. Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)
