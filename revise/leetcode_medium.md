@@ -149,9 +149,33 @@ public:
 };
 ```
 
-## [18. 4Sum](https://leetcode.com/problems/4sum/)
-
 ## [24. Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)
+
+交换相邻的两个结点。申请dummy结点，省去考虑头结点的情况。first和second分别指向要交换的两个结点的前一个结点。
+
+```cpp
+class Solution
+{
+public:
+    ListNode *swapPairs(ListNode *head)
+    {
+
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *first = dummy, *second = head, *p;
+
+        while (second && second->next)
+        {
+            first->next = second->next;
+            second->next = first->next->next;
+            first->next->next = second;
+            first = second;
+            second = first->next;
+        }
+        return dummy->next;
+    }
+};
+```
 
 ## [31. Next Permutation](https://leetcode.com/problems/next-permutation/)
 
