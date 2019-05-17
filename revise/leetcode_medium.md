@@ -179,6 +179,48 @@ public:
 
 ## [31. Next Permutation](https://leetcode.com/problems/next-permutation/)
 
+求下一个全排列。有标准库函数 next_permutation(nums.begin(), nums.end());
+
+找到最后一个出现增序的位置(即从右往左第一个)，如果不存在，那么直接翻转整个数组即可。
+
+如果存在，设为k，nums[k] \< nums[k+1]，查找[k+1,n-1]中大于nums[k]最后一个数。交换。
+
+然后翻转[k+1,end]即可
+
+```cpp
+class Solution
+{
+public:
+    void nextPermutation(vector<int> &nums)
+    {
+        int n = nums.size(), k, l;
+        for (k = n - 2; k >= 0; k--)
+        {
+            if (nums[k] < nums[k + 1])
+            {
+                break;
+            }
+        }
+        if (k < 0)
+        {
+            reverse(nums.begin(), nums.end());
+        }
+        else
+        {
+            for (l = n - 1; l > k; l--)
+            {
+                if (nums[l] > nums[k])
+                {
+                    break;
+                }
+            }
+            swap(nums[k], nums[l]);
+            reverse(nums.begin() + k + 1, nums.end());
+        }
+    }
+};
+```
+
 ## [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ## [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)
