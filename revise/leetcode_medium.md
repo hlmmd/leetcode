@@ -225,6 +225,41 @@ public:
 
 ## [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)
 
+判断数独是否合法。
+
+```cpp
+class Solution
+{
+public:
+    bool isValidSudoku(vector<vector<char>> &board)
+    {
+
+        vector<vector<int>> used1(9, vector<int>(9, 0));
+        vector<vector<int>> used2(9, vector<int>(9, 0));
+        vector<vector<int>> used3(9, vector<int>(9, 0));
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] != '.')
+                {
+                    int num = board[i][j] - '1';
+                    int pos = i / 3 * 3 + j / 3;
+
+                    if (used1[i][num] || used2[j][num] || used3[pos][num])
+                        return false;
+
+                    used1[i][num] = used2[j][num] = used3[pos][num] = 1;
+                }
+            }
+        }
+
+        return true;
+    }
+};
+```
+
 ## [46. Permutations](https://leetcode.com/problems/permutations/)
 
 ## [48. Rotate Image](https://leetcode.com/problems/rotate-image/)
