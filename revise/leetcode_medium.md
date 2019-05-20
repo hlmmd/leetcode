@@ -262,6 +262,75 @@ public:
 
 ## [46. Permutations](https://leetcode.com/problems/permutations/)
 
+一种基于dfs递归，一种基于交换
+
+```cpp
+class Solution
+{
+public:
+    vector<vector<int>> ret;
+
+    void get(vector<int> &temp, vector<int> &nums)
+    {
+        if (temp.size() == nums.size())
+        {
+            ret.push_back(temp);
+            return;
+        }
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (find(temp.begin(), temp.end(), nums[i]) != temp.end())
+                continue;
+
+            temp.push_back(nums[i]);
+
+            get(temp, nums);
+
+            temp.pop_back();
+        }
+        return;
+    }
+
+    vector<vector<int>> permute(vector<int> &nums)
+    {
+        vector<int> temp;
+        get(temp, nums);
+        return ret;
+    }
+};
+```
+
+```cpp
+class Solution
+{
+public:
+    vector<vector<int>> permute(vector<int> &num)
+    {
+        vector<vector<int>> result;
+
+        permuteRecursive(num, 0, result);
+        return result;
+    }
+
+    void permuteRecursive(vector<int> &num, int begin, vector<vector<int>> &result)
+    {
+        if (begin >= num.size())
+        {
+            result.push_back(num);
+            return;
+        }
+
+        for (int i = begin; i < num.size(); i++)
+        {
+            swap(num[begin], num[i]);
+            permuteRecursive(num, begin + 1, result);
+            swap(num[begin], num[i]);
+        }
+    }
+};
+```
+
 ## [48. Rotate Image](https://leetcode.com/problems/rotate-image/)
 
 旋转矩阵。
