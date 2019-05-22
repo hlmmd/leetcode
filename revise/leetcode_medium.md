@@ -371,7 +371,37 @@ void anti_rotate(vector<vector<int> > &matrix) {
 
 ## [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/)
 
-合并区间
+合并区间。利用sort先排序，再判断下一区间的左边界和当前区间右边界的关系
+
+```cpp
+class Solution
+{
+public:
+    vector<vector<int>> merge(vector<vector<int>> &intervals)
+    {
+
+        vector<vector<int>> ret;
+
+        if (intervals.size() == 0)
+            return ret;
+        auto comp = [](vector<int> &v1, vector<int> &v2) {
+            if(v1[0]==v2[0])return v1[1]<v2[1];return v1[0]<v2[0]; };
+        sort(intervals.begin(), intervals.end(), comp);
+
+        ret.push_back(intervals[0]);
+
+        for (int i = 1; i < intervals.size(); i++)
+        {
+            if (intervals[i][0] > ret.back()[1])
+                ret.push_back(intervals[i]);
+            else if (ret.back()[1] < intervals[i][1])
+                ret.back()[1] = intervals[i][1];
+        }
+
+        return ret;
+    }
+};
+```
 
 ## [64. Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 
