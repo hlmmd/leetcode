@@ -405,7 +405,35 @@ public:
 
 ## [64. Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 
-矩阵中两点的最短路径
+矩阵中两点的最短路径 dp
+
+```cpp
+class Solution
+{
+public:
+    int minPathSum(vector<vector<int>> &grid)
+    {
+        int m = grid.size();
+        if (m == 0 || grid[0].size() == 0)
+            return 0;
+        int n = grid[0].size();
+
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, INT_MAX));
+        dp[1][1] = grid[0][0];
+
+        for (int i = 1; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                if (i != 1 || j != 1)
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
+            }
+        }
+
+        return dp[m][n];
+    }
+};
+```
 
 ## [73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)
 
