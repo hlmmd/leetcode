@@ -437,8 +437,40 @@ public:
 
 ## [73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)
 
-
 将矩阵中为0的元素所有行所有列都设置为0，O(1)空间
+
+用第一行或者第一列的数存储对应行列是否需要置为0，此时row0和col0会冲突，所以单独用一个变量来存储。
+
+第一个循环设置好01，第二个循环给矩阵赋值。
+
+```cpp
+class Solution
+{
+public:
+    void setZeroes(vector<vector<int>> &matrix)
+    {
+        int col0 = 1, rows = matrix.size(), cols = matrix[0].size();
+
+        for (int i = 0; i < rows; i++)
+        {
+            if (matrix[i][0] == 0)
+                col0 = 0;
+            for (int j = 1; j < cols; j++)
+                if (matrix[i][j] == 0)
+                    matrix[i][0] = matrix[0][j] = 0;
+        }
+
+        for (int i = rows - 1; i >= 0; i--)
+        {
+            for (int j = cols - 1; j >= 1; j--)
+                if (matrix[i][0] == 0 || matrix[0][j] == 0)
+                    matrix[i][j] = 0;
+            if (col0 == 0)
+                matrix[i][0] = 0;
+        }
+    }
+};
+```
 
 ## [78. Subsets](https://leetcode.com/problems/subsets/)
 
