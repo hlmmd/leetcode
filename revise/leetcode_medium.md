@@ -476,6 +476,43 @@ public:
 
 求一个集合的子集。
 
+```cpp
+class Solution
+{
+public:
+    vector<vector<int>> ret;
+
+    void get(int start, int end, int k, vector<int> &temp, vector<int> &nums)
+    {
+
+        if (temp.size() == k)
+        {
+            ret.push_back(temp);
+            return;
+        }
+
+        for (int i = start; i < end; i++)
+        {
+            temp.push_back(nums[i]);
+            get(i + 1, end, k, temp, nums);
+            temp.pop_back();
+        }
+    }
+
+    vector<vector<int>> subsets(vector<int> &nums)
+    {
+        int n = nums.size();
+        for (int i = 0; i <= n; i++)
+        {
+
+            vector<int> temp;
+            get(0, n, i, temp, nums);
+        }
+        return ret;
+    }
+};
+```
+
 ## [79. Word Search](https://leetcode.com/problems/word-search/)
 
 二维矩阵中寻找单词
