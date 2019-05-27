@@ -517,6 +517,54 @@ public:
 
 二维矩阵中寻找单词
 
+定义一个指针指向单词，每次dfs找到了下一个字符就移动指针，如果不相同直接返回false。
+
+```cpp
+class Solution
+{
+public:
+    int m;
+    int n;
+
+    bool exist(vector<vector<char>> &board, string word)
+    {
+        m = board.size();
+        if (m == 0 || board[0].size() == 0)
+            return false;
+        n = board[0].size();
+        string temp = "";
+        for (int i = 0; i < board.size(); i++)
+        {
+            for (int j = 0; j < board[0].size(); j++)
+            {
+                if (canfind(board, word.c_str(), i, j))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    bool canfind(vector<vector<char>> &board, const char *str, int x, int y)
+    {
+        if (*str == 0)
+            return true;
+
+        if (x < 0 || x >= m || y < 0 || y >= n || board[x][y] == 0 || *str != board[x][y])
+            return false;
+
+        char t = board[x][y];
+        board[x][y] = 0;
+
+        if (canfind(board, str + 1, x + 1, y) || canfind(board, str + 1, x - 1, y) || canfind(board, str + 1, x, y + 1) || canfind(board, str + 1, x, y - 1))
+            return true;
+
+        board[x][y] = t;
+
+        return false;
+    }
+};
+```
+
 ## [92. Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)
 
 翻转链表一部分
