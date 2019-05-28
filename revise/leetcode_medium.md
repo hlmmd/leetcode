@@ -567,7 +567,32 @@ public:
 
 ## [92. Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)
 
-翻转链表一部分
+**翻转链表一部分**
+
+```cpp
+class Solution
+{
+public:
+    ListNode *reverseBetween(ListNode *head, int m, int n)
+    {
+        ListNode *dummy = new ListNode(0), *pre = dummy, *cur;
+        dummy->next = head;
+        for (int i = 0; i < m - 1; i++)
+        {
+            pre = pre->next;
+        }
+        cur = pre->next;
+        for (int i = 0; i < n - m; i++)
+        {
+            ListNode *temp = pre->next;
+            pre->next = cur->next;
+            cur->next = cur->next->next;
+            pre->next->next = temp;
+        }
+        return dummy->next;
+    }
+};
+```
 
 ## [95. Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/)
 
