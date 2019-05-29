@@ -604,6 +604,36 @@ public:
 
 ## [120. Triangle](https://leetcode.com/problems/triangle/)
 
+一个三角形二位数组，求一个从上往下的路径，使得路径和最小。要求O(n)空间。利用动态规划，从底往上求解，只保存下一层的信息，并用上一层的信息计算出当前层的最小值，覆盖原值。
+
+```cpp
+class Solution
+{
+public:
+    int minimumTotal(vector<vector<int>> &triangle)
+    {
+        int m = triangle.size();
+        if (m == 0)
+            return 0;
+
+        vector<int> dp(m, 0);
+
+        for (int i = m - 1; i >= 0; i--)
+        {
+            for (int j = 0; j <= i; j++)
+            {
+                if (i == m - 1)
+                    dp[j] = triangle[i][j];
+                else
+                    dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j];
+            }
+        }
+
+        return dp[0];
+    }
+};
+```
+
 ## [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
 
 切分字符串，使每个子串都是回文序列
