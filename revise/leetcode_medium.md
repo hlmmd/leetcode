@@ -638,6 +638,56 @@ public:
 
 切分字符串，使每个子串都是回文序列
 
+DFS 当检测到一个子串是回文序列时，截断，继续递归。
+
+```cpp
+class Solution
+{
+public:
+    vector<vector<string>> ret;
+
+    vector<vector<string>> partition(string s)
+    {
+
+        vector<string> temp;
+
+        helper(s, 0, temp);
+        return ret;
+    }
+
+    bool IsPalindrome(string s, int left, int right)
+    {
+        while (left <= right)
+        {
+            if (s[left] != s[right])
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    void helper(string s, int start, vector<string> &temp)
+    {
+        if (start == s.length())
+        {
+            ret.push_back(temp);
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++)
+        {
+            if (IsPalindrome(s, start, i))
+            {
+                temp.push_back(s.substr(start, i - start + 1));
+                helper(s, i + 1, temp);
+                temp.pop_back();
+            }
+        }
+    }
+};
+```
+
 ## [137. Single Number II](https://leetcode.com/problems/single-number-ii/)
 
 一个数字出现了一次，其他所有数字都出现了三次
