@@ -692,6 +692,68 @@ public:
 
 一个数字出现了一次，其他所有数字都出现了三次
 
+ 统计每一位的出现次数，再%3.
+
+```cpp
+int singleNumber(vector<int> &s)
+{
+    vector<int> t(32); ////Made a array contain 32 elements.
+    int sz = s.size();
+    int i, j, n;
+    for (i = 0; i < sz; ++i)
+    {
+        n = s[i];
+        for (j = 31; j >= 0; --j)
+        {
+            t[j] += n & 1; //Find the last digit.
+            n >>= 1;
+            if (!n)
+                break;
+        }
+    }
+    int res = 0;
+    for (j = 31; j >= 0; --j)
+    {
+        n = t[j] % 3; //"3" represents k times.
+        if (n)
+            res += 1 << (31 - j);
+    }
+    return res;
+}
+```
+
+```text
+The code seems tricky and hard to understand at first glance.
+However, if you consider the problem in Boolean algebra form, everything becomes clear.
+
+What we need to do is to store the number of '1's of every bit. Since each of the 32 bits follow the same rules, we just need to consider 1 bit. We know a number appears 3 times at most, so we need 2 bits to store that. Now we have 4 state, 00, 01, 10 and 11, but we only need 3 of them.
+
+In this solution, 00, 01 and 10 are chosen. Let 'ones' represents the first bit, 'twos' represents the second bit. Then we need to set rules for 'ones' and 'twos' so that they act as we hopes. The complete loop is 00->10->01->00(0->1->2->3/0).
+
+For 'ones', we can get 'ones = ones ^ A[i]; if (twos == 1) then ones = 0', that can be tansformed to 'ones = (ones ^ A[i]) & ~twos'.
+
+Similarly, for 'twos', we can get 'twos = twos ^ A[i]; if (ones* == 1) then twos = 0' and 'twos = (twos ^ A[i]) & ~ones'. Notice that 'ones*' is the value of 'ones' after calculation, that is why twos is
+calculated later.
+```
+
+```cpp
+class Solution
+{
+public:
+    int singleNumber(vector<int> &nums)
+    {
+
+        int ones = 0, twos = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            ones = (ones ^ nums[i]) & ~twos;
+            twos = (twos ^ nums[i]) & ~ones;
+        }
+        return ones;
+    }
+};
+```
+
 ## [139. Word Break](https://leetcode.com/problems/word-break/)
 
 单词拆分
