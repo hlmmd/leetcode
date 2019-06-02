@@ -758,6 +758,39 @@ public:
 
 单词拆分
 
+动态规划，先将vector转为set，方便查找。dp[i]表示子串[0-i]是否能拆分。那么如果有dp[j]==true，即0-j能拆分，而且[j+1,i]是word中的单词的话，那么p[0-i]也是能拆分的。
+
+```cpp
+class Solution
+{
+public:
+    bool wordBreak(string s, vector<string> &wordDict)
+    {
+
+        unordered_set dict(wordDict.begin(), wordDict.end());
+        if (wordDict.size() == 0)
+            return false;
+
+        vector<bool> dp(s.length() + 1, false);
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+
+                if (dp[j] == true && dict.find(s.substr(j, i - j)) != dict.end())
+                {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp.back();
+    }
+};
+```
+
 ## [144. Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/)
 
 二叉树先序遍历，非递归实现
