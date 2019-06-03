@@ -795,6 +795,40 @@ public:
 
 二叉树先序遍历，非递归实现
 
+用栈
+
+```CPP
+class Solution
+{
+public:
+    vector<int> preorderTraversal(TreeNode *root)
+    {
+        if (root == NULL)
+        {
+            return vector<int>();
+        }
+        vector<int> result;
+        stack<TreeNode *> treeStack;
+        treeStack.push(root);
+        while (!treeStack.empty())
+        {
+            TreeNode *temp = treeStack.top();
+            result.push_back(temp->val);
+            treeStack.pop();
+            if (temp->right != NULL)
+            {
+                treeStack.push(temp->right);
+            }
+            if (temp->left != NULL)
+            {
+                treeStack.push(temp->left);
+            }
+        }
+        return result;
+    }
+};
+```
+
 ## [148. Sort List](https://leetcode.com/problems/sort-list/)
 
 链表排序
