@@ -833,9 +833,92 @@ public:
 
 链表排序
 
+```cpp
+class Solution
+{
+public:
+    ListNode *sortList(ListNode *head)
+    {
+        if (head == NULL || head->next == NULL)
+            return head;
+        ListNode *slow = head, *fast = head;
+        ListNode *pre;
+        while (fast != NULL && fast->next != NULL)
+        {
+            pre = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        //先用快慢两指针找到链表的中部(slow指针)
+        pre->next = NULL;
+
+        ListNode *l1 = sortList(head);
+        ListNode *l2 = sortList(slow);
+        //递归调用sortList，用分治思想将链表分解，得到两个有序的链表
+        return Merge(l1, l2);
+        //归并排序，将两个有序的链表合并
+    }
+
+    ListNode *Merge(ListNode *l1, ListNode *l2)
+    {
+        ListNode *l = new ListNode(0);
+        ListNode *p;
+        p = l;
+
+        while (l1 && l2)
+        {
+            //比较l1和l2 val的大小，取较小值作为链表的下一个结点
+            if (l1->val < l2->val)
+            {
+                p->next = l1;
+                l1 = l1->next;
+            }
+            else
+            {
+                p->next = l2;
+                l2 = l2->next;
+            }
+            p = p->next;
+        }
+        //将剩余的链表接到尾部（此时l1,l2只剩下一个)
+        p->next = l1 ? l1 : l2;
+
+        return l->next;
+    }
+};
+```
+
 ## [152. Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
 
 连续子系列的最大乘积
+
+记录最大乘积的同时，记录最小乘积。因为乘以一个负数后最小乘积就变成最大乘积了。同时要和nums[i]比较，因为要考虑0
+
+```cpp
+class Solution
+{
+public:
+    int maxProduct(vector<int> &nums)
+    {
+        if (nums.size() == 0)
+            return 0;
+
+        int maxp, minp, ret;
+        ret = maxp = minp = nums[0];
+
+        for (int i = 1; i < nums.size(); i++)
+        {
+            int tmax = max(maxp * nums[i], minp * nums[i]);
+            int tmin = min(maxp * nums[i], minp * nums[i]);
+            maxp = max(tmax, nums[i]);
+            minp = min(tmin, nums[i]);
+            ret = max(ret, maxp);
+        }
+
+        return ret;
+    }
+};
+```
 
 ## [173. Binary Search Tree Iterator](https://leetcode.com/problems/binary-search-tree-iterator/)
 
