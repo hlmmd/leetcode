@@ -927,3 +927,25 @@ public:
 ## [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/)
 
 二叉树的右视图
+
+## [201. Bitwise AND of Numbers Range](https://leetcode.com/problems/bitwise-and-of-numbers-range/)
+
+求区间内所有数的AND值
+
+## [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/)
+
+实现前缀树
+
+## [209. Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)
+
+求长度最小的连续数组，满足和>=s
+
+## [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
+
+课程安排（拓扑排序）
+
+## [211. Add and Search Word - Data structure design](https://leetcode.com/problems/add-and-search-word-data-structure-design/)
+
+添加和搜索单词
+
+## [213. House Robber II](https://leetcode.com/problems/house-robber-ii/)
