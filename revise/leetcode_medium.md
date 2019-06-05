@@ -949,3 +949,13 @@ public:
 添加和搜索单词
 
 ## [213. House Robber II](https://leetcode.com/problems/house-robber-ii/)
+
+## [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+
+第k大的数
+
+## [216. Combination Sum III](https://leetcode.com/problems/combination-sum-iii/)
+
+## [221. Maximal Square](https://leetcode.com/problems/maximal-square/)
+
+## [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/)
