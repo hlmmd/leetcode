@@ -932,6 +932,31 @@ public:
 
 求区间内所有数的AND值
 
+因为是&运算，所以一旦出现0，那一位上结果就是另。所以找到m,n两数的相同前缀即可。其后面的部分必定是0
+
+```cpp
+class Solution
+{
+public:
+    int rangeBitwiseAnd(int m, int n)
+    {
+
+        if (m == 0)
+            return 0;
+
+        int factor = 0;
+        while (m != n)
+        {
+            m >>= 1;
+            n >>= 1;
+            factor++;
+        }
+
+        return m << factor;
+    }
+};
+```
+
 ## [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/)
 
 实现前缀树
