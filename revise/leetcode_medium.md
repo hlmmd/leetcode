@@ -959,3 +959,14 @@ public:
 ## [221. Maximal Square](https://leetcode.com/problems/maximal-square/)
 
 ## [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/)
+
+## [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/)
+
+给一个数组，求出现次数大于n/3的数
+
+## [230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+
+求二叉搜索树中第k小的元素
+
+## [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
