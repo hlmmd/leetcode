@@ -965,6 +965,39 @@ public:
 
 求长度最小的连续数组，满足和>=s
 
+滑动窗口
+
+```cpp
+class Solution
+{
+public:
+    int minSubArrayLen(int s, vector<int> &nums)
+    {
+        if (nums.size() == 0)
+            return 0;
+        int ret = nums.size() + 1;
+
+        int start = 0, end = 0;
+        int value = 0;
+
+        while (end < nums.size() || value >= s)
+        {
+            if (value >= s)
+            {
+                ret = min(ret, end - start);
+                value -= nums[start++];
+            }
+            else
+            {
+                value += nums[end++];
+            }
+        }
+
+        return ret == (nums.size() + 1) ? 0 : ret;
+    }
+};
+```
+
 ## [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
 
 课程安排（拓扑排序）
