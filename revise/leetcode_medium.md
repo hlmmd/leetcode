@@ -1002,6 +1002,55 @@ public:
 
 课程安排（拓扑排序）
 
+```cpp
+class Solution
+{
+  public:
+    vector<int> findOrder(int numCourses, vector<pair<int, int>> &prerequisites)
+    {
+        vector<int>ret;
+        if (numCourses == 0)
+            return ret;
+        queue<int> q;
+        vector<int> indegree(numCourses, 0);
+        vector<vector<int>> adj(numCourses);
+        for (int i = 0; i < prerequisites.size(); i++)
+        {
+            indegree[prerequisites[i].first]++;
+            adj[prerequisites[i].second].push_back(prerequisites[i].first);
+        }
+
+        for (int i = 0; i < indegree.size(); i++)
+        {
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+        int count = 0;
+        while (!q.empty())
+        {
+            int v = q.front();
+            q.pop();
+            ret.push_back(v);
+            ++count;
+
+            for (int i = 0; i < adj[v].size(); i++)
+            {
+                if (!(--indegree[adj[v][i]]))
+                    q.push(adj[v][i]);
+            }
+        }
+        
+        if( count == numCourses)
+            return ret;
+        else{
+            ret.clear();
+            return ret;                
+        }
+            
+    }
+};
+```
+
 ## [211. Add and Search Word - Data structure design](https://leetcode.com/problems/add-and-search-word-data-structure-design/)
 
 添加和搜索单词
