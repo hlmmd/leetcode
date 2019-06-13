@@ -1057,6 +1057,46 @@ class Solution
 
 ## [213. House Robber II](https://leetcode.com/problems/house-robber-ii/)
 
+抢劫房子，不能抢劫相邻的房子，切头尾算相邻的房子。求能抢到的最大值
+
+分成两种情况。一种只包括头，一种只包含尾，然后转换成原始rob问题。
+
+ppre表示在上上步时的最大值，pre是上一步最大值。那么对于当前步来说，抢的话就是ppre+nums[i]，不抢就是pre，两者比较取较大值。
+
+```cpp
+class Solution
+{
+public:
+    int rob(vector<int> &nums)
+    {
+
+        if (nums.size() == 0)
+            return 0;
+
+        if (nums.size() == 1)
+            return nums[0];
+
+        vector<int> n1(nums.begin() + 1, nums.end());
+        vector<int> n2(nums.begin(), nums.end() - 1);
+
+        return max(rob2(n1), rob2(n2));
+    }
+    int rob2(vector<int> &nums)
+    {
+
+        int ppre = 0, pre = 0, cur = 0;
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            ppre = pre;
+            pre = cur;
+            cur = nums[i] + ppre;
+            cur = (cur > pre ? cur : pre);
+        }
+        return cur;
+    }
+};
+```
+
 ## [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
 
 第k大的数
