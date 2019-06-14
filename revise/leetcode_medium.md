@@ -1101,11 +1101,162 @@ public:
 
 第k大的数
 
-## [216. Combination Sum III](https://leetcode.com/problems/combination-sum-iii/)
+可以利用优先队列（heapsort)，以及快排(partition)
+
+```cpp
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int left = 0, right = nums.size() - 1, kth;
+        while (true) {
+            int idx = partition(nums, left, right);
+            if (idx == k - 1) {
+                kth = nums[idx];
+                break;
+            }
+            if (idx < k - 1) {
+                left = idx + 1;
+            } else {
+                right = idx - 1;
+            }
+        }
+        return kth;
+    }
+private:
+    int partition(vector<int>& nums, int left, int right) {
+        int pivot = nums[left], l = left + 1, r = right;
+        while (l <= r) {
+            if (nums[l] < pivot && nums[r] > pivot) {
+                swap(nums[l++], nums[r--]);
+            }
+            if (nums[l] >= pivot) {
+                l++;
+            }
+            if (nums[r] <= pivot) {
+                r--;
+            }
+        }
+        swap(nums[left], nums[r]);
+        return r;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        buildMaxHeap(nums);
+        for (int i = 0; i < k - 1; i++) {
+            swap(nums[0], nums[--heapSize]);
+            maxHeapify(nums, 0);
+        }
+        return nums[0];
+    }
+private:
+    int heapSize;
+    
+    int left(int i) {
+        return (i << 1) + 1;
+    }
+    
+    int right(int i) {
+        return (i << 1) + 2;
+    }
+    
+    void maxHeapify(vector<int>& nums, int i) {
+        int largest = i, l = left(i), r = right(i);
+        if (l < heapSize && nums[l] > nums[largest]) {
+            largest = l;
+        }
+        if (r < heapSize && nums[r] > nums[largest]) {
+            largest = r;
+        }
+        if (largest != i) {
+            swap(nums[i], nums[largest]);
+            maxHeapify(nums, largest);
+        }
+    }
+    
+    void buildMaxHeap(vector<int>& nums) {
+        heapSize = nums.size();
+        for (int i = (heapSize >> 1) - 1; i >= 0; i--) {
+            maxHeapify(nums, i);
+        }
+    }
+};
+```
 
 ## [221. Maximal Square](https://leetcode.com/problems/maximal-square/)
 
+求01矩阵中最大的正方形,dp
+
+```cpp
+class Solution
+{
+public:
+    int maximalSquare(vector<vector<char>> &matrix)
+    {
+        if (matrix.size() == 0 || matrix[0].size() == 0)
+            return 0;
+        int ret = 0;
+        vector<vector<int>> dp(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+
+        for (int i = 1; i <= matrix.size(); i++)
+        {
+            for (int j = 1; j <= matrix[0].size(); j++)
+            {
+                if (matrix[i - 1][j - 1] == '1')
+                {
+                    dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                    ret = max(ret, dp[i][j]);
+                }
+            }
+        }
+
+        return ret * ret;
+    }
+};
+```
+
 ## [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/)
+
+计算完全二叉树结点个数。利用递归。并判断最左和最右子树是否相同来判断是否是满二叉树快速计算满二叉树的结点个数。
+
+```cpp
+class Solution
+{
+
+public:
+    int countNodes(TreeNode *root)
+    {
+
+        if (!root)
+            return 0;
+
+        int hl = 0, hr = 0;
+
+        TreeNode *l = root, *r = root;
+
+        while (l)
+        {
+            hl++;
+            l = l->left;
+        }
+
+        while (r)
+        {
+            hr++;
+            r = r->right;
+        }
+
+        if (hl == hr)
+            return pow(2, hl) - 1;
+
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+};
+```
 
 ## [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/)
 
