@@ -1262,6 +1262,61 @@ public:
 
 给一个数组，求出现次数大于n/3的数
 
+记录出现次数最多的两个数，当遍历到第三个数时，前两个数的技术-1，如果变成0那么就重新确定出现次数>n/3的数。先找到出现次数可能大于n/3的数，再重新准确计数。大于n/3的数加入返回值中。注意可能有0-2个数
+
+```cpp
+class Solution
+{
+public:
+    vector<int> majorityElement(vector<int> &nums)
+    {
+
+        int n1, n2, c1, c2;
+        c1 = c2 = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+
+            if (n1 == nums[i])
+                c1++;
+            else if (n2 == nums[i])
+                c2++;
+            else if (c1 == 0)
+            {
+                n1 = nums[i];
+                c1 = 1;
+            }
+            else if (c2 == 0)
+            {
+                n2 = nums[i];
+                c2 = 1;
+            }
+            else
+            {
+                c1--;
+                c2--;
+            }
+        }
+
+        vector<int> ret;
+
+        c1 = c2 = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (n1 == nums[i])
+                c1++;
+            else if (n2 == nums[i])
+                c2++;
+        }
+
+        if (c1 > nums.size() / 3)
+            ret.push_back(n1);
+        if (c2 > nums.size() / 3)
+            ret.push_back(n2);
+        return ret;
+    }
+};
+```
+
 ## [230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
 
 求二叉搜索树中第k小的元素
