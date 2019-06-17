@@ -1323,3 +1323,273 @@ public:
 
 ## [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 
+求二叉树两个结点的最小祖先
+
+在两个结点左上方、中间（root）、右上方
+
+```cpp
+class Solution
+{
+public:
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+    {
+        if (root == NULL || p == root || q == root)
+            return root;
+
+        TreeNode *left = lowestCommonAncestor(root->left, p, q);
+        TreeNode *right = lowestCommonAncestor(root->right, p, q);
+        if (left == NULL && right == NULL)
+            return NULL;
+        else if (left && right)
+            return root;
+        else if (left == NULL)
+            return right;
+        else
+            return left;
+    }
+};
+```
+
+## [241. Different Ways to Add Parentheses](https://leetcode.com/problems/different-ways-to-add-parentheses/)
+
+一个计算式，通过不同的方式添加括号，计算能够得到的值。
+
+## [260. Single Number III](https://leetcode.com/problems/single-number-iii/)
+
+一个数列中，只有两个元素出现了一次，求出这两个元素。
+
+## [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
+
+n+1个1-n的数中，必定存在重复的数，假设只有一个数出现两次，求这个数
+
+## [289. Game of Life](https://leetcode.com/problems/game-of-life/)
+
+## [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
+
+最长递增子序列
+
+## [304. Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+
+二维矩阵的子矩阵和
+
+## [307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)
+
+连续子数组的和
+
+## [309. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+
+有冷却情况下买卖股票的最佳时机
+
+## [310. Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)
+
+## [313. Super Ugly Number](https://leetcode.com/problems/super-ugly-number/)
+
+丑数问题
+
+## [318. Maximum Product of Word Lengths](https://leetcode.com/problems/maximum-product-of-word-lengths/)
+
+构成不重复的单词长度最大乘积
+
+## [322. Coin Change](https://leetcode.com/problems/coin-change/)
+
+最少找零问题
+
+## [328. Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/)
+
+奇偶链表
+
+## [331. Verify Preorder Serialization of a Binary Tree](https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/)
+
+验证二叉树的先序遍历序列化
+
+## [334. Increasing Triplet Subsequence](https://leetcode.com/problems/increasing-triplet-subsequence/)
+
+## [337. House Robber III](https://leetcode.com/problems/house-robber-iii/)
+
+## [338. Counting Bits](https://leetcode.com/problems/counting-bits/)
+
+计算一串数的每一个数二进制中1的个数
+
+## [341. Flatten Nested List Iterator](https://leetcode.com/problems/flatten-nested-list-iterator/)
+
+## [343. Integer Break](https://leetcode.com/problems/integer-break/)
+
+将一个数拆分成至少两个正数，求拆分后的最大乘积
+
+## [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
+
+求数组中最多出现的前K个数
+
+## [355. Design Twitter](https://leetcode.com/problems/design-twitter/)
+
+设计twitter
+
+## [368. Largest Divisible Subset](https://leetcode.com/problems/largest-divisible-subset/)
+
+求最大数组，使得每两个元素都能相除
+
+## [373. Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
+
+## [376. Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/)
+
+## [377. Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)
+
+## [378. Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+
+在一个有序的矩阵中找到第k小的数
+
+## [380. Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)
+
+## [382. Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)
+
+## [384. Shuffle an Array](https://leetcode.com/problems/shuffle-an-array/)
+
+打乱一个数组
+
+## [386. Lexicographical Numbers](https://leetcode.com/problems/lexicographical-numbers/)
+
+返回1-n的字典序
+
+## [390. Elimination Game](https://leetcode.com/problems/elimination-game/)
+
+## [394. Decode String](https://leetcode.com/problems/decode-string/)
+
+字符串解码
+
+## [395. Longest Substring with At Least K Repeating Characters](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+
+最长有最少K个重复字符的子串
+
+## [399. Evaluate Division](https://leetcode.com/problems/evaluate-division/)
+
+## [402. Remove K Digits](https://leetcode.com/problems/remove-k-digits/)
+
+删除一个数字的K位，得到的数最小
+
+## [406. Queue Reconstruction by Height](https://leetcode.com/problems/queue-reconstruction-by-height/)
+
+## [413. Arithmetic Slices](https://leetcode.com/problems/arithmetic-slices/)
+
+## [416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
+
+将数组分成和相等的两部分
+
+## [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
+
+## [421. Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
+
+求数组中两个数最大的xor
+
+## [430. Flatten a Multilevel Doubly Linked List](https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/)
+
+## [433. Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/)
+
+## [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)
+
+求最少需要删去多少个区间后，剩下的区间不重叠
+
+## [436. Find Right Interval](https://leetcode.com/problems/find-right-interval/)
+
+## [442. Find All Duplicates in an Array](https://leetcode.com/problems/find-all-duplicates-in-an-array/)
+
+找到数组中所有出现两次的数
+
+## [445. Add Two Numbers II](https://leetcode.com/problems/add-two-numbers-ii/)
+
+链表表示的两个数相加
+
+## [449. Serialize and Deserialize BST](https://leetcode.com/problems/serialize-and-deserialize-bst/)
+
+序列化二叉搜索树
+
+## [450. Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst/)
+
+删除二叉搜索树的结点
+
+## [452. Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/)
+
+## [454. 4Sum II](https://leetcode.com/problems/4sum-ii/)
+
+## [456. 132 Pattern](https://leetcode.com/problems/132-pattern/)
+
+## [462. Minimum Moves to Equal Array Elements II](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/)
+
+求通过让一个数+1或-1，使得所有的数相等，求操作的最少次数
+
+## [464. Can I Win](https://leetcode.com/problems/can-i-win/)
+
+## [467. Unique Substrings in Wraparound String](https://leetcode.com/problems/unique-substrings-in-wraparound-string/)
+
+## [470. Implement Rand10() Using Rand7()](https://leetcode.com/problems/implement-rand10-using-rand7/)
+
+通过rand7()生成rand10()
+
+## [473. Matchsticks to Square](https://leetcode.com/problems/matchsticks-to-square/)
+
+## [474. Ones and Zeroes](https://leetcode.com/problems/ones-and-zeroes/)
+
+## [477. Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/)
+
+求两两汉明距离的总和
+
+## [486. Predict the Winner](https://leetcode.com/problems/predict-the-winner/)
+
+## [491. Increasing Subsequences](https://leetcode.com/problems/increasing-subsequences/)
+
+求所有递增子串
+
+## [494. Target Sum](https://leetcode.com/problems/target-sum/)
+
+## [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)
+
+## [508. Most Frequent Subtree Sum](https://leetcode.com/problems/most-frequent-subtree-sum/)
+
+## [513. Find Bottom Left Tree Value](https://leetcode.com/problems/find-bottom-left-tree-value/)
+
+## [515. Find Largest Value in Each Tree Row](https://leetcode.com/problems/find-largest-value-in-each-tree-row/)
+
+## [516. Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)
+
+最长回文子序列
+
+## [518. Coin Change 2](https://leetcode.com/problems/coin-change-2/)
+
+求找零方式个数
+
+## [524. Longest Word in Dictionary through Deleting](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/)
+
+删除一个单词某些字符后，得到的最长在字典中的单词
+
+## [525. Contiguous Array](https://leetcode.com/problems/contiguous-array/)
+
+## [526. Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/)
+
+## [539. Minimum Time Difference](https://leetcode.com/problems/minimum-time-difference/)
+
+## [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/)
+
+## [542. 01 Matrix](https://leetcode.com/problems/01-matrix/)
+
+求每个单位到其最近0的距离
+
+## [547. Friend Circles](https://leetcode.com/problems/friend-circles/)
+
+## [554. Brick Wall](https://leetcode.com/problems/brick-wall/)
+
+## [556. Next Greater Element III](https://leetcode.com/problems/next-greater-element-iii/)
+
+## [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
+
+求连续子串和为k的子串个数
+
+## [565. Array Nesting](https://leetcode.com/problems/array-nesting/)
+
+## [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/)
+
+查找s2中是否有s1的同构字符串
+
+## [576. Out of Boundary Paths](https://leetcode.com/problems/out-of-boundary-paths/)
+
+## [583. Delete Operation for Two Strings](https://leetcode.com/problems/delete-operation-for-two-strings/)
+
+
