@@ -1354,6 +1354,44 @@ public:
 
 一个计算式，通过不同的方式添加括号，计算能够得到的值。
 
+递归。当当前字符是一个运算符时，考虑其前后两个字符串计算得到的结果，再进行运算。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> diffWaysToCompute(string input)
+    {
+        vector<int> result;
+        int size = input.size();
+        for (int i = 0; i < size; i++)
+        {
+            char cur = input[i];
+            if (cur == '+' || cur == '-' || cur == '*')
+            {
+                vector<int> result1 = diffWaysToCompute(input.substr(0, i));
+                vector<int> result2 = diffWaysToCompute(input.substr(i + 1));
+                for (auto n1 : result1)
+                {
+                    for (auto n2 : result2)
+                    {
+                        if (cur == '+')
+                            result.push_back(n1 + n2);
+                        else if (cur == '-')
+                            result.push_back(n1 - n2);
+                        else
+                            result.push_back(n1 * n2);
+                    }
+                }
+            }
+        }
+        if (result.empty())
+            result.push_back(atoi(input.c_str()));
+        return result;
+    }
+};
+```
+
 ## [260. Single Number III](https://leetcode.com/problems/single-number-iii/)
 
 一个数列中，只有两个元素出现了一次，求出这两个元素。
