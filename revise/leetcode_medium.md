@@ -1396,6 +1396,38 @@ public:
 
 一个数列中，只有两个元素出现了一次，求出这两个元素。
 
+设这两个数为a和b。那么，将整个数组异或之后，得到a^b，因为ab不相同，所以异或的结果至少有一位是1.通过diff&=-diff找到最后一个为1的bit。这一位，就可以区分a和b两个数。通过diff将a 和 b分成两组，每一组都是有一个出现一次的元素，其他都是出现两次。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> singleNumber(vector<int> &nums)
+    {
+        // Pass 1 :
+        // Get the XOR of the two numbers we need to find
+        int diff = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
+        // Get its last set bit
+        diff &= -diff;
+
+        // Pass 2 :
+        vector<int> rets = {0, 0}; // this vector stores the two numbers we will return
+        for (int num : nums)
+        {
+            if ((num & diff) == 0) // the bit is not set
+            {
+                rets[0] ^= num;
+            }
+            else // the bit is set
+            {
+                rets[1] ^= num;
+            }
+        }
+        return rets;
+    }
+};
+```
+
 ## [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
 
 n+1个1-n的数中，必定存在重复的数，假设只有一个数出现两次，求这个数
