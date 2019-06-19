@@ -1430,7 +1430,34 @@ public:
 
 ## [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
 
-n+1个1-n的数中，必定存在重复的数，假设只有一个数出现两次，求这个数
+n+1个1-n的数中，必定存在重复的数，假设只有一个数出现多次，求这个数
+
+这个数处于1-n之间，使用二分法求解。每次取中，计算数组中<=mid的数的个数。并通过比较count和mid来动态调整low和high的值。
+
+```cpp
+int findDuplicate(vector<int> &nums)
+{
+    int n = nums.size() - 1;
+    int low = 1;
+    int high = n;
+    int mid;
+    while (low < high)
+    {
+        mid = (low + high) / 2;
+        int count = 0;
+        for (int num : nums)
+        {
+            if (num <= mid)
+                count++;
+        }
+        if (count > mid)
+            high = mid;
+        else
+            low = mid + 1;
+    }
+    return low;
+}
+```
 
 ## [289. Game of Life](https://leetcode.com/problems/game-of-life/)
 
@@ -1438,9 +1465,64 @@ n+1个1-n的数中，必定存在重复的数，假设只有一个数出现两�
 
 最长递增子序列
 
+用res[i]表示长度为i+1的递增子序列的最后一个值
+
+那么，res是一个非递减的的数组，res的长度就是最长子序列的长度。对于一个新的数，有两种情况：比res.back()大，那么就push_back()进res中，表示得到了更长的递增子序列。否则就找到res中第一个大于nums[i]的值，将其修改。
+
+```cpp
+int lengthOfLIS(vector<int> &nums)
+{
+    vector<int> res;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        auto it = std::lower_bound(res.begin(), res.end(), nums[i]);
+        if (it == res.end())
+            res.push_back(nums[i]);
+        else
+            *it = nums[i];
+    }
+    return res.size();
+}
+```
+
 ## [304. Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
 
 二维矩阵的子矩阵和
+
+大矩阵-两个小矩阵+小小矩阵
+
+```cpp
+class NumMatrix
+{
+public:
+    vector<vector<int>> sum;
+
+    NumMatrix(vector<vector<int>> matrix)
+    {
+        if (matrix.size() == 0 || matrix[0].size() == 0)
+            return;
+
+        sum = vector<vector<int>>(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+
+        for (int i = 1; i <= matrix.size(); i++)
+        {
+            int linesum = 0;
+
+            for (int j = 1; j <= matrix[0].size(); j++)
+            {
+                linesum += matrix[i - 1][j - 1];
+                sum[i][j] = sum[i - 1][j] + linesum;
+            }
+        }
+    }
+
+    int sumRegion(int row1, int col1, int row2, int col2)
+    {
+
+        return sum[row2 + 1][col2 + 1] - sum[row2 + 1][col1] - sum[row1][col2 + 1] + sum[row1][col1];
+    }
+};
+```
 
 ## [307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)
 
