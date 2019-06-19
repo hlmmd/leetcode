@@ -1538,6 +1538,43 @@ public:
 
 丑数问题
 
+```cpp
+class Solution
+{
+public:
+    int nthSuperUglyNumber(int n, vector<int> &primes)
+    {
+
+        if (n < 1 || primes.size() == 0)
+            return 0;
+
+        vector<int> index(primes.size(), 0);
+
+        vector<int> ret(n, 1);
+
+        for (int i = 1; i < n; i++)
+        {
+            vector<int> temp(index.size());
+            int minval = INT_MAX;
+            for (int j = 0; j < index.size(); j++)
+            {
+                temp[j] = ret[index[j]] * primes[j];
+                if (minval > temp[j])
+                    minval = temp[j];
+            }
+            ret[i] = minval;
+            for (int j = 0; j < index.size(); j++)
+            {
+                if (minval == temp[j])
+                    index[j]++;
+            }
+        }
+
+        return ret.back();
+    }
+};
+```
+
 ## [318. Maximum Product of Word Lengths](https://leetcode.com/problems/maximum-product-of-word-lengths/)
 
 构成不重复的单词长度最大乘积
