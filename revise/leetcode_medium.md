@@ -1532,6 +1532,37 @@ public:
 
 有冷却情况下买卖股票的最佳时机
 
+利用DP+状态机求解。
+
+[leetcode 解答](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75928/Share-my-DP-solution-(By-State-Machine-Thinking))
+
+```cpp
+class Solution
+{
+public:
+    int maxProfit(vector<int> &prices)
+    {
+
+        if (prices.size() <= 0)
+            return 0;
+        vector<int> s0(prices.size(), 0);
+        vector<int> s1(prices.size(), 0);
+        vector<int> s2(prices.size(), 0);
+
+        s1[0] = -prices[0];
+
+        s2[0] = INT_MIN;
+        for (int i = 1; i < prices.size(); i++)
+        {
+            s0[i] = max(s0[i - 1], s2[i - 1]);
+            s1[i] = max(s1[i - 1], s0[i - 1] - prices[i]);
+            s2[i] = s1[i - 1] + prices[i];
+        }
+        return max(s0[prices.size() - 1], s2[prices.size() - 1]);
+    }
+};
+```
+
 ## [310. Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)
 
 ## [313. Super Ugly Number](https://leetcode.com/problems/super-ugly-number/)
@@ -1579,9 +1610,55 @@ public:
 
 构成不重复的单词长度最大乘积
 
+用bitmap来判断单词是否有重复字母。
+
+```cpp
+class Solution
+{
+public:
+    int maxProduct(vector<string> &words)
+    {
+        vector<int> mask(words.size());
+        int result = 0;
+        for (int i = 0; i < words.size(); ++i)
+        {
+            for (char c : words[i])
+                mask[i] |= 1 << (c - 'a');
+            for (int j = 0; j < i; ++j)
+                if (!(mask[i] & mask[j]))
+                    result = max(result, int(words[i].size() * words[j].size()));
+        }
+        return result;
+    }
+};
+```
+
 ## [322. Coin Change](https://leetcode.com/problems/coin-change/)
 
 最少找零问题
+
+DP
+
+```cpp
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {        
+        vector<int> dp(amount+1,amount+1);
+        dp[0] = 0;
+        for(int i = 1;i<=amount;i++)
+        {
+            for(int j = 0 ;j<coins.size()  ;j++)
+            {
+                if(i>=coins[j])
+                    dp[i] = min( dp[i],  dp[i-coins[j]]+1);                
+            }            
+        }        
+        return dp[amount]== (amount+1)?-1:dp[amount];
+        
+    }
+};
+```
+
 
 ## [328. Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/)
 
