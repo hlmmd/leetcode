@@ -1664,13 +1664,71 @@ public:
 
 奇偶链表
 
+```cpp
+class Solution
+{
+public:
+    ListNode *oddEvenList(ListNode *head)
+    {
+        if (head == NULL || head->next == NULL)
+            return head;
 
+        ListNode *l1 = head, *l2 = head->next, *pp = head->next;
+        while (l1 && l2 && l2->next)
+        {
+            ListNode *temp = l2->next;
+
+            l1->next = temp;
+            l2->next = temp->next;
+            l1 = l1->next;
+            l2 = l2->next;
+        }
+
+        l1->next = pp;
+
+        return head;
+    }
+};
+```
 
 ## [331. Verify Preorder Serialization of a Binary Tree](https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/)
 
 验证二叉树的先序遍历序列化
 
 ## [334. Increasing Triplet Subsequence](https://leetcode.com/problems/increasing-triplet-subsequence/)
+
+数组中是否存在一个长度为3的递增子序列
+
+设置两个数，s1存储当前最小值，s2存储大于s1的值，当第三个大于s2的数出现时，即满足条件。
+
+```cpp
+class Solution
+{
+public:
+    bool increasingTriplet(vector<int> &nums)
+    {
+
+        int s1 = INT_MAX, s2 = INT_MAX;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] <= s1)
+            {
+                s1 = nums[i];
+            }
+            else if (nums[i] <= s2)
+            {
+                s2 = nums[i];
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
+```
 
 ## [337. House Robber III](https://leetcode.com/problems/house-robber-iii/)
 
