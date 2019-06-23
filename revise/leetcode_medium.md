@@ -1732,15 +1732,40 @@ public:
 
 ## [337. House Robber III](https://leetcode.com/problems/house-robber-iii/)
 
-## [338. Counting Bits](https://leetcode.com/problems/counting-bits/)
-
-计算一串数的每一个数二进制中1的个数
-
 ## [341. Flatten Nested List Iterator](https://leetcode.com/problems/flatten-nested-list-iterator/)
 
 ## [343. Integer Break](https://leetcode.com/problems/integer-break/)
 
 将一个数拆分成至少两个正数，求拆分后的最大乘积
+
+x^(n/x) ，求最小值，求导（先取对数再求导）可以得到 x=e时取得最大值。即2个或者3个数。
+
+动态规划。j*(i-j)表示两个数，j*maxArr[i-j]表示三个数
+
+```cpp
+class Solution
+{
+public:
+    int integerBreak(int n)
+    {
+
+        if (n <= 2)
+            return 1;
+
+        vector<int> maxArr(n + 1, 0);
+        maxArr[1] = 0;
+        maxArr[2] = 1;
+        for (int i = 3; i <= n; i++)
+        {
+            for (int j = 1; j < i; j++)
+            {
+                maxArr[i] = max(maxArr[i], max(j * (i - j), j * maxArr[i - j]));
+            }
+        }
+        return maxArr[n];
+    }
+};
+```
 
 ## [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
 
