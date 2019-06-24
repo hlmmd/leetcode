@@ -1771,6 +1771,39 @@ public:
 
 求数组中最多出现的前K个数
 
+先用map统计各个数的出现次数，再利用桶排序，将数按出现次数排序，返回出现次数最多的k个数。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> topKFrequent(vector<int> &nums, int k)
+    {
+
+        unordered_map<int, int> m;
+
+        for (auto num : nums)
+            ++m[num];
+
+        vector<vector<int>> buckets(nums.size() + 1);
+        for (auto p : m)
+            buckets[p.second].push_back(p.first);
+
+        vector<int> ans;
+        for (int i = buckets.size() - 1; i >= 0 && ans.size() < k; --i)
+        {
+            for (int num : buckets[i])
+            {
+                ans.push_back(num);
+                if (ans.size() == k)
+                    break;
+            }
+        }
+        return ans;
+    }
+};
+```
+
 ## [355. Design Twitter](https://leetcode.com/problems/design-twitter/)
 
 设计twitter
@@ -1778,6 +1811,10 @@ public:
 ## [368. Largest Divisible Subset](https://leetcode.com/problems/largest-divisible-subset/)
 
 求最大数组，使得每两个元素都能相除
+
+```cpp
+
+```
 
 ## [373. Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
 
