@@ -1812,8 +1812,51 @@ public:
 
 求最大数组，使得每两个元素都能相除
 
-```cpp
+对于一个已经满足条件的数组，如果要往其中添加新的数，那么要么满足能够整除最大数，或者能被最小数整除。先对数组进行排序，然后从大往小开始遍历，用T[i]表示有nums[i]的数组的最大长度。
 
+```cpp
+class Solution
+{
+public:
+    vector<int> largestDivisibleSubset(vector<int> &nums)
+    {
+        sort(nums.begin(), nums.end());
+
+        vector<int> T(nums.size(), 0);
+        vector<int> parent(nums.size(), 0);
+
+        int m = 0;
+        int mi = 0;
+
+        for (int i = nums.size() - 1; i >= 0; --i)
+        {
+            for (int j = i; j < nums.size(); ++j)
+            {
+                if (nums[j] % nums[i] == 0 && T[i] < 1 + T[j])
+                {
+                    T[i] = 1 + T[j];
+                    parent[i] = j;
+
+                    if (T[i] > m)
+                    {
+                        m = T[i];
+                        mi = i;
+                    }
+                }
+            }
+        }
+
+        vector<int> ret;
+
+        for (int i = 0; i < m; ++i)
+        {
+            ret.push_back(nums[mi]);
+            mi = parent[mi];
+        }
+
+        return ret;
+    }
+};
 ```
 
 ## [373. Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
