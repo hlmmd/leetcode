@@ -1861,6 +1861,52 @@ public:
 
 ## [373. Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
 
+两个有序集合，从a和b中各取一个数，得到一个pair，求和最小的前K个pairs
+
+```cpp
+class Solution
+{
+public:
+    vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k)
+    {
+
+        vector<int> index(nums1.size(), 0);
+        vector<vector<int>> ret;
+        if (nums1.size() == 0 || nums2.size() == 0)
+            return ret;
+
+        int count = min(k, int(nums1.size() * nums2.size()));
+        while (count)
+        {
+            int t = INT_MAX;
+            for (int i = 0; i < nums1.size(); i++)
+            {
+                if (index[i] == nums2.size())
+                    continue;
+                t = min(t, nums1[i] + nums2[index[i]]);
+            }
+
+            for (int i = 0; i < nums1.size(); i++)
+            {
+                if (index[i] < nums2.size() && t == (nums1[i] + nums2[index[i]]))
+                {
+                    vector<int> temp(2, 0);
+                    temp[0] = nums1[i];
+                    temp[1] = nums2[index[i]];
+                    ret.push_back(temp);
+                    index[i]++;
+                    count--;
+                }
+                if (count == 0)
+                    return ret;
+            }
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [376. Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/)
 
 ## [377. Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)
