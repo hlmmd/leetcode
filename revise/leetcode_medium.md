@@ -1915,6 +1915,83 @@ public:
 
 在一个有序的矩阵中找到第k小的数
 
+可以用类似ugly number的解法，但是复杂度较高。
+
+另外可以用二分搜索，矩阵最小值为left，最大值为right，利用二分法求mid，再用upper_bound求出每一行第一个大于mid的数的位置，进行累加，如果这个累加和小于k，就更新left。否则更新right。
+
+```cpp
+class Solution
+{
+public:
+    int kthSmallest(vector<vector<int>> &matrix, int k)
+    {
+        int n = matrix[0].size();
+        int left = matrix[0][0];
+        int right = matrix[n - 1][n - 1];
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+            int num = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                auto it = upper_bound(matrix[i].begin(), matrix[i].end(), mid);
+                num += it - matrix[i].begin();
+            }
+
+            if (num < k)
+                left = mid + 1;
+            else
+                right = mid;
+        }
+
+        return right;
+    }
+};
+```
+
+```cpp
+class Solution
+{
+public:
+    int kthSmallest(vector<vector<int>> &matrix, int k)
+    {
+
+        if (matrix.size() == 0 || matrix[0].size() == 0)
+            return 0;
+
+        vector<int> index(matrix.size(), 0);
+
+        int count = min(k, int(matrix.size() * matrix[0].size()));
+        int val;
+        while (count > 0)
+        {
+            val = INT_MAX;
+            for (int i = 0; i < matrix.size(); i++)
+            {
+                if (index[i] == matrix[0].size())
+                    continue;
+                val = min(val, matrix[i][index[i]]);
+            }
+
+            for (int i = 0; i < matrix.size(); i++)
+            {
+                if (index[i] < matrix[0].size() && val == matrix[i][index[i]])
+                {
+                    count--;
+                    index[i]++;
+                    if (count == 0)
+                        return val;
+                }
+            }
+        }
+
+        return val;
+    }
+};
+```
+
 ## [380. Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)
 
 ## [382. Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)
