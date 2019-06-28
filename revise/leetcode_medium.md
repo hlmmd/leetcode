@@ -1996,6 +1996,45 @@ public:
 
 ## [380. Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)
 
+map+vector，vector中记录数值，map记录数值及其对应vecotr中的下标
+
+```cpp
+class RandomizedSet {
+public:
+    /** Initialize your data structure here. */
+    RandomizedSet() {
+        
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    bool insert(int val) {
+        if (m.find(val) != m.end()) return false;
+        nums.push_back(val);
+        m[val] = nums.size() - 1;
+        return true;
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    bool remove(int val) {
+        if (m.find(val) == m.end()) return false;
+        int last = nums.back();
+        m[last] = m[val];
+        nums[m[val]] = last;
+        nums.pop_back();
+        m.erase(val);
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    int getRandom() {
+        return nums[rand() % nums.size()];
+    }
+private:
+    vector<int> nums;
+    unordered_map<int, int> m;
+};
+```
+
 ## [382. Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)
 
 ## [384. Shuffle an Array](https://leetcode.com/problems/shuffle-an-array/)
