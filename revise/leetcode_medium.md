@@ -2041,6 +2041,8 @@ private:
 
 打乱一个数组
 
+
+
 ## [386. Lexicographical Numbers](https://leetcode.com/problems/lexicographical-numbers/)
 
 返回1-n的字典序
