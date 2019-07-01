@@ -230,3 +230,103 @@ int main()
 }
 ```
 
+### 特征提取
+
+```
+ 小明是一名算法工程师，同时也是一名铲屎官。某天，他突发奇想，想从猫咪的视频里挖掘一些猫咪的运动信息。为了提取运动信息，他需要从视频的每一帧提取“猫咪特征”。一个猫咪特征是一个两维的vector<x, y>。如果x_1=x_2 and y_1=y_2，那么这俩是同一个特征。
+       因此，如果喵咪特征连续一致，可以认为喵咪在运动。也就是说，如果特征<a, b>在持续帧里出现，那么它将构成特征运动。比如，特征<a, b>在第2/3/4/7/8帧出现，那么该特征将形成两个特征运动2-3-4 和7-8。
+现在，给定每一帧的特征，特征的数量可能不一样。小明期望能找到最长的特征运动。
+```
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+#include <map>
+using namespace std;
+
+int main()
+{
+    int N;
+    cin >> N;
+    for (int i = 0; i < N; i++)
+    {
+        int M;
+        cin >> M;
+        int out = 0;
+        //key为frame，value 为 index和length对，分别表示上一个index的值和当前的长度
+        //注意，unordered_map需要传入一个hash函数，才能将pair作为键值，而map是通过比较，所以不需要
+        map<pair<int, int>, pair<int, int>> map;
+        for (int j = 0; j < M; j++)
+        {
+            int count;
+            cin >> count;
+            for (int k = 0; k < count; k++)
+            {
+                if (out == 0)
+                    out = 1;
+                pair<int, int> frame;
+                cin >> frame.first >> frame.second;
+
+                auto it = map.find(frame);
+
+                if (it == map.end())
+                    map[frame] = pair<int, int>(j, 1);
+                else
+                {
+                    //如果和上一帧连续，就++length，并更新out，否则将length重置为1，再更新index
+                    if ((it->second.first + 1) == j)
+                    {
+                        it->second.second++;
+                        out = max(out, it->second.second);
+                    }
+                    else
+                    {
+                        it->second.second = 1;
+                    }
+
+                    it->second.first = j;
+                }
+            }
+        }
+        cout << out << endl;
+    }
+    return 0;
+}
+```
+
+### 机器人能量
+
+逆推。或者用二分法
+
+```
+机器人正在玩一个古老的基于DOS的游戏。游戏中有N+1座建筑——从0到N编号，从左到右排列。编号为0的建筑高度为0个单位，编号为i的建筑的高度为H(i)个单位。 
+
+起初， 机器人在编号为0的建筑处。每一步，它跳到下一个（右边）建筑。假设机器人在第k个建筑，且它现在的能量值是E, 下一步它将跳到第个k+1建筑。它将会得到或者失去正比于与H(k+1)与E之差的能量。如果 H(k+1) > E 那么机器人就失去 H(k+1) - E 的能量值，否则它将得到 E - H(k+1) 的能量值。
+
+游戏目标是到达第个N建筑，在这个过程中，能量值不能为负数个单位。现在的问题是机器人以多少能量值开始游戏，才可以保证成功完成游戏？
+```
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+	int N;
+	cin >> N;
+
+	vector<int> height(N, 0);
+	for (int i = 0; i < height.size(); i++)
+		cin >> height[i];
+	vector<int>dp(N + 1, 0);
+	for (int i = N - 1; i >= 0; i--)
+	{
+		dp[i] = (height[i] + dp[i + 1] + 1) / 2;
+	}
+	cout << dp[0] << endl;
+	return 0;
+}
+```

@@ -47,3 +47,7 @@ priority_queue<int, vector<int>, greater<int>> pq;
 ```cpp
 for(int i= 0;i<nums.size()-1;i++)
 ```
+
+## unordered_map 与Pair
+
+注意，unordered_map不能直接用pair作为键值，需要传入hash函数。可以用map替代，因为map是基于比较的。
