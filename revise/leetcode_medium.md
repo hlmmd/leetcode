@@ -2041,13 +2041,93 @@ private:
 
 打乱一个数组
 
+随机位置，然后交换
 
+```cpp
+class Solution {
+public:
+    
+    vector<int> origin;
+    Solution(vector<int>& nums) {
+        origin = nums;  
+        srand(time(0));
+    }
+    configuration and return it. */
+    vector<int> reset() {
+        return origin;        
+    }    
+    vector<int> shuffle() {        
+        vector<int> result(origin);
+        for (int i = 0;i < result.size();i++) {
+            int pos = rand()%(result.size()-i);
+            swap(result[i+pos], result[i]);
+        }
+        return result;
+    }
+};
+```
 
 ## [386. Lexicographical Numbers](https://leetcode.com/problems/lexicographical-numbers/)
 
 返回1-n的字典序
 
-## [390. Elimination Game](https://leetcode.com/problems/elimination-game/)
+dfs或者直接求解
+
+```cpp
+class Solution
+{
+public:
+    vector<int> ret;
+    vector<int> lexicalOrder(int n)
+    {
+
+        for (int i = 1; i <= 9; i++)
+        {
+            dfs(n, i);
+        }
+        return ret;
+    }
+
+    void dfs(int n, int t)
+    {
+        if (t > n)
+            return;
+        ret.push_back(t);
+        t *= 10;
+        for (int i = 0; i <= 9; i++)
+            if (t + i <= n)
+                dfs(n, t + i);
+    }
+};
+```
+
+```cpp
+class Solution {
+class Solution
+{
+public:
+    vector<int> lexicalOrder(int n)
+    {
+        vector<int> res(n);
+        int cur = 1;
+        for (int i = 0; i < n; i++)
+        {
+            res[i] = cur;
+            if (cur * 10 <= n)
+                cur *= 10;
+            else
+            {
+                if (cur >= n)
+                    cur /= 10;
+                cur++;
+                while (!(cur % 10))
+                    cur /= 10;
+            }
+        }
+        return res;
+    }
+};
+```
 
 ## [394. Decode String](https://leetcode.com/problems/decode-string/)
 
@@ -2056,6 +2136,42 @@ private:
 ## [395. Longest Substring with At Least K Repeating Characters](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/)
 
 最长有最少K个重复字符的子串
+
+先统计所有字符的个数，然后找到第一个出现次数少于k次的字符，以该位置为分割点，一分为二，递归求解。
+
+```cpp
+class Solution
+{
+public:
+    int longestSubstring(string s, int k)
+    {
+        if (s.size() == 0 || k > s.size())
+            return 0;
+        if (k == 0)
+            return s.size();
+
+        unordered_map<char, int> Map;
+        for (int i = 0; i < s.size(); i++)
+        {
+            Map[s[i]]++;
+        }
+
+        int idx = 0;
+        while (idx < s.size() && Map[s[idx]] >= k)
+            idx++;
+        if (idx == s.size())
+            return s.size();
+
+        int left = longestSubstring(s.substr(0, idx), k);
+
+        while (idx < s.size() && Map[s[idx]] < k)
+            idx++;
+        int right = longestSubstring(s.substr(idx), k);
+
+        return max(left, right);
+    }
+};
+```
 
 ## [399. Evaluate Division](https://leetcode.com/problems/evaluate-division/)
 
