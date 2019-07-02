@@ -2186,6 +2186,41 @@ public:
 
 删除一个数字的K位，得到的数最小
 
+把string当作stack，对比栈顶和当前遍历到的字符，如果栈顶大，那么就将栈顶删除。注意如果c是'0'且栈顶为空，就不进栈（前导零）
+
+```cpp
+class Solution
+{
+public:
+    string removeKdigits(string num, int k)
+    {
+
+        string ans = ""; 
+
+        for (char c : num)
+        {
+            while (ans.length() && ans.back() > c && k)
+            {
+                ans.pop_back(); 
+                k--;            
+            }
+
+            if (ans.length() || c != '0')
+            {
+                ans.push_back(c);
+            } 
+        }
+
+        while (ans.length() && k--)
+        {
+            ans.pop_back();
+        } 
+
+        return ans.empty() ? "0" : ans;
+    }
+};
+```
+
 ## [406. Queue Reconstruction by Height](https://leetcode.com/problems/queue-reconstruction-by-height/)
 
 ## [413. Arithmetic Slices](https://leetcode.com/problems/arithmetic-slices/)
