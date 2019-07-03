@@ -2249,6 +2249,33 @@ public:
 
 将数组分成和相等的两部分
 
+可以转化为，求一个子数组，使其和为sum的一半。动态规划。
+
+```cpp
+class Solution
+{
+public:
+    bool canPartition(vector<int> &nums)
+    {
+
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++)
+            sum += nums[i];
+        if (sum == 0 || sum & 1 != 0)
+            return false;
+        sum /= 2;
+
+        vector<int> dp(sum + 1, 0);
+        dp[0] = 1;
+        for (auto num : nums)
+            for (int i = sum; i >= num; i--)
+                dp[i] = dp[i] || dp[i - num];
+
+        return dp[sum];
+    }
+};
+```
+
 ## [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
 
 ## [421. Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
