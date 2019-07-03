@@ -2223,7 +2223,27 @@ public:
 
 ## [406. Queue Reconstruction by Height](https://leetcode.com/problems/queue-reconstruction-by-height/)
 
-## [413. Arithmetic Slices](https://leetcode.com/problems/arithmetic-slices/)
+给定一组<身高,个数>，将其排序，满足个数等于排在自己前面且比自己高的人的个数
+
+先按照身高、位置排序，再依次将人插入返回数组中。
+
+翻译：矮子插队无所谓，反正高个子看不到
+
+```cpp
+//网上的api改了
+class Solution {
+public:
+    vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
+         auto comp = [](const pair<int, int>& p1, const pair<int, int>& p2)
+                    { return p1.first > p2.first || (p1.first == p2.first && p1.second < p2.second); };
+    sort(people.begin(), people.end(), comp);
+    vector<pair<int, int>> res;
+    for (auto& p : people) 
+        res.insert(res.begin() + p.second, p);
+    return res;
+    }
+};
+```
 
 ## [416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
 
