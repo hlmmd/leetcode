@@ -180,7 +180,7 @@ public:
 ## [31. Next Permutation](https://leetcode.com/problems/next-permutation/)
 
 求下一个全排列。有标准库函数 next_permutation(nums.begin(), nums.end());
-
+                            
 找到最后一个出现增序的位置(即从右往左第一个)，如果不存在，那么直接翻转整个数组即可。
 
 如果存在，设为k，nums[k] \< nums[k+1]，查找[k+1,n-1]中大于nums[k]最后一个数。交换。
@@ -2327,8 +2327,6 @@ public:
 求数组中两个数最大的xor
 
 ## [430. Flatten a Multilevel Doubly Linked List](https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/)
-
-## [433. Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/)
 
 ## [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)
 
