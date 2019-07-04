@@ -12,4 +12,4 @@
 
 [剑指offer 题解 ](CodingInterviews)
 
-[数据库复习笔记 ](leetcode_origin)
+[数据库复习笔记 ](Database)
