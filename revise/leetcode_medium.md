@@ -2332,6 +2332,32 @@ public:
 
 求最少需要删去多少个区间后，剩下的区间不重叠
 
+```cpp
+class Solution
+{
+public:
+    int eraseOverlapIntervals(vector<vector<int>> &intervals)
+    {
+
+        auto comp = [](vector<int> &v1, vector<int> &v2) {if(v1[0]==v2[0]) return v1[1]<v2[1];   return v1[0]<v2[0]; };
+        sort(intervals.begin(), intervals.end(), comp);
+        int ret = 0, pre = 0;
+        for (int i = 1; i < intervals.size(); i++)
+        {
+            if (intervals[i][0] < intervals[pre][1])
+            {
+                ret++;
+                if (intervals[i][1] < intervals[pre][1])
+                    pre = i;
+            }
+            else
+                pre = i;
+        }
+        return ret;
+    }
+};
+```
+
 ## [436. Find Right Interval](https://leetcode.com/problems/find-right-interval/)
 
 ## [442. Find All Duplicates in an Array](https://leetcode.com/problems/find-all-duplicates-in-an-array/)
