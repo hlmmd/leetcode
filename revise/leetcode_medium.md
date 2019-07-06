@@ -2360,6 +2360,10 @@ public:
 
 ## [436. Find Right Interval](https://leetcode.com/problems/find-right-interval/)
 
+```cpp
+
+```
+
 ## [442. Find All Duplicates in an Array](https://leetcode.com/problems/find-all-duplicates-in-an-array/)
 
 找到数组中所有出现两次的数
