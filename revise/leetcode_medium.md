@@ -2368,6 +2368,26 @@ public:
 
 找到数组中所有出现两次的数
 
+因为所有数都是1-n，所以将这个数对应的位置的数取反，如果取反后是正数，说明已经取反了两次，就将这个数添加res中。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> findDuplicates(vector<int> &nums)
+    {
+        vector<int> res;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            nums[abs(nums[i]) - 1] = -nums[abs(nums[i]) - 1];
+            if (nums[abs(nums[i]) - 1] > 0)
+                res.push_back(abs(nums[i]));
+        }
+        return res;
+    }
+};
+```
+
 ## [445. Add Two Numbers II](https://leetcode.com/problems/add-two-numbers-ii/)
 
 链表表示的两个数相加
