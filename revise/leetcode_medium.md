@@ -2410,6 +2410,28 @@ public:
 
 求通过让一个数+1或-1，使得所有的数相等，求操作的最少次数
 
+中位数
+
+```CPP
+class Solution {
+public:
+    int minMoves2(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int m  = nums[ (nums.size()-1)/2];
+        int count = 0 ;
+        for(int i = 0 ;i<nums.size();i++)
+        {
+            if(nums[i]<m)
+                count+=m-nums[i];
+            else
+                count+=nums[i]-m;            
+        }
+        return count;
+        
+    }
+};
+```
+
 ## [464. Can I Win](https://leetcode.com/problems/can-i-win/)
 
 ## [467. Unique Substrings in Wraparound String](https://leetcode.com/problems/unique-substrings-in-wraparound-string/)
