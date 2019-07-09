@@ -2402,7 +2402,33 @@ public:
 
 ## [452. Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/)
 
-## [454. 4Sum II](https://leetcode.com/problems/4sum-ii/)
+```cpp
+class Solution
+{
+public:
+    int findMinArrowShots(vector<pair<int, int>> &points)
+    {
+        if (points.size() == 0)
+            return 0;
+
+        auto comp = [](pair<int, int> p1, pair<int, int> p2) { return p1.second < p2.second; };
+        sort(points.begin(), points.end(), comp);
+
+        int shotcount = 1;
+        int shotpos = points[0].second;
+        for (int i = 1; i < points.size(); i++)
+        {
+            if (shotpos < points[i].first)
+            {
+                shotcount++;
+                shotpos = points[i].second;
+            }
+        }
+
+        return shotcount;
+    }
+};
+```
 
 ## [456. 132 Pattern](https://leetcode.com/problems/132-pattern/)
 
@@ -2431,8 +2457,6 @@ public:
     }
 };
 ```
-
-## [464. Can I Win](https://leetcode.com/problems/can-i-win/)
 
 ## [467. Unique Substrings in Wraparound String](https://leetcode.com/problems/unique-substrings-in-wraparound-string/)
 
