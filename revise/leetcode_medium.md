@@ -2464,6 +2464,24 @@ public:
 
 通过rand7()生成rand10()
 
+注意rand7()是生成1-7
+
+```
+class Solution
+{
+  public:
+    int rand10()
+    {
+        int result = 40;
+        while (result >= 40)
+        {
+            result = 7 * (rand7() - 1) + (rand7() - 1);
+        }
+        return result % 10 + 1;
+    }
+};
+```
+
 ## [473. Matchsticks to Square](https://leetcode.com/problems/matchsticks-to-square/)
 
 ## [474. Ones and Zeroes](https://leetcode.com/problems/ones-and-zeroes/)
