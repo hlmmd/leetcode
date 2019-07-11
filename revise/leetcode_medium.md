@@ -2486,6 +2486,37 @@ class Solution
 
 ## [474. Ones and Zeroes](https://leetcode.com/problems/ones-and-zeroes/)
 
+给定字符串数组中，有多少个字符能够由最多m个0，n个1组成
+
+```cpp
+class Solution
+{
+public:
+    int findMaxForm(vector<string> &strs, int m, int n)
+    {
+
+        vector<vector<int>> ret(m + 1, vector<int>(n + 1, 0));
+
+        for (int i = 0; i < strs.size(); i++)
+        {
+            vector<int> c(2, 0);
+            for (char ch : strs[i])
+                c[ch - '0']++;
+
+            for (int i = m; i >= c[0]; i--)
+            {
+                for (int j = n; j >= c[1]; j--)
+                {
+                    ret[i][j] = max(ret[i][j], ret[i - c[0]][j - c[1]] + 1);
+                }
+            }
+        }
+
+        return ret[m][n];
+    }
+};
+```
+
 ## [477. Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/)
 
 求两两汉明距离的总和
