@@ -2572,11 +2572,69 @@ public:
 
 求所有递增子串
 
-```cpp
+DFS
 
+```cpp
+class Solution
+{
+public:
+	vector<vector<int>> ret;
+	vector<vector<int>> findSubsequences(vector<int> &nums)
+	{
+		vector<int> temp;
+		dfs(nums, temp, 0);
+		return ret;
+	}
+	void dfs(vector<int> &nums, vector<int> &temp, int index)
+	{
+		if (temp.size() > 1)
+			ret.push_back(temp);
+		unordered_set<int> hash;
+		for (int i = index; i < nums.size(); ++i)
+		{
+			if ((temp.size() == 0 || nums[i] >= temp[temp.size() - 1]) && hash.find(nums[i]) == hash.end())
+			{
+				temp.push_back(nums[i]);
+				dfs(nums, temp, i + 1);
+				temp.pop_back();
+				hash.insert(nums[i]);
+			}
+		}
+	}
+};
 ```
 
 ## [494. Target Sum](https://leetcode.com/problems/target-sum/)
+
+```text
+                  sum(P) - sum(N) = target
+sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
+                       2 * sum(P) = target + sum(nums)
+```
+
+可以证明，sum(p)必须是sum和target和的一半，这样就能进行转换。
+
+```cpp
+class Solution
+{
+public:
+    int findTargetSumWays(vector<int> &nums, int s)
+    {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        return sum < s || (s + sum) & 1 ? 0 : subsetSum(nums, (s + sum) >> 1);
+    }
+
+    int subsetSum(vector<int> &nums, int s)
+    {
+        int dp[s + 1] = {0};
+        dp[0] = 1;
+        for (int n : nums)
+            for (int i = s; i >= n; i--)
+                dp[i] += dp[i - n];
+        return dp[s];
+    }
+};
+```
 
 ## [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)
 
