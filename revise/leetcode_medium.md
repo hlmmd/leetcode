@@ -2542,9 +2542,39 @@ public:
 
 ## [486. Predict the Winner](https://leetcode.com/problems/predict-the-winner/)
 
+DP
+
+```cpp
+class Solution
+{
+public:
+    bool PredictTheWinner(vector<int> &nums)
+    {
+        vector<vector<int>> dp(nums.size(), vector<int>(nums.size(), 0));
+
+        for (int i = 0; i < nums.size(); i++)
+            dp[i][i] = nums[i];
+
+        for (int l = 1; l < nums.size(); l++)
+        {
+            for (int i = 0; i < nums.size() - l; i++)
+            {
+                dp[i][i + l] = max(nums[i + l] - dp[i][i + l - 1], nums[i] - dp[i + 1][i + l]);
+            }
+        }
+
+        return dp[0][nums.size() - 1] >= 0;
+    }
+};
+```
+
 ## [491. Increasing Subsequences](https://leetcode.com/problems/increasing-subsequences/)
 
 求所有递增子串
+
+```cpp
+
+```
 
 ## [494. Target Sum](https://leetcode.com/problems/target-sum/)
 
