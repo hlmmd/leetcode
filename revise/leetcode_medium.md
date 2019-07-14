@@ -2638,6 +2638,31 @@ public:
 
 ## [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)
 
+```cpp
+class Solution
+{
+  public:
+    vector<int> nextGreaterElements(vector<int> &nums)
+    {
+        int n = nums.size();
+        vector<int> next(n, -1);
+        stack<int> s;
+        for (int i = 0; i < n * 2; i++)
+        {
+            int num = nums[i % n];
+            while (!s.empty() && nums[s.top()] < num)
+            {
+                next[s.top()] = num;
+                s.pop();
+            }
+            if (i < n)
+                s.push(i);
+        }
+        return next;
+    }
+};
+```
+
 ## [508. Most Frequent Subtree Sum](https://leetcode.com/problems/most-frequent-subtree-sum/)
 
 ## [513. Find Bottom Left Tree Value](https://leetcode.com/problems/find-bottom-left-tree-value/)
