@@ -2708,6 +2708,26 @@ public:
 
 求找零方式个数
 
+```cpp
+class Solution
+{
+public:
+    int change(int amount, vector<int> &coins)
+    {
+        vector<int> dp(amount + 1, 0);
+        dp[0] = 1;
+        for (int j = 0; j < coins.size(); j++)
+        {
+            for (int i = coins[j]; i <= amount; i++)
+            {
+                dp[i] += dp[i - coins[j]];
+            }
+        }
+        return dp[amount];
+    }
+};
+```
+
 ## [524. Longest Word in Dictionary through Deleting](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/)
 
 删除一个单词某些字符后，得到的最长在字典中的单词
