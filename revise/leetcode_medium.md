@@ -2728,11 +2728,41 @@ public:
 };
 ```
 
-## [524. Longest Word in Dictionary through Deleting](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/)
-
-删除一个单词某些字符后，得到的最长在字典中的单词
-
 ## [525. Contiguous Array](https://leetcode.com/problems/contiguous-array/)
+
+求最长的连续字串，包含相同的0和1。
+
+求和，用-1代替0，这样，一个0和1个数相等的字串和就是0。那么先求sum(0,i)，再根据sum(i,j)= sum(0,j)-sum(0,i) 来找到和为0的字串。用map来保存对应的sum值和下标，降低复杂度。
+
+```cpp
+class Solution
+{
+public:
+    int findMaxLength(vector<int> &nums)
+    {
+        if (nums.size() == 0)
+            return 0;
+        vector<int> dp(nums.size() + 1, 0);
+        int ret = 0;
+
+        unordered_map<int, int> map;
+        map[0] = 0;
+        for (int i = 1; i <= nums.size(); i++)
+        {
+            if (nums[i - 1] == 0)
+                dp[i] = dp[i - 1] - 1;
+            else
+                dp[i] = dp[i - 1] + 1;
+
+            if (map.find(dp[i]) == map.end())
+                map[dp[i]] = i;
+            else
+                ret = max(ret, i - map[dp[i]]);
+        }
+        return ret;
+    }
+};
+```
 
 ## [526. Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/)
 
