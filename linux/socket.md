@@ -20,3 +20,34 @@ int setnonblocking(int fd)
 
 在server中，需要accept新的connection并同时相应用户的数据，此时可以将listenfd和userfd同时加入select中，当listenfd可读时，说明有新的连接。然后再遍历除了listenfd的所有socket，相应用户数据。
 
+## recv
+
+recv非阻塞的socket的时候，当没有数据可读的时候，返回值<0时并且(errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)的情况下认为连接是正常的，继续接收。
+
+可以利用这一特性保证socket中的数据已经读完。
+
+```cpp
+while (1)
+{
+    memset(buf, 0, BUFFER_SIZE);
+    int ret = recv(sockfd, buf, BUFFER_SIZE, 0);
+    if (ret < 0)
+    {
+        if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+        {
+            printf("read later\n");
+            break;
+        }
+        close(sockfd);
+        break;
+    }
+    else if (ret == 0)
+    {
+        close(sockfd);
+    }
+    else
+    {
+        printf("get %d bytes of content: %s\n", ret, buf);
+    }
+}
+```
