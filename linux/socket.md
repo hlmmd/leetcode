@@ -70,9 +70,26 @@ while (1)
 
 ## 系统/进程打开最大文件数
 
-/proc/sys/fs/file-max 和 /etc/security/limits.conf 中设置
-
 ulimit -n 可以查看单个进程打开的最大描述符个数
 
+在/etc/security/limits.conf 中修改
 
+```bash
+sudo vi /et
+#添加：
+* soft nofile 3000000
+* hard nofile 3000000
+```
+
+/proc/sys/fs/file-max 中保存再系统所有进程总计可以打开的文件描述符数量
+
+在/etc/sysctl.conf中修改
+
+```bash
+vim /etc/sysctl.conf
+加入以下内容，重启生效
+fs.file-max=30000000
+net.nf_conntrack_max = 30000000
+net.netfilter.nf_conntrack_max = 30000000
+```
 
