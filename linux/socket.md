@@ -51,3 +51,28 @@ while (1)
     }
 }
 ```
+
+## epoll ET 模式下 accept的问题
+
+多个连接同时到达，服务器的TCP就绪队列瞬间积累多个就绪连接，由于是边缘触发模式，epoll只会通知一次，accept只处理一个连接，导致TCP就绪队列中剩下的连接都得不到处理。
+
+解决办法: 用while循环抱住accept调用，处理完TCP就绪队列中的所有连接后再退出循环。如何知道是否处理完就绪队列中的所有连接呢？accept返回-1并且errno设置为EAGAIN就表示所有连接都处理完。综合以上两种情况，服务器应该使用非阻塞地accept，accept在ET模式下的正确使用方式为：
+
+```cpp
+while (1)
+{
+    int connfd = accept(listenfd, (struct sockaddr *)&client_address, &client_addrlength);
+    if (connfd < 0 && (errno == EAGAIN || errno == ECONNABORTED || errno == EPROTO || errno == EINTR))
+        break;
+    addfd(epollfd, connfd, true);
+}
+```
+
+## 系统/进程打开最大文件数
+
+/proc/sys/fs/file-max 和 /etc/security/limits.conf 中设置
+
+ulimit -n 可以查看单个进程打开的最大描述符个数
+
+
+
