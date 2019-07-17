@@ -829,12 +829,197 @@ int main(int c, char **v)
 
 libevent特性：
 
-Portability：可移植性
+* Portability：可移植性
+* Speed：快速、非阻塞的socket通信
+* Scalability：支持成千上万的并发连接
+* Convenience：编程简单、健壮性高
 
-Speed：快速、非阻塞的socket通信
+libevent构成：
 
-Scalability：支持成千上万的并发连接
+* evutil:封装各个平台网络编程接口
+* event and event_base: 提供用户编程API
+* bufferevent: 读写事件通知
+* evbuffer: bufferevent的buffer
+* evhttp/evdns/evrpc: 简单的http/dns/rpc实现
 
-Convenience：编程简单、健壮性高
+### 创建event_base
 
+每个event_base都会有一个方法，包括：
+
+select、poll、epoll、kqueue、devpoll、evport、win32
+
+event_base会选择当前平台支持的最快的方法。
+
+当我们想对event_base进行设置时，需要使用event_config结构，通过event_base_new_with_config()函数修改当前的config。设置完成后调用event_config_free释放config结构体。
+
+检查当前系统和libevent支持的函数类型：
+
+```cpp
+#include <stdio.h>
+#include <event2/event.h>
+
+int main()
+{
+
+    int i;
+    const char **methods = event_get_supported_methods();
+    printf("Starting Libevent %s. Available methods are:\n", event_get_version());
+    for (i = 0; methods[i] != NULL; ++i)
+    {
+        printf("%s\n", methods[i]);
+    }
+
+    return 0;
+}
+```
+
+检查当前系统和livevent支持的特性（ET模式、O(1)事件通知复杂度、FD type支持(不仅仅是socket))
+
+```cpp
+#include <stdio.h>
+#include <event2/event.h>
+
+int main()
+{
+    struct event_base *base;
+    enum event_method_feature f;
+    base = event_base_new();
+    if (!base)
+    {
+        puts("Couldn't get an event_base!");
+    }
+    else
+    {
+        printf("Using Libevent with backend method %s.",
+               event_base_get_method(base));
+        f = (event_method_feature)event_base_get_features(base);
+        if ((f & EV_FEATURE_ET))
+            printf(" Edge-triggered events are supported.");
+        if ((f & EV_FEATURE_O1))
+            printf(" O(1) event notification is supported.");
+        if ((f & EV_FEATURE_FDS))
+            printf(" All FD types are supported.");
+        puts("");
+    }
+
+    return 0;
+}
+```
+
+### event loop
+
+在初始化好了event_base并注册了一些events，开启事件循环。
+
+```cpp
+#define EVLOOP_ONCE
+0x01
+#define EVLOOP_NONBLOCK
+0x02
+#define EVLOOP_NO_EXIT_ON_EMPTY 0x04
+int event_base_loop(struct event_base *base, int flags);
+```
+
+### event
+
+libevent的基本单元是event。每个event包括：
+
+* 一个等待读取或写入的fd
+* 一个等待读取或写入的fd(仅用于ET模式)
+* 计时器
+* 信号
+* user-triggered event
+
+使用event_new创建一个新的event
+
+```cpp
+/*事件超时后激活*/
+#define EV_TIMEOUT 0x01
+/*可读事件激活*/
+#define EV_READ 0x02
+/*可写事件激活*/
+#define EV_WRITE 0x04
+/*检测信号*/
+#define EV_SIGNAL 0x08
+/*事件响应后不会被移除，不需要event_add*/
+#define EV_PERSIST 0x10
+/*ET 模式*/
+#define EV_ET 0x20
+
+typedef void (*event_callback_fn)(evutil_socket_t, short, void *);
+struct event *event_new(struct event_base *base, evutil_socket_t fd,
+                        short what, event_callback_fn cb,
+                        void *arg);
+void event_free(struct event *event);
+```
+
+* event_base: 新申请的event都会注册到event_base上
+* evutil_socket_t fd:socketfd
+* short what: 宏定义
+* event_callback_fn cb:当事件发生时的回调函数
+* void *arg:回调函数的参数
+
+当事件响应后，需要使用event_add重新添加对该事件的监听。或者设置EV_PERSIST。
+
+对于一些timeout-only的event，提供了一些宏定义
+
+```cpp
+#define evtimer_new(base, callback, arg) \
+event_new((base), -1, 0, (callback), (arg))
+#define evtimer_add(ev, tv) \
+event_add((ev),(tv))
+#define evtimer_del(ev) \
+event_del(ev)
+#define evtimer_pending(ev, tv_out) \
+event_pending((ev), EV_TIMEOUT, (tv_out))
+```
+
+### 常用的函数和数据类型
+
+#### evutil_socket_t
+
+除了windows系统，所有的操作系统中socket都是一个int型。
+
+```cpp
+#ifdef WIN32
+#define evutil_socket_t intptr_t
+#else
+#define evutil_socket_t int
+#endif
+```
+
+#### 跨平台的timer函数
+
+提供了获取系统时间、比较大小、重置等操作
+
+```cpp
+#define evutil_timercmp(tvp, uvp, cmp)
+#define evutil_timerclear(tvp) /* ... */
+#define evutil_timerisset(tvp) /* ... */
+#define evutil_timeradd(tvp, uvp, vvp) /* ... */
+#define evutil_timersub(tvp, uvp, vvp) /* ... */
+int evutil_gettimeofday(struct timeval *tv, struct timezone *tz);
+```
+
+socket API 操作
+
+string操作
+
+随机数生成器
+
+### bufferevent
+
+传统socket通信的步骤包括：
+
+* 我们将要写入socket的数据放入一个buffer中
+* 等待连接可写
+* 尽可能多地写数据
+* 记录写过了多少数据，以及还有多少仍需要写入的，等到下一次可写就绪
+
+bufferevent会在读取或者写入足够的数据后引发回调函数，而不是可写或者可读
+
+### Evbuffer
+
+libevent的evbuffer通过队列实现，在队尾添加数据，从队头取数据。
+
+evbuffer不是线程安全的。
 
