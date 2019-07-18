@@ -103,3 +103,15 @@ net.nf_conntrack_max = 30000000
 net.netfilter.nf_conntrack_max = 30000000
 ```
 
+## epoll内部数据结构
+
+一块mmap区域，用于与内核交互
+
+红黑树，存储event,O(logn)插入复杂度
+
+链表，就绪句柄链表
+
+## epoll压力测试
+
+在使用epoll作为客户端进行压力测试时，由于客户端端口数限制，需要设置多个虚拟IP进行绑定，否则连接最多只能到达28230。
+
