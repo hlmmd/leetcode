@@ -2800,11 +2800,47 @@ public:
 };
 ```
 
-## [542. 01 Matrix](https://leetcode.com/problems/01-matrix/)
-
-求每个单位到其最近0的距离
-
 ## [547. Friend Circles](https://leetcode.com/problems/friend-circles/)
+
+判断有多少个好友圈。用DFS遍历所有的好友圈，计数。
+
+```cpp
+class Solution
+{
+public:
+    int findCircleNum(vector<vector<int>> &M)
+    {
+
+        if (M.size() == 0 || M[0].size() == 0)
+            return 0;
+
+        int ret = 0;
+
+        vector<int> visited(M[0].size(), 0);
+        for (int i = 0; i < M[0].size(); i++)
+        {
+            if (visited[i] == 0)
+            {
+                helper(i, M, visited);
+                ret++;
+            }
+        }
+        return ret;
+    }
+
+    void helper(int start, vector<vector<int>> &M, vector<int> &visited)
+    {
+        for (int i = 0; i < M[0].size(); i++)
+        {
+            if (M[start][i] == 1 && visited[i] == false)
+            {
+                visited[i] = true;
+                helper(i, M, visited);
+            }
+        }
+    }
+};
+```
 
 ## [554. Brick Wall](https://leetcode.com/problems/brick-wall/)
 
