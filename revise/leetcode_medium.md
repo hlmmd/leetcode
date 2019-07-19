@@ -2844,6 +2844,31 @@ public:
 
 ## [554. Brick Wall](https://leetcode.com/problems/brick-wall/)
 
+```cpp
+class Solution
+{
+public:
+    int leastBricks(vector<vector<int>> &wall)
+    {
+        unordered_map<int, int> edges;
+        auto minBricks = wall.size();
+
+        for (auto row : wall)
+        {
+            for (int i = 0, width = 0; i < row.size() - 1; i++)
+            {
+                width += row[i];
+                edges[width] += 1;
+            }
+        }
+
+        for (auto edge : edges)
+            minBricks = min(minBricks, wall.size() - edge.second);
+        return minBricks;
+    }
+};
+```
+
 ## [556. Next Greater Element III](https://leetcode.com/problems/next-greater-element-iii/)
 
 ## [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
