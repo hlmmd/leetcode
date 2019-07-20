@@ -2869,11 +2869,33 @@ public:
 };
 ```
 
-## [556. Next Greater Element III](https://leetcode.com/problems/next-greater-element-iii/)
-
 ## [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
 
 求连续子串和为k的子串个数
+
+用map记录sum(0,i)，计数。在遍历的时候，用find查找sum-k，ret+=map[sum-k]，此时sum(i,j)==k。
+
+```cpp
+class Solution
+{
+public:
+	int subarraySum(vector<int> &nums, int k)
+	{
+
+		unordered_map<int, int> map;
+		int sum = 0, ret = 0;
+		map[0] = 1;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			sum += nums[i];
+			if (map.find(sum - k) != map.end())
+				ret += map[sum - k];
+			map[sum]++;
+		}
+		return ret;
+	}
+};
+```
 
 ## [565. Array Nesting](https://leetcode.com/problems/array-nesting/)
 
