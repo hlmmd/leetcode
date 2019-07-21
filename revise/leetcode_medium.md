@@ -2899,9 +2899,63 @@ public:
 
 ## [565. Array Nesting](https://leetcode.com/problems/array-nesting/)
 
+在遍历过一圈后，将遍历过的数置为-1，防止再次遍历。
+
+```cpp
+class Solution
+{
+public:
+    int arrayNesting(vector<int> &a)
+    {
+        int maxsize = 0;
+        for (int i = 0; i < a.size(); i++)
+        {
+            int size = 0;
+            for (int k = i; a[k] >= 0; size++)
+            {
+                int ak = a[k];
+                a[k] = -1;
+                k = ak;
+            }
+            maxsize = max(maxsize, size);
+        }
+
+        return maxsize;
+    }
+};
+```
+
 ## [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/)
 
 查找s2中是否有s1的同构字符串
+
+```cpp
+class Solution
+{
+public:
+    bool checkInclusion(string s1, string s2)
+    {
+        const int l1 = s1.length(), l2 = s2.length();
+        if (l1 > l2)
+            return false;
+
+        vector<int> c1(26), c2(26);
+
+        for (const char &c : s1)
+            ++c1[c - 'a'];
+
+        for (int i = 0; i < l2; ++i)
+        {
+            ++c2[s2[i] - 'a'];
+            if (i >= l1)
+                --c2[s2[i - l1] - 'a'];
+            if (c1 == c2)
+                return true;
+        }
+        return false;
+    }
+};
+```
 
 ## [576. Out of Boundary Paths](https://leetcode.com/problems/out-of-boundary-paths/)
 
