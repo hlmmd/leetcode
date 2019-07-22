@@ -233,3 +233,85 @@ int main()
 第四题(100%): 给定一个序列，可以删除其任意长度的连续子串，求剩下的序列的最大子段和。
 解法：其实就是求序列中两个不相交的区间的最大和。从左往右扫一遍求0<=index<=i的最大子段和，记为seq[i];再从右往左一遍，求 n>index>=i的最大子段和,记为rseq[i]；最后从左往右扫一遍，求max(seq[i]+rseq[i+1])。
 
+根据上面这个算法，写了一个答案，但没有测试集，不知道对不对
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+/*
+6
+100 100 -1000 500 -200 400
+*/
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> nums(n);
+	for (int i = 0; i < nums.size(); i++)
+	{
+		cin >> nums[i];
+	}
+
+	vector<long long int> seql(n + 1, 0);
+	vector<long long int> seqr(n + 1, 0);
+
+	long long int temp = 0;
+	long long int tempmax = 0;
+
+	//求 从左到右，seql[0,i]的最大连续子序列和
+	for (int i = 1; i < seql.size(); i++)
+	{
+		if (nums[i - 1] > 0)
+		{
+			temp += nums[i - 1];
+			tempmax = max(tempmax, temp);
+		}
+		else if (temp + nums[i - 1] > 0)
+		{
+			temp += nums[i - 1];
+		}
+		else
+			temp = 0;
+
+		seql[i] = tempmax;
+	}
+
+	temp = 0;
+	tempmax = 0;
+	//求 从右到左，seqr[0,i]的最大连续子序列和
+	for (int i = n - 1; i >= 0; i--)
+	{
+		if (nums[i] > 0)
+		{
+			temp += nums[i];
+			tempmax = max(tempmax, temp);
+		}
+		else if (temp + nums[i] > 0)
+		{
+			temp += nums[i];
+		}
+		else
+			temp = 0;
+
+		seqr[i] = tempmax;
+	}
+
+	tempmax = 0;
+	temp = 0;
+
+	//从0到n选择partition，可将原数组分成两个左右两部分，表示删除之后的左右两部分。
+
+	for (int i = 0; i <= n; i++)
+	{
+		tempmax = max(tempmax, seql[i] + seqr[i]);
+	}
+	cout << tempmax << endl;
+
+	return 0;
+}
+```
