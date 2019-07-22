@@ -2959,6 +2959,8 @@ public:
 
 ## [583. Delete Operation for Two Strings](https://leetcode.com/problems/delete-operation-for-two-strings/)
 
+两个字符串，每次删除一个其中一个字符串的字符，最后使得两个字符串相同。求最少的删除操作次数。
+
 动态规划。
 
 dp[i][j]表示s1.substr(0,i)和s2.substr(0,j)的最长序列。
@@ -2987,3 +2989,114 @@ public:
 };
 ```
 
+## [611. Valid Triangle Number](https://leetcode.com/problems/valid-triangle-number/)
+
+## [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/)
+
+## [622. Design Circular Queue](https://leetcode.com/problems/design-circular-queue/)
+
+## [646. Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/)
+
+## [647. Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
+
+## [648. Replace Words](https://leetcode.com/problems/replace-words/)
+
+## [650. 2 Keys Keyboard](https://leetcode.com/problems/2-keys-keyboard/)
+
+## [652. Find Duplicate Subtrees](https://leetcode.com/problems/find-duplicate-subtrees/)
+
+## [654. Maximum Binary Tree](https://leetcode.com/problems/maximum-binary-tree/)
+
+## [658. Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
+
+## [659. Split Array into Consecutive Subsequences](https://leetcode.com/problems/split-array-into-consecutive-subsequences/)
+
+## [662. Maximum Width of Binary Tree](https://leetcode.com/problems/maximum-width-of-binary-tree/)
+
+## [670. Maximum Swap](https://leetcode.com/problems/maximum-swap/)
+
+## [673. Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)
+
+## [677. Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/)
+
+## [678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/)
+
+## [684. Redundant Connection](https://leetcode.com/problems/redundant-connection/)
+
+## [688. Knight Probability in Chessboard](https://leetcode.com/problems/knight-probability-in-chessboard/)
+
+## [692. Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)
+
+## [695. Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
+
+## [698. Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)
+
+## [701. Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree/)
+
+## [712. Minimum ASCII Delete Sum for Two Strings](https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/)
+
+## [713. Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)
+
+## [714. Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+
+## [718. Maximum Length of Repeated Subarray](https://leetcode.com/problems/maximum-length-of-repeated-subarray/)
+
+## [721. Accounts Merge](https://leetcode.com/problems/accounts-merge/)
+
+## [725. Split Linked List in Parts](https://leetcode.com/problems/split-linked-list-in-parts/)
+
+## [729. My Calendar I](https://leetcode.com/problems/my-calendar-i/)
+
+## [731. My Calendar II](https://leetcode.com/problems/my-calendar-ii/)
+
+## [735. Asteroid Collision](https://leetcode.com/problems/asteroid-collision/)
+
+## [738. Monotone Increasing Digits](https://leetcode.com/problems/monotone-increasing-digits/)
+
+## [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
+
+## [740. Delete and Earn](https://leetcode.com/problems/delete-and-earn/)
+
+## [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
+
+## [752. Open the Lock](https://leetcode.com/problems/open-the-lock/)
+
+## [763. Partition Labels](https://leetcode.com/problems/partition-labels/)
+
+## [764. Largest Plus Sign](https://leetcode.com/problems/largest-plus-sign/)
+
+## [767. Reorganize String](https://leetcode.com/problems/reorganize-string/)
+
+## [769. Max Chunks To Make Sorted](https://leetcode.com/problems/max-chunks-to-make-sorted/)
+
+## [779. K-th Symbol in Grammar](https://leetcode.com/problems/k-th-symbol-in-grammar/)
+
+## [785. Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
+
+## [787. Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
+
+## [792. Number of Matching Subsequences](https://leetcode.com/problems/number-of-matching-subsequences/)
+
+## [795. Number of Subarrays with Bounded Maximum](https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/)
+
+## [797. All Paths From Source to Target](https://leetcode.com/problems/all-paths-from-source-to-target/)
+
+## [799. Champagne Tower](https://leetcode.com/problems/champagne-tower/)
+
+## [801. Minimum Swaps To Make Sequences Increasing](https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/)
+
+## [802. Find Eventual Safe States](https://leetcode.com/problems/find-eventual-safe-states/)
+
+## [807. Max Increase to Keep City Skyline](https://leetcode.com/problems/max-increase-to-keep-city-skyline/)
+
+## [813. Largest Sum of Averages](https://leetcode.com/problems/largest-sum-of-averages/)
+
+## [814. Binary Tree Pruning](https://leetcode.com/problems/binary-tree-pruning/)
+
+## [823. Binary Trees With Factors](https://leetcode.com/problems/binary-trees-with-factors/)
+
+## [826. Most Profit Assigning Work](https://leetcode.com/problems/most-profit-assigning-work/)
+
+## [837. New 21 Game](https://leetcode.com/problems/new-21-game/)
+
+## [838. Push Dominoes](https://leetcode.com/problems/push-dominoes/)
