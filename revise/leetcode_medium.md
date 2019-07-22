@@ -2957,8 +2957,33 @@ public:
 };
 ```
 
-## [576. Out of Boundary Paths](https://leetcode.com/problems/out-of-boundary-paths/)
-
 ## [583. Delete Operation for Two Strings](https://leetcode.com/problems/delete-operation-for-two-strings/)
 
+动态规划。
+
+dp[i][j]表示s1.substr(0,i)和s2.substr(0,j)的最长序列。
+
+```cpp
+class Solution
+{
+public:
+    int minDistance(string word1, string word2)
+    {
+        vector<vector<int>> dp(word1.length() + 1, vector<int>(word2.length() + 1, 0));
+        for (int i = 0; i <= word1.length(); i++)
+        {
+            for (int j = 0; j <= word2.length(); j++)
+            {
+                if (i == 0 || j == 0)
+                    dp[i][j] = 0;
+                else
+                    dp[i][j] = (word1[i - 1] == word2[j - 1]) ? dp[i - 1][j - 1] + 1
+                                                              : max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+        int val = dp[word1.length()][word2.length()];
+        return word1.length() - val + word2.length() - val;
+    }
+};
+```
 
