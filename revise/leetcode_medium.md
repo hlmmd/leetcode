@@ -3210,6 +3210,35 @@ string replaceWords(vector<string> &dict, string snt)
 
 ## [650. 2 Keys Keyboard](https://leetcode.com/problems/2-keys-keyboard/)
 
+动态规划。也可以用贪心。
+
+```cpp
+class Solution
+{
+public:
+    int minSteps(int n)
+    {
+
+        vector<int> dp(n + 1, 0);
+        dp[1] = 0;
+        for (int i = 2; i <= n; i++)
+        {
+            dp[i] = i;
+            for (int j = i / 2; j > 1; j--)
+            {
+                if (i % j == 0)
+                {
+                    dp[i] = dp[j] + i / j;
+                    break;
+                }
+            }
+        }
+
+        return dp[n];
+    }
+};
+```
+
 ## [652. Find Duplicate Subtrees](https://leetcode.com/problems/find-duplicate-subtrees/)
 
 ## [654. Maximum Binary Tree](https://leetcode.com/problems/maximum-binary-tree/)
