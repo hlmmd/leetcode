@@ -2991,11 +2991,95 @@ public:
 
 ## [611. Valid Triangle Number](https://leetcode.com/problems/valid-triangle-number/)
 
+从一个大于0的数组中选出三个数，组成三角形，求所有可能的个数。
+
+先排序，然后固定两个最大数，遍历最小数。此时有两个条件必定满足。只需要判断两个较小的数之和大于最大数即可。如果最小的数能满足，那么从最小到第三大的数都能满足。
+
+```cpp
+class Solution
+{
+public:
+    int triangleNumber(vector<int> &nums)
+    {
+        vector<int> snums(nums);
+        sort(snums.begin(), snums.end());
+        int count = 0;
+        for (int n = nums.size(), k = n - 1; k > 1; --k)
+        {
+            int i = 0, j = k - 1;
+            while (i < j)
+            {
+                if (snums[i] + snums[j] > snums[k])
+                    count += --j - i + 1;
+                else
+                    ++i;
+            }
+        }
+        return count;
+    }
+};
+```
+
 ## [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/)
+
+任务安排，考虑间隙的情况下，得到一个理论上一定能够满足的最小值，如果这个最小值比总数小，那么就返回总数。
+
+```cpp
+class Solution
+{
+public:
+    int leastInterval(vector<char> &tasks, int n)
+    {
+
+        vector<int> count(26, 0);
+        int maxcount = 0;
+        int maxvalue = 0;
+        for (int i = 0; i < tasks.size(); i++)
+        {
+            count[tasks[i] - 'A']++;
+            maxvalue = max(maxvalue, count[tasks[i] - 'A']);
+        }
+        for (int i = 0; i < 26; i++)
+        {
+            if (count[i] == maxvalue)
+                maxcount++;
+        }
+
+        int c = (maxvalue - 1) * (n + 1) + maxcount;
+        c = max((int)tasks.size(), c);
+        return c;
+    }
+};
+```
 
 ## [622. Design Circular Queue](https://leetcode.com/problems/design-circular-queue/)
 
 ## [646. Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/)
+
+求一个子集，所有的的interval递增，且不重叠。先进行排序，按second排序，然后比较pre的second是否小于当前interval的first，如果满足则说明能够不重叠，计数加1.
+
+```cpp
+class Solution
+{
+public:
+    int findLongestChain(vector<vector<int>> &pairs)
+    {
+        int ret = 0;
+        auto comp = [](vector<int> p1, vector<int> p2) { return p1[1] < p2[1]; };
+        sort(pairs.begin(), pairs.end(), comp);
+        for (int i = 0, pre = 0; i < pairs.size(); i++)
+        {
+            if (i == 0 || pairs[pre][1] < pairs[i][0])
+            {
+                ret++;
+                pre = i;
+            }
+        }
+
+        return ret;
+    }
+};
+```
 
 ## [647. Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
 
