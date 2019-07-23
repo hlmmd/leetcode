@@ -3083,7 +3083,130 @@ public:
 
 ## [647. Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
 
+求字符串有多少个回文子串
+
+用动态规划求出字串[i,j]是不是回文串，再进行计数。
+
+```cpp
+class Solution
+{
+public:
+    int countSubstrings(string s)
+    {
+
+        vector<vector<int>> dp(s.length(), vector<int>(s.length(), 0));
+        int count = 0;
+        for (int len = 0; len < s.length(); len++)
+        {
+            for (int i = 0; i + len < s.length(); i++)
+            {
+                int j = i + len;
+                if (len == 0)
+                    dp[i][j] = 1;
+                else if (len == 1)
+                    dp[i][j] = s[i] == s[j];
+                else
+                    dp[i][j] = (s[i] == s[j]) && (dp[i + 1][j - 1] == 1);
+                if (dp[i][j] == 1)
+                    count++;
+            }
+        }
+
+        return count;
+    }
+};
+```
+
+选取一个center，然后分奇偶情况，向两边展开，求回文子序列。算法复杂度较低
+
+```cpp
+class Solution
+{
+public:
+    int countSubstrings(string s)
+    {
+        int count = 0;
+        for (int i = 0; i < s.length(); ++i)
+        {
+            int left = i;
+            int right = i;
+            while (left >= 0 && right < s.length() && s[left] == s[right])
+            {
+                --left;
+                ++right;
+                count++;
+            }
+            left = i;
+            right = i + 1;
+            while (left >= 0 && right < s.length() && s[left] == s[right])
+            {
+                --left;
+                ++right;
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
+```
+
+[Manacher's Algorithm ](https://en.wikipedia.org/wiki/Longest_palindromic_substring)
+
+具体没看，不知道是什么神仙操作。O(N)时间和空间复杂度
+
 ## [648. Replace Words](https://leetcode.com/problems/replace-words/)
+
+抄了一个字典树，之后研究。
+
+```cpp
+class trie
+{
+    bool isRoot = false;
+    trie *l[26] = {};
+
+public:
+    void insert(string &word, int ch, int sz)
+    {
+        isRoot |= ch == sz;
+        if (!isRoot)
+        { // stop at the shortest root.
+            if (l[word[ch] - 'a'] == nullptr)
+                l[word[ch] - 'a'] = new trie();
+            l[word[ch] - 'a']->insert(word, ch + 1, sz);
+        }
+    }
+    int root(string &word, int st, int ch, int sz)
+    {
+        if (st + ch == sz || word[st + ch] == ' ' || this->isRoot)
+            return ch;
+        if (l[word[st + ch] - 'a'] == nullptr)
+        { // root was not found
+            while (st + ch < sz && word[st + ch] != ' ')
+                ++ch; // skipping the entire word
+            return ch;
+        }
+        return l[word[st + ch] - 'a']->root(word, st, ch + 1, sz);
+    }
+};
+string replaceWords(vector<string> &dict, string snt)
+{
+    trie t;
+    string res;
+    for (auto s : dict)
+        t.insert(s, 0, s.size());
+    for (int i = 0; i < snt.size();)
+    {
+        if (snt[i] == ' ')
+            res += snt[i++];
+        auto chars = t.root(snt, i, 0, snt.size());
+        res += snt.substr(i, chars);
+        for (i += chars; i < snt.size() && snt[i] != ' '; ++i)
+            ;
+    }
+    return res;
+}
+```
 
 ## [650. 2 Keys Keyboard](https://leetcode.com/problems/2-keys-keyboard/)
 
