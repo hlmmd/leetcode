@@ -3238,18 +3238,50 @@ public:
     }
 };
 ```
-
-## [652. Find Duplicate Subtrees](https://leetcode.com/problems/find-duplicate-subtrees/)
-
 ## [654. Maximum Binary Tree](https://leetcode.com/problems/maximum-binary-tree/)
-
-## [658. Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
-
-## [659. Split Array into Consecutive Subsequences](https://leetcode.com/problems/split-array-into-consecutive-subsequences/)
 
 ## [662. Maximum Width of Binary Tree](https://leetcode.com/problems/maximum-width-of-binary-tree/)
 
 ## [670. Maximum Swap](https://leetcode.com/problems/maximum-swap/)
+
+交换一个数字的两位之后，能得到的最大值。
+
+想要让交换后得到的数字较大，需要把前面的较小数与最后面的最大数进行交换。
+
+记录每一位(0-9)最后一次出现的下表。从开头数字开始遍历，设其为nums[i]，那么查找last数组中，大于nums[i]的位置，存在，则直接交换。
+
+```cpp
+class Solution
+{
+public:
+    int maximumSwap(int num)
+    {
+
+        string nums = to_string(num);
+        vector<int> last(10, 0);
+        for (int i = 0; i < nums.size(); i++)
+        {
+            last[nums[i] - '0'] = i;
+        }
+
+        for (int i = 0; i < nums.length(); i++)
+        {
+            for (int d = 9; d > nums[i] - '0'; d--)
+            {
+                if (last[d] > i)
+                {
+                    char temp = nums[i];
+                    nums[i] = nums[last[d]];
+                    nums[last[d]] = temp;
+                    return atoi(nums.c_str());
+                }
+            }
+        }
+
+        return num;
+    }
+};
+```
 
 ## [673. Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)
 
