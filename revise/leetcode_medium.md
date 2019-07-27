@@ -3285,6 +3285,47 @@ public:
 
 ## [673. Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)
 
+求最长递增子串的个数。len[i]表示nums[0,i]的最长递增子序列个数，cnt[i]表示此时的最长递增子序列总数。
+
+```cpp
+len[k+1] = max(len[k+1], len[i]+1) for all i <= k and nums[i] < nums[k+1];
+cnt[k+1] = sum(cnt[i]) for all i <= k and nums[i] < nums[k+1] and len[i] = len[k+1]-1;
+```
+
+```cpp
+class Solution
+{
+public:
+    int findNumberOfLIS(vector<int> &nums)
+    {
+        int n = nums.size(), maxlen = 1, ans = 0;
+        vector<int> cnt(n, 1), len(n, 1);
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (nums[i] > nums[j])
+                {
+                    if (len[j] + 1 > len[i])
+                    {
+                        len[i] = len[j] + 1;
+                        cnt[i] = cnt[j];
+                    }
+                    else if (len[j] + 1 == len[i])
+                        cnt[i] += cnt[j];
+                }
+            }
+            maxlen = max(maxlen, len[i]);
+        }
+        for (int i = 0; i < n; i++)
+            if (len[i] == maxlen)
+                ans += cnt[i];
+        return ans;
+    }
+};
+
+```
+
 ## [677. Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/)
 
 ## [678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/)
