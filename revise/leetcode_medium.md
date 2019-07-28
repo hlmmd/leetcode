@@ -3330,6 +3330,41 @@ public:
 
 ## [678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/)
 
+判断在有\*号的情况下括号匹配问题。\*可以表示成'('、')'或者空。括号匹配返回true，不匹配返回false
+
+```cpp
+class Solution
+{
+public:
+    bool checkValidString(string s)
+    {
+        int lower = 0, upper = 0;
+        for (char c : s)
+        {
+            if (c == '(')
+            {
+                lower++;
+                upper++;
+            }
+            else if (c == ')')
+            {
+                lower--;
+                upper--;
+            }
+            else
+            { // * encountered
+                lower--;
+                upper++;
+            }
+            lower = max(lower, 0);
+            if (upper < 0) // unmatched ')' found in the middle of string
+                return false;
+        }
+        return lower == 0;
+    }
+};
+```
+
 ## [684. Redundant Connection](https://leetcode.com/problems/redundant-connection/)
 
 ## [688. Knight Probability in Chessboard](https://leetcode.com/problems/knight-probability-in-chessboard/)
