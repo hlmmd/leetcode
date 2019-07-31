@@ -3371,8 +3371,6 @@ public:
 
 ## [692. Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)
 
-## [695. Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
-
 ## [698. Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)
 
 ## [701. Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree/)
