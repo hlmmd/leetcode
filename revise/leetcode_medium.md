@@ -3377,6 +3377,30 @@ public:
 
 ## [712. Minimum ASCII Delete Sum for Two Strings](https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/)
 
+删除字符后，两个字符串相同。求删去字符ascii码总和最小。
+
+```cpp
+class Solution {
+public:
+    int minimumDeleteSum(string s1, string s2) {
+        int m = s1.size(), n = s2.size();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+        for (int j = 1; j <= n; j++)
+            dp[0][j] = dp[0][j-1]+s2[j-1];
+        for (int i = 1; i <= m; i++) {
+            dp[i][0] = dp[i-1][0]+s1[i-1];
+            for (int j = 1; j <= n; j++) {
+                if (s1[i-1] == s2[j-1])
+                    dp[i][j] = dp[i-1][j-1];
+                else 
+                    dp[i][j] = min(dp[i-1][j]+s1[i-1], dp[i][j-1]+s2[j-1]);
+            }
+        }
+        return dp[m][n];
+    }
+};
+```
+
 ## [713. Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)
 
 ## [714. Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
