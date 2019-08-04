@@ -315,3 +315,276 @@ int main()
 	return 0;
 }
 ```
+
+## 2019.4.17 华为笔试
+
+给定一个数组，含有6个数字，求这六个数字能组成的最大时间。
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+vector<int> ret;
+int retv = -1;
+void cal(vector<int> &nums)
+{
+    int num1 = nums[0] * 10 + nums[1];
+    int num2 = nums[2] * 10 + nums[3];
+    int num3 = nums[4] * 10 + nums[5];
+
+    if (num1 >= 24 || num2 >= 60 || num3 >= 60)
+        return;
+    else
+    {
+        int temp = num1 * 10000 + num2 * 100 + num3;
+        if (temp > retv)
+        {
+            retv = temp;
+            ret = nums;
+        }
+    }
+}
+
+void helper(vector<int> &nums, vector<int> &temp, vector<bool> &visited)
+{
+    if (nums.size() == temp.size())
+    {
+        cal(temp);
+        return;
+    }
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (visited[i] == true)
+            continue;
+        temp.push_back(nums[i]);
+        visited[i] = true;
+
+        helper(nums, temp, visited);
+        temp.pop_back();
+        visited[i] = false;
+
+        while (i + 1 < nums.size() && nums[i] == nums[i + 1])
+            i++;
+    }
+}
+
+int main()
+{
+    vector<int> time;
+
+    string str;
+    cin >> str;
+    int i = 0;
+    while (i < str.length())
+    {
+        string temp = "";
+        while (str[i] >= '0' && str[i] <= '9')
+        {
+            temp += str[i];
+            i++;
+        }
+        if (temp != "")
+        {
+
+            int v = stoi(temp);
+            time.push_back(v);
+        }
+        i++;
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        if (time[i] > 9)
+        {
+            cout << "invalid" << endl;
+            return 0;
+        }
+    }
+
+    vector<bool> visited(6, false);
+
+    vector<int> sss;
+    helper(time, sss, visited);
+
+    if (retv == -1)
+        cout << "invalid" << endl;
+    else
+    {
+        cout << ret[0] << ret[1] << ":" << ret[2] << ret[3] << ":" << ret[4] << ret[5] << endl;       
+    }
+
+    system("pause");
+    return 0;
+}
+```
+
+卖水果问题。数组m,n,m表示成本价，n表示卖出价格，在成本有k元的情况下，最多能赚多少钱。每个水果买卖一次。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    vector<int> m;
+    vector<int> n;
+
+    string str;
+    cin >> str;
+    int i = 0;
+    while (i < str.length())
+    {
+        string temp = "";
+        while (str[i] >= '0' && str[i] <= '9')
+        {
+            temp += str[i];
+            i++;
+        }
+        if (temp != "")
+        {
+            int v = stoi(temp);
+            m.push_back(v);
+        }
+        i++;
+    }
+
+    cin >> str;
+    i = 0;
+    while (i < str.length())
+    {
+        string temp = "";
+        while (str[i] >= '0' && str[i] <= '9')
+        {
+            temp += str[i];
+            i++;
+        }
+        if (temp != "")
+        {
+            int v = stoi(temp);
+            n.push_back(v);
+        }
+        i++;
+    }
+
+    int k;
+    cin >> k;
+
+    if (m.size() != n.size())
+        return 0;
+
+    vector<pair<int, int>> map(m.size());
+
+    for (int i = 0; i < m.size(); i++)
+    {
+        map[i].first = m[i];
+        map[i].second = n[i];
+    }
+
+    auto comp = [](pair<int, int> p1, pair<int, int> p2) { return p1.first < p2.first; };
+
+    sort(map.begin(), map.end(), comp);
+
+    int money = k;
+
+    for (int i = 0; i < map.size(); i++)
+    {
+        if (map[i].second <= map[i].first)
+            continue;
+        else if (map[i].first > money)
+            break;
+        else
+        {
+            money += map[i].second - map[i].first;
+        }
+    }
+
+    cout << money << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
+有m个处理器，n个作业，在最短作业优先的方案下，处理完所有作业耗时？
+
+3 5
+
+8 4 3 1 10
+
+输出13
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+struct compare
+{
+    bool operator()(const int a, const int b)
+    {
+        return a > b;
+    }
+};
+
+int main()
+{
+    int m, n;
+    cin >> m >> n;
+    vector<int> time(n);
+    for (int i = 0; i < n; i++)
+        cin >> time[i];
+
+    sort(time.begin(), time.end());
+
+    priority_queue<int, vector<int>, compare> qu;
+    int ret = 0;
+    int index = 0;
+
+    if (m >= n)
+    {
+        cout << time.back() << endl;
+        return 0;
+    }
+
+    while (index < time.size())
+    {
+        while (qu.size() < m && (index < time.size()))
+        {
+            //	cout << time[index] + ret << endl;
+            qu.push(time[index] + ret);
+            index++;
+        }
+        //3 5 8 4 3 1 10
+        if (index >= time.size())
+        {
+            //	cout << time.back() + ret << endl;
+            ret = time.back() + ret;
+            break;
+        }
+        int top = qu.top();
+        while (!qu.empty() && qu.top() == top)
+        {
+            qu.pop();
+        }
+        ret = top;
+    }
+
+    cout << ret << endl;
+
+    system("pause");
+    return 0;
+}
+```
