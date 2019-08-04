@@ -3403,7 +3403,33 @@ public:
 
 ## [713. Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)
 
+子数组乘积小于k，求所有子数组个数。
 
+滑动窗口，每次增加窗口大小个。
+
+```cpp
+class Solution
+{
+public:
+    int numSubarrayProductLessThanK(vector<int> &nums, int k)
+    {
+        if (k == 0)
+            return 0;
+        int cnt = 0;
+        int pro = 1;
+        for (int i = 0, j = 0; j < nums.size(); j++)
+        {
+            pro *= nums[j];
+            while (i <= j && pro >= k)
+            {
+                pro /= nums[i++];
+            }
+            cnt += j - i + 1;
+        }
+        return cnt;
+    }
+};
+```
 
 ## [714. Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
 
