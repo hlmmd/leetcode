@@ -179,3 +179,35 @@ restart)
 esac
 exit 0
 ```
+
+## 零拷贝技术
+
+网络编程中，发送文件内容需要DMA读取硬盘内容到内存中，用户使用read将kernel中的数据读取到用户态buffer缓冲区中，再使用send将数据写入内核socket发送队列，再使用DMA送入网卡。
+
+### mmap
+
+通过mmap跳过用户态、内核态的转换。减少拷贝次数
+
+### sendfile 系统调用
+
+```
+#include<sys/sendfile.h>
+ssize_t sendfile(int out_fd, int in_fd, off_t *offset, size_t count);
+```
+
+out_fd指向套接字，in_fd是一个可以mmap的fd，一般是文件。
+
+不经过用户态，在内核中完成。
+
+不需要将数据copy到socket缓冲区，而是直接从页缓冲区DMA送进网卡
+
+### splice
+
+```cpp
+#define _GNU_SOURCE         /* See feature_test_macros(7) */
+#include <fcntl.h>
+ssize_t splice(int fd_in, loff_t *off_in, int fd_out, loff_t *off_out, size_t len, unsigned int flags);
+```
+
+有一方必须是管道
+
