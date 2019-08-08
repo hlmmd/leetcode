@@ -3491,15 +3491,36 @@ public:
 };
 ```
 
-## [721. Accounts Merge](https://leetcode.com/problems/accounts-merge/)
-
-## [725. Split Linked List in Parts](https://leetcode.com/problems/split-linked-list-in-parts/)
-
 ## [729. My Calendar I](https://leetcode.com/problems/my-calendar-i/)
 
 ## [731. My Calendar II](https://leetcode.com/problems/my-calendar-ii/)
 
 ## [735. Asteroid Collision](https://leetcode.com/problems/asteroid-collision/)
+
+小行星碰撞问题。正数表示从左往右，负数表示从右往左，下标表示其初始位置。两个方向不同的会发生碰撞，质量小的消失，如果一样则同时消失。求碰撞完后的状况。用栈处理。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> asteroidCollision(vector<int> &a)
+    {
+        vector<int> s; // use vector to simulate stack.
+        for (int i = 0; i < a.size(); i++)
+        {
+            if (a[i] > 0 || s.empty() || s.back() < 0) // a[i] is positive star or a[i] is negative star and there is no positive on stack
+                s.push_back(a[i]);
+            else if (s.back() <= -a[i])
+            { // a[i] is negative star and stack top is positive star
+                if (s.back() < -a[i])
+                    i--;      // only positive star on stack top get destroyed, stay on i to check more on stack.
+                s.pop_back(); // destroy positive star on the frontier;
+            }                 // else : positive on stack bigger, negative star destroyed.
+        }
+        return s;
+    }
+};
+```
 
 ## [738. Monotone Increasing Digits](https://leetcode.com/problems/monotone-increasing-digits/)
 
