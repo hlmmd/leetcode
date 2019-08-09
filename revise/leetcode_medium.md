@@ -3524,6 +3524,34 @@ public:
 
 ## [738. Monotone Increasing Digits](https://leetcode.com/problems/monotone-increasing-digits/)
 
+对于一个数，求不大于这个数的最大数，满足各个位是nums[i]<=nums[i+1]的
+
+```cpp
+class Solution
+{
+public:
+    int monotoneIncreasingDigits(int N)
+    {
+        string n_str = to_string(N);
+
+        int marker = n_str.size();
+        for (int i = n_str.size() - 1; i > 0; i--)
+        {
+            if (n_str[i] < n_str[i - 1])
+            {
+                marker = i;
+                n_str[i - 1] = n_str[i - 1] - 1;
+            }
+        }
+
+        for (int i = marker; i < n_str.size(); i++)
+            n_str[i] = '9';
+
+        return stoi(n_str);
+    }
+};
+```
+
 ## [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
 
 ## [740. Delete and Earn](https://leetcode.com/problems/delete-and-earn/)
