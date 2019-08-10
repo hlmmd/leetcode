@@ -3554,6 +3554,34 @@ public:
 
 ## [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
 
+给定连续几天的温度，对于任意一天，求需要多少天才能到比当天温度高。用栈记录下标，当当前天大于栈顶的时候，跟新等待天数。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> dailyTemperatures(vector<int> &T)
+    {
+
+        stack<int> pre;
+        vector<int> ret(T.size(), 0);
+
+        for (int i = 0; i < T.size(); i++)
+        {
+            while (!pre.empty() && T[i] > T[pre.top()])
+            {
+                int index = pre.top();
+                pre.pop();
+                ret[index] = i - index;
+            }
+            pre.push(i);
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [740. Delete and Earn](https://leetcode.com/problems/delete-and-earn/)
 
 ## [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
