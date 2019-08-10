@@ -588,3 +588,93 @@ int main()
     return 0;
 }
 ```
+
+## 2019.8.9 依图
+
+N个人，每个人说M个兴趣，如果两个人有K个相同的兴趣，则可以做朋友。求朋友最多的人的朋友个数
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+#include <set>
+using namespace std;
+
+
+/*
+3 3 2 
+sing jump rap
+sing basketball rap
+code basketball rap
+
+*/
+
+void calfriend(int p1, int p2, vector<int> &counters, vector< vector<int>> &strs,int K)
+{
+	int count = 0;
+	auto s1 = strs[p1];
+	auto s2 = strs[p2];
+	for (auto ss : s1)
+	{
+		for (auto ss2 : s2)
+		{
+			if (ss == ss2)
+			{
+				count++;
+				if (count >= K)
+				{
+					counters[p1]++;
+					counters[p2]++;
+					return;
+				}
+				break;
+			}
+		}
+	}
+}
+
+int main() 
+{
+	int N, M, K;
+	cin >> N >> M >> K;
+	vector<int> counters(N, 0);
+	vector< vector<int>> strs(N,vector<int>(M));
+
+	unordered_map<string, int> mmap;
+	int mapcount = 0;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			string temp;
+			cin >> temp;
+			if (mmap.find(temp) == mmap.end())
+			{
+				mmap[temp] = mapcount;
+				mapcount++;
+			}
+			strs[i][j] = mmap[temp];
+		}
+	}
+
+	for (int i = 0; i < N - 1; i++)
+	{
+		for (int j = i + 1; j < N; j++)
+		{
+			calfriend(i, j, counters, strs, K);
+		}
+	}
+	
+	int ret = 0;
+	for (int i = 0; i < N; i++)
+	{
+		ret = max(ret, counters[i]);
+	}
+
+	cout << ret << endl;
+	system("pause");
+	return 0;
+}
+```
