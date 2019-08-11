@@ -3584,9 +3584,38 @@ public:
 
 ## [740. Delete and Earn](https://leetcode.com/problems/delete-and-earn/)
 
-## [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
+从数组中取出所有为n的数，同时会删去所有n-1和n+1的数，问能获取到的最大和是多少。
 
-## [752. Open the Lock](https://leetcode.com/problems/open-the-lock/)
+所有的数在[0,10000]之间。
+
+使用桶排序的思想，统计所有Num的和，再利用动态规划，求解最大的和。
+
+```cpp
+class Solution
+{
+public:
+    int deleteAndEarn(vector<int> &nums)
+    {
+        int n = 10001;
+        vector<int> values(n, 0);
+        for (int num : nums)
+            values[num] += num;
+
+        vector<int> take(n, 0);
+        vector<int> skip(n, 0);
+
+        for (int i = 1; i < n; i++)
+        {
+            take[i] = skip[i - 1] + values[i];
+            skip[i] = max(skip[i - 1], take[i - 1]);
+        }
+
+        return max(take.back(), skip.back());
+    }
+};
+```
+
+## [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
 
 ## [763. Partition Labels](https://leetcode.com/problems/partition-labels/)
 
