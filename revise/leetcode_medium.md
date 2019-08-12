@@ -3619,6 +3619,43 @@ public:
 
 ## [763. Partition Labels](https://leetcode.com/problems/partition-labels/)
 
+给字符串分组，使各个组间的字符串不会重复。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> partitionLabels(string S)
+    {
+
+        int n = S.length();
+        vector<int> last(128, 0);
+        for (int i = 0; i < n; i++)
+        {
+            last[S[i]] = i;
+        }
+
+        vector<int> ret;
+        int tempend = 0;
+        int tempstart = 0;
+        for (int i = 0; i < n; i++)
+        {
+
+            int index = last[S[i]];
+            if (index > tempend)
+                tempend = index;
+            if (i >= tempend)
+            {
+                ret.push_back(tempend - tempstart + 1);
+                tempstart = i + 1;
+            }
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [764. Largest Plus Sign](https://leetcode.com/problems/largest-plus-sign/)
 
 ## [767. Reorganize String](https://leetcode.com/problems/reorganize-string/)
