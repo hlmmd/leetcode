@@ -3660,8 +3660,6 @@ public:
 
 ## [767. Reorganize String](https://leetcode.com/problems/reorganize-string/)
 
-## [769. Max Chunks To Make Sorted](https://leetcode.com/problems/max-chunks-to-make-sorted/)
-
 ## [779. K-th Symbol in Grammar](https://leetcode.com/problems/k-th-symbol-in-grammar/)
 
 ## [785. Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
