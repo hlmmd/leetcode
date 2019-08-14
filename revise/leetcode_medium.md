@@ -3662,6 +3662,10 @@ public:
 
 ## [779. K-th Symbol in Grammar](https://leetcode.com/problems/k-th-symbol-in-grammar/)
 
+```cpp
+
+```
+
 ## [785. Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
 
 ## [787. Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
