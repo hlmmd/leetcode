@@ -678,3 +678,133 @@ int main()
 	return 0;
 }
 ```
+
+## 2019.8.17 腾讯
+
+### 解析字符串，同leetcode 394
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+#include <set>
+using namespace std;
+//HG[3|B[2|CA]]F
+string decoding(string s)
+{
+    if (s.length() == 0)
+        return "";
+    string ret;
+    int i = 0;
+    while (s[i] >= 'A' && s[i] <= 'Z')
+        ret += s[i++];
+    if (s[i] == 0)
+        return ret;
+    string temp;
+    int count = 1;
+    while (s[i] >= '0' && s[i] <= '9')
+    {
+        temp += s[i++];
+    }
+
+    count = atoi(temp.c_str());
+    if (s[i] == 0)
+        return ret;
+    int start = i, end;
+    int c = 1;
+    if (s[i] == '[')
+    {
+        while (c != 0 && s[i++])
+        {
+            if (s[i] == '[')
+                c++;
+            else if (s[i] == ']')
+                c--;
+        }
+        end = i;
+    }
+    else
+    {
+        end = s.length();
+    }
+
+    string ds = decoding(s.substr(start + 1, end - start - 1));
+    //cout << count <<ds<< endl;
+    for (int i = 0; i < count - 1; i++)
+        ret += ds;
+    ret += ds;
+    if (end < s.length())
+        ret += decoding(s.substr(end + 1));
+
+    return ret;
+}
+```
+
+### 最少休息多少天
+
+n天的时间，play[i]为1表示当天能去健身，work[i]为1表示当天能去工作。不能连续工作或者健身。问最少休息多少天。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+#include <set>
+using namespace std;
+
+/*
+4
+1 1 0 0
+0 1 1 0
+4
+0 0 0 0
+1 1 0 1
+*/
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> work(n, 0);
+    vector<int> play(n, 0);
+
+    int dp1, dp2, lp1, lp2;
+    dp1 = dp2 = lp1 = lp2 = 0;
+
+    for (int i = 0; i < n; i++)
+        cin >> work[i];
+    for (int i = 0; i < n; i++)
+        cin >> play[i];
+    for (int i = 0; i < n; i++)
+    {
+        lp1 = dp1;
+        lp2 = dp2;
+        if (work[i] == 0 && play[i] == 0)
+        {
+            dp2 = dp1 = max(lp1, lp2);
+        }
+        else if (work[i] == 1 && play[i] == 1)
+        {
+            dp1 = max(lp1, lp2 + 1);
+            dp2 = max(lp2, lp1 + 1);
+        }
+        else if (work[i] == 1)
+        {
+            dp2 = max(lp1, lp2);
+            dp1 = max(lp1, lp2 + 1);
+        }
+        else
+        {
+            dp1 = max(lp1, lp2);
+            dp2 = max(lp2, lp1 + 1);
+        }
+    }
+    cout << n - max(dp1, dp2) << endl;
+    system("pause");
+    return 0;
+}
+```
+
