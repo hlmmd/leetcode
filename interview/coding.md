@@ -808,3 +808,66 @@ int main()
 }
 ```
 
+### 能看到多少楼
+
+n个楼拍成一列，每个楼高度为h(n)，对于每一座楼，求在这个楼上能看到多少楼。分自身、从左向右、从右向左。前面的楼高度>=后面的楼，则后面的楼会被遮住。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+/*
+6
+4 5 7 3 4 6
+*/
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> height(n);
+    for (int i = 0; i < n; i++)
+        cin >> height[i];
+
+    vector<int> left(n, 0);
+    vector<int> right(n, 0);
+
+    stack<int> s;
+
+    s.push(height[0]);
+    for (int i = 1; i < n; i++)
+    {
+        left[i] = s.size();
+        while (!s.empty() && s.top() < height[i])
+        {
+            s.pop();
+        }
+        s.push(height[i]);
+    }
+
+    while (!s.empty())
+    {
+        s.pop();
+    }
+
+    s.push(height[n - 1]);
+    for (int i = n - 2; i >= 0; i--)
+    {
+        right[i] = s.size();
+        while (!s.empty() && s.top() < height[i])
+        {
+            s.pop();
+        }
+        s.push(height[i]);
+    }
+
+    for (int i = 0; i < n; i++)
+        cout << left[i] + right[i] + 1 << " ";
+    cout << endl;
+    system("pause");
+
+    return 0;
+}
+```
