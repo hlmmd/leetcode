@@ -10,15 +10,18 @@ int main()
     if (1)
     {
         Singleton *s = Singleton::Instance();
-        delete s ;
+        cout << "sizeof(Singleton):" << sizeof(Singleton) << endl;
+        delete s;
     }
 
-    if(1)
+    if (1)
     {
-       Factory * fac = new ConcreteFactory();
-       Product * p = fac->CreateProduct();
-       delete p;
-       delete fac;
+        Factory *fac = new ConcreteFactory();
+        Product *p = fac->CreateProduct();
+        cout << "sizeof(Factory):" << sizeof(Factory) << endl;
+        cout << "sizeof(Product):" << sizeof(Product) << endl;
+        delete p;
+        delete fac;
     }
 
     return 0;
