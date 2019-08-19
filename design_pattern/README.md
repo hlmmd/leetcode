@@ -359,11 +359,25 @@ void ConcreteAbstractionImpB::Operation()
 
 ### Adapter 适配器模式
 
-### Decorator
+主要用于转换第三方接口。类比转接线的功能。
 
-### Composite
+实现方法：双重继承/组合
 
-### flyweight
+继承：接口继承/实现继承。C++ public方式是接口+实现继承。可以通过用private继承获得实现继承。通过纯虚函数得到接口继承。但实际上C++中的纯虚函数也可以提供默认实现。
+
+### Decorator 装饰
+
+可以为类动态添加功能
+
+为一个已经设计好的类添加新的功能，我们可以通过继承来实现，但这样会导致继承深度变深。所以可以用组合的方法实现。
+
+有一个指向其他对象的指针，通过组合的方式来提供更多的操作。
+
+### Composite 组合
+
+Composite模式通过和Decorator模式有着类似的结构图，但是Composite模式旨在构造类，而Decorator模式重在不生成子类即可给对象添加职责。Decorator模式重在修饰，而Composite模式重在表示。
+
+### flyweight 享元模式
 
 ### Facade
 
