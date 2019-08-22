@@ -3668,6 +3668,28 @@ public:
 
 ## [795. Number of Subarrays with Bounded Maximum](https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/)
 
+最大值在L到R之间的子数组个数
+
+```cpp
+class Solution
+{
+public:
+    int numSubarrayBoundedMax(vector<int> &A, int L, int R)
+    {
+        int result = 0, left = -1, right = -1;
+        for (int i = 0; i < A.size(); i++)
+        {
+            if (A[i] > R)
+                left = i;
+            if (A[i] >= L)
+                right = i;
+            result += right - left;
+        }
+        return result;
+    }
+};
+```
+
 ## [797. All Paths From Source to Target](https://leetcode.com/problems/all-paths-from-source-to-target/)
 
 ## [799. Champagne Tower](https://leetcode.com/problems/champagne-tower/)
