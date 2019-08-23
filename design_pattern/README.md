@@ -430,6 +430,7 @@ Composite模式通过和Decorator模式有着类似的结构图，但是Composit
 
 ### Momento
 
+
 ### Command
 
 ### Visitor
