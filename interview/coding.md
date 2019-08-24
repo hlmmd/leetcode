@@ -871,3 +871,13 @@ int main()
     return 0;
 }
 ```
+
+## 2019.8.22 m美团点评
+
+### 骑手包裹
+
+[Leetcode 763. Partition Labels](https://leetcode.com/problems/partition-labels/)
+
+### 求字典序
+
+给一系列单词，他们是以一个重定义后的字典序排列的，求对应的字典序。如果不存在，输出invalid
