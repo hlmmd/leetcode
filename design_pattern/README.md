@@ -432,6 +432,232 @@ subject:被观察者（一），observer:观察者（多）。
 
 subject具有注册、移除、通知observer的功能，通过维护一张观察者表来实现。
 
+#### subject.h
+
+```cpp
+#ifndef _SUBJECT_H
+#define _SUBJECT_H
+
+#include <list>
+#include <string>
+using namespace std;
+typedef string State;
+class Observer;
+class Subject
+{
+public:
+    virtual ~Subject();
+    virtual void Attach(Observer *obv);
+    virtual void Detach(Observer *obv);
+    virtual void Notify();
+    virtual void SetState(const State &st) = 0;
+    virtual State GetState() = 0;
+
+protected:
+    Subject();
+
+private:
+    list<Observer *> *_obvs;
+};
+
+class ConcreteSubject : public Subject
+{
+public:
+    ConcreteSubject();
+    ~ConcreteSubject();
+    State GetState();
+    void SetState(const State &st);
+
+protected:
+private:
+    State _st;
+};
+
+#endif
+```
+
+#### subject.cpp
+
+```cpp
+#include "subject.h"
+#include "observer.h"
+#include <iostream>
+#include <list>
+using namespace std;
+typedef string state;
+Subject::Subject()
+{ //在模板的使用之前一定要new，创建
+    _obvs = new list<Observer *>;
+}
+Subject::~Subject()
+{
+    delete _obvs;
+}
+void Subject::Attach(Observer *obv)
+{
+    _obvs->push_front(obv);
+}
+void Subject::Detach(Observer *obv)
+{
+    if (obv != NULL)
+        _obvs->remove(obv);
+}
+void Subject::Notify()
+{
+    list<Observer *>::iterator it;
+    it = _obvs->begin();
+    for (; it != _obvs->end(); it++)
+    { //关于模板和iterator的用法
+        (*it)->Update(this);
+    }
+}
+ConcreteSubject::ConcreteSubject()
+{
+    _st = "";
+}
+ConcreteSubject::~ConcreteSubject()
+{
+}
+State ConcreteSubject::GetState()
+{
+    return _st;
+}
+void ConcreteSubject::SetState(const State &st)
+{
+    _st = st;
+}
+```
+
+#### observer.h
+
+```cpp
+#ifndef _OBSERVER_H
+#define _OBSERVER_H
+#include "subject.h"
+#include <string>
+using namespace std;
+typedef string State;
+class Observer
+{
+public:
+    virtual ~Observer();
+    virtual void Update(Subject *sub) = 0;
+    virtual void PrintInfo() = 0;
+
+protected:
+    Observer();
+    State _st;
+
+private:
+};
+
+class ConcreteObserverA : public Observer
+{
+public:
+    virtual Subject *GetSubject();
+    ConcreteObserverA(Subject *sub);
+    virtual ~ConcreteObserverA();
+    void Update(Subject *sub);
+    void PrintInfo();
+
+protected:
+private:
+    Subject *_sub;
+};
+
+class ConcreteObserverB : public Observer
+{
+public:
+    virtual Subject *GetSubject();
+    ConcreteObserverB(Subject *sub);
+    virtual ~ConcreteObserverB();
+    void Update(Subject *sub);
+    void PrintInfo();
+
+protected:
+private:
+    Subject *_sub;
+};
+
+#endif
+```
+
+#### observer.cpp
+
+```cpp
+#include "observer.h"
+#include "subject.h"
+
+#include <iostream>
+#include <string>
+using namespace std;
+Observer::Observer()
+{
+    _st = "";
+}
+
+Observer::~Observer()
+{
+}
+
+ConcreteObserverA::ConcreteObserverA(Subject *sub)
+{
+    _sub = sub;
+    _sub->Attach(this);
+}
+
+ConcreteObserverA::~ConcreteObserverA()
+{
+    _sub->Detach(this);
+    if (_sub != NULL)
+        delete _sub;
+}
+Subject *ConcreteObserverA::GetSubject()
+{
+    return _sub;
+}
+
+void ConcreteObserverA::PrintInfo()
+{
+    cout << "ConcreteObserverA observer.... " << _sub->GetState() << endl;
+}
+
+void ConcreteObserverA::Update(Subject *sub)
+{
+    _st = sub->GetState();
+    PrintInfo();
+}
+
+
+ConcreteObserverB::ConcreteObserverB(Subject *sub)
+{
+    _sub = sub;
+    _sub->Attach(this);
+}
+
+ConcreteObserverB::~ConcreteObserverB()
+{
+    _sub->Detach(this);
+    if (_sub != NULL)
+        delete _sub;
+}
+Subject *ConcreteObserverB::GetSubject()
+{
+    return _sub;
+}
+
+void ConcreteObserverB::PrintInfo()
+{
+    cout << "ConcreteObserverB observer.... " << _sub->GetState() << endl;
+}
+
+void ConcreteObserverB::Update(Subject *sub)
+{
+    _st = sub->GetState();
+    PrintInfo();
+}
+```
+
 ### Momento 备忘录模式
 
 Memento模式的关键就是要在不破坏封装行的前提下，捕获并保存一个类的内部状态，这样就可以利用该保存的状态实施恢复操作
