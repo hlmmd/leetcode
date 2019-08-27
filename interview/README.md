@@ -330,3 +330,85 @@ int main()
 	return 0;
 }
 ```
+
+### 京东 紧急疏散
+
+体育场突然着火了，现场需要紧急疏散，但是过道真的是太窄了，同时只能容许一个人通过。现在知道了体育场的所有座位分布，座位分布图是一棵树，已知每个座位上都坐了一个人，安全出口在树的根部，也就是1号结点的位置上。其他节点上的人每秒都能向树根部前进一个结点，但是除了安全出口以外，没有任何一个结点可以同时容纳两个及以上的人，这就需要一种策略，来使得人群尽快疏散，问在采取最优策略的情况下，体育场最快可以在多长时间内疏散完成。
+
+输入描述:
+第一行包含一个正整数n，即树的结点数量（1<=n<=100000）。 接下来有n-1行，每行有两个正整数x，y，表示在x和y结点之间存在一条边。(1<=x，y<=n)
+
+输出描述:
+输出仅包含一个正整数，表示所需要的最短时间
+
+输入例子1:
+
+6
+
+2 1
+
+3 2
+
+4 3
+
+5 2
+
+6 1
+
+输出例子1:
+
+4
+
+起始就是求根节点最大的子树结点个数。使用vector<list<int>> 来存储所有的边，再使用dfs进行遍历，求每一个结点的子树结点个数。在dfs时传入parent，避免重复遍历。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <list>
+#include <algorithm>
+using namespace std;
+
+
+int dfs(vector<list<int>> &edge ,int node ,int parent)
+{
+	int ret = 1;
+
+	for (auto it = edge[node].begin(); it != edge[node].end(); it++)
+	{
+		if (*it != parent)
+		{
+			ret += dfs(edge, *it, node);
+		}
+	}
+
+	return ret;
+}
+
+
+int main()
+{
+	int N;
+	cin >> N;
+
+	vector<list<int>> edge(N+1, list<int>());
+
+	for (int i = 0; i < N-1; i++)
+	{
+		int a, b;
+		cin >> a >> b;
+		edge[a].push_front(b);
+		edge[b].push_front(a);
+	}
+
+	int ret = 0;
+	for (auto it = edge[1].begin(); it != edge[1].end(); it++)
+	{
+		ret = max(ret, dfs(edge, *it,1));
+	}
+
+	cout << ret << endl;
+	
+	system("pause");
+	return 0;
+}
+```
