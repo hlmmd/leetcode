@@ -412,3 +412,64 @@ int main()
 	return 0;
 }
 ```
+
+### 京东 寻找子串
+
+给出m个字符串S1，S2，...，Sm和一个单独的字符串T。请在T中选出尽可能多的子串同时满足：  1）这些子串在T中互不相交。  2）这些子串都是S1，S2，...，Sm中的某个串。  问最多能选出多少个子串。
+
+输入描述:
+
+第一行一个数m（1≤m≤10），接下来m行，每行一个串。最后一行输入一个串T。输入中所有单个串的长度不超过100000，串中只会出现小写字母。
+
+输出描述:
+
+输出一个数，最多能选出多少串。
+
+```
+输入例子1:
+3
+aa
+b
+ac
+bbaac
+
+输出例子1:
+3
+```
+
+贪心算法。先将s1-sm按照字符串的长度排序，优先找短的子串。在找到后，将s中的子串替换为"0"，再继续寻找即可。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <list>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<string> strs(n);
+    for (int i = 0; i < n; i++)
+        cin >> strs[i];
+    string s;
+    cin >> s;
+    auto comp = [](const string &s1, const string &s2) { return s1.size() < s2.size(); };
+    sort(strs.begin(), strs.end(), comp);
+    int count = 0;
+    for (int i = 0; i < strs.size(); i++)
+    {
+        int pos = 0;
+        while ((pos = s.find(strs[i], pos)) != -1)
+        {
+            count++;
+            s.replace(pos, strs[i].size(), "0");
+        }
+    }
+    cout << count << endl;
+    system("pause");
+    return 0;
+}
+```
