@@ -626,3 +626,157 @@ int main()
     return 0;
 }
 ```
+
+### 网易 安置路灯
+
+```
+小Q正在给一条长度为n的道路设计路灯安置方案。
+
+为了让问题更简单,小Q把道路视为n个方格,需要照亮的地方用'.'表示, 不需要照亮的障碍物格子用'X'表示。
+
+小Q现在要在道路上设置一些路灯, 对于安置在pos位置的路灯, 这盏路灯可以照亮pos - 1, pos, pos + 1这三个位置。
+
+小Q希望能安置尽量少的路灯照亮所有'.'区域, 希望你能帮他计算一下最少需要多少盏路灯。
+
+
+输入描述:
+输入的第一行包含一个正整数t(1 <= t <= 1000), 表示测试用例数
+接下来每两行一个测试数据, 第一行一个正整数n(1 <= n <= 1000),表示道路的长度。
+第二行一个字符串s表示道路的构造,只包含'.'和'X'。
+
+输出描述:
+对于每个测试用例, 输出一个正整数表示最少需要多少盏路灯。
+
+输入例子1:
+2
+3
+.X.
+11
+...XX....XX
+
+输出例子1:
+1
+3
+```
+
+贪心算法即可。每遍历到一个. 就+1，然后指针后移3（在这个.的下一位置放路灯）
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    int t;
+    cin >> t;
+    for (int x = 0; x < t; x++)
+    {
+        int n;
+        cin >> n;
+        string str;
+        cin >> str;
+        int ret = 0;
+
+        for (int i = 0; i < str.length();)
+        {
+            if (str[i] == '.')
+            {
+                ret++;
+                i += 3;
+            }
+            else
+                i++;
+        }
+
+        cout << ret << endl;
+    }
+    system("pause");
+    return 0;
+}
+```
+
+### 网易 牛牛的背包问题
+
+```
+牛牛准备参加学校组织的春游, 出发前牛牛准备往背包里装入一些零食, 牛牛的背包容量为w。
+牛牛家里一共有n袋零食, 第i袋零食体积为v[i]。
+牛牛想知道在总体积不超过背包容量的情况下,他一共有多少种零食放法(总体积为0也算一种放法)。
+
+输入描述:
+输入包括两行
+第一行为两个正整数n和w(1 <= n <= 30, 1 <= w <= 2 * 10^9),表示零食的数量和背包的容量。
+第二行n个正整数v[i](0 <= v[i] <= 10^9),表示每袋零食的体积。
+
+输出描述:
+输出一个正整数, 表示牛牛一共有多少种零食放法。
+
+输入例子1:
+3 10
+1 2 4
+
+输出例子1:
+8
+
+例子说明1:
+三种零食总体积小于10,于是每种零食有放入和不放入两种情况，一共有2*2*2 = 8种情况。
+```
+
+dfs，注意在背包中所有的重量和小于w时，可以简化计算。另外不要用pow.
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <cmath>
+#include <list>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+int helper(vector<int> &nums, int start, int w)
+{
+    int ret = 1;
+
+    for (int i = start; i < nums.size(); i++)
+    {
+        if (nums[i] > w)
+        {
+            return ret;
+        }
+        ret += helper(nums, i + 1, w - nums[i]);
+    }
+    return ret;
+}
+
+int main()
+{
+    int n;
+    int w;
+    cin >> n >> w;
+    vector<int> nums(n);
+    for (int i = 0; i < n; i++)
+        cin >> nums[i];
+    sort(nums.begin(), nums.end());
+    long long sum = 0;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        sum += nums[i];
+    }
+    if (sum <= w)
+    {
+        int ans = 1;
+        for (int i = 0; i < nums.size(); i++)
+            ans *= 2;
+        cout << ans << endl;
+        return 0;
+    }
+
+    int ret = helper(nums, 0, w);
+    cout << ret << endl;
+
+    system("pause");
+    return 0;
+}
+
+```
