@@ -883,3 +883,84 @@ int main()
 给一系列单词，他们是以一个重定义后的字典序排列的，求对应的字典序。如果不存在，输出invalid
 
 leetcode 269
+
+## 2019.8.31 360
+
+### 寻找子串
+
+求出现次数最多的子串的出现次数。
+
+就是统计字符个数。
+
+### 散步问题
+
+起点随机，走过M次后，可能到达的终点个数
+
+DFS即可。且只需要遍历一半，另一半利用对称性。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+using namespace std;
+/*
+10 3
+5
+2
+6
+*/
+
+void dfs(vector<int> &dp, vector<int> &D, int start, int pos, int N)
+{
+    if (start == D.size())
+    {
+        dp[pos] = 1;
+        return;
+    }
+    if ((pos + D[start]) < N)
+    {
+        dfs(dp, D, start + 1, pos + D[start], N);
+    }
+
+    if ((pos - D[start]) >= 0)
+    {
+        dfs(dp, D, start + 1, pos - D[start], N);
+    }
+}
+
+int main()
+{
+    int N, M;
+    cin >> N;
+    cin >> M;
+    vector<int> D(M, 0);
+    for (int i = 0; i < M; i++)
+        cin >> D[i];
+    vector<int> dp(N, 0);
+    for (int i = 0; i < N / 2 + 1; i++)
+    {
+        dfs(dp, D, 0, i, N);
+    }
+
+    for (int i = 0; i < N / 2 + 1; i++)
+    {
+        if (dp[i] == 1)
+        {
+            dp[N - i - 1] = 1;
+        }
+    }
+    int ret = 0;
+
+    for (int i = 0; i < N; i++)
+    {
+        if (dp[i] == 1)
+            ret++;
+    }
+
+    cout << ret << endl;
+
+    //	system("pause");
+    return 0;
+}
+```
