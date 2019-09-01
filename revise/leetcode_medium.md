@@ -3712,4 +3712,56 @@ public:
 
 ## [838. Push Dominoes](https://leetcode.com/problems/push-dominoes/)
 
+模拟多米诺骨牌倒下后的状态。用一个values记录每个多米诺骨牌获得的能量。往左为正，往右为负，最终能量和为0则保持不动
 
+```cpp
+class Solution
+{
+public:
+    string pushDominoes(string dominoes)
+    {
+        int n = dominoes.size();
+
+        vector<int> values(n, 0);
+        for (int i = 0; i < n; i++)
+        {
+            if (dominoes[i] == 'L')
+            {
+                values[i] += n;
+                int v = n;
+                for (int j = i - 1; j >= 0 && dominoes[j] == '.'; j--)
+                {
+                    values[j] += v--;
+                    if (values[j] == 0)
+                        break;
+                }
+            }
+
+            if (dominoes[i] == 'R')
+            {
+                values[i] += -n;
+                int v = -n;
+                for (int j = i + 1; j < dominoes.size() && dominoes[j] == '.'; j++)
+                {
+                    values[j] += v++;
+                    if (values[j] == 0)
+                        break;
+                }
+            }
+        }
+
+        string ret;
+        for (int i = 0; i < values.size(); i++)
+        {
+            if (values[i] > 0)
+                ret += 'L';
+            else if (values[i] == 0)
+                ret += '.';
+            else
+                ret += 'R';
+        }
+
+        return ret;
+    }
+};
+```
