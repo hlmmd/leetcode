@@ -3708,7 +3708,42 @@ public:
 
 ## [826. Most Profit Assigning Work](https://leetcode.com/problems/most-profit-assigning-work/)
 
-## [837. New 21 Game](https://leetcode.com/problems/new-21-game/)
+给工人安排工作，获取最大的利润。主要是要排序。
+
+```cpp
+class Solution
+{
+public:
+    int maxProfitAssignment(vector<int> &difficulty, vector<int> &profit, vector<int> &worker)
+    {
+        vector<pair<int, int>> p;
+        for (int i = 0; i < difficulty.size(); i++)
+        {
+            p.push_back({difficulty[i], profit[i]});
+        }
+
+        auto comp = [](const pair<int, int> &p1, const pair<int, int> &p2) { return p1.first < p2.first; };
+
+        sort(p.begin(), p.end(), comp);
+        sort(worker.begin(), worker.end());
+
+        int ret = 0;
+        int maxp = 0;
+        int pos = 0;
+
+        for (int i = 0; i < worker.size(); i++)
+        {
+            while (pos < p.size() && p[pos].first <= worker[i])
+            {
+                maxp = max(maxp, p[pos++].second);
+            }
+            ret += maxp;
+        }
+
+        return ret;
+    }
+};
+```
 
 ## [838. Push Dominoes](https://leetcode.com/problems/push-dominoes/)
 
