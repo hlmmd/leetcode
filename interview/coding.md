@@ -964,3 +964,276 @@ int main()
     return 0;
 }
 ```
+
+## 2019.9.1 腾讯
+
+### 宝箱问题
+
+计算两个奇偶数的值,取较小值相加即可
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+    vector<long long> a(n);
+    vector<long long> b(m);
+
+    int a1, a2, b1, b2;
+    a1 = a2 = b1 = b2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        if (a[i] % 2 == 0)
+            a2++;
+        else
+            a1++;
+    }
+    for (int i = 0; i < m; i++)
+    {
+        cin >> b[i];
+        if (b[i] % 2 == 0)
+            b2++;
+        else
+            b1++;
+    }
+
+    int ret = min(a1, b2) + min(a2, b1);
+    cout << ret << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
+### 排队
+
+n个员工排队喝咖啡，有两个属性值a,b。排在第i位的员工满意度为`a[i]*i+b[i]*(n-i+1)`
+
+重新安排顺序，求总满意度最高的序列。
+
+对b-a进行排序。
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+3 
+1 3
+1 1 
+4 1
+*/
+
+int main()
+{	
+	int n;
+	cin >> n;
+
+	vector<pair<long long , long long >> nums(n);
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> nums[i].first >> nums[i].second;
+	}
+	auto comp = [](const pair<long long , long long > &p1, const pair<long long, long long > &p2) {		
+		return (p1.second-p1.first)< (p2.second - p2.first);
+	};
+
+	sort(nums.begin(), nums.end(),comp);
+
+	long long ret = 0;
+	for (int i = 0; i < n; i++)
+	{
+		ret += nums[i].first*(i)+nums[i].second*(n - i - 1);
+	}
+	cout << ret << endl;
+
+	system("pause");
+	return 0;
+}
+```
+
+### 搬箱子
+
+这题太难了，完全不会
+
+1-n，n个位置，每个位置有a[i]个箱子。有m个工人，初始位置是0。
+
+每一秒，一个工人可以：走到下一位置，或者搬走当前位置一个箱子。
+
+求搬完所有的箱子要多少秒。
+
+### 期末总结
+
+数组nums，求 max( min(i,j) * sum(i,j)  );
+
+min(i,j)为[i,j]的最小值，sum[i,j]为[i,j]的和。
+
+之前面字节跳动被问过类似的题，当时用的二分法，超时了
+
+```cpp
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+vector<long long> sum;
+int getminpos(vector<int> &w, int l, int r, int &v)
+{
+    int m = 100000, pos = l;
+    for (int i = l; i <= r; i++)
+    {
+        if (w[i] <= m)
+        {
+            m = w[i];
+            pos = i;
+        }
+    }
+    v = m;
+    return pos;
+}
+
+long long cal(vector<int> &w, int l, int r)
+{
+    if (l > r)
+        return 0;
+    int minv = 0;
+    int pos = getminpos(w, l, r, minv);
+    long long value = 0;
+    if (l > 0)
+        value = minv * (sum[r] - sum[l - 1]);
+    else
+        value = minv * (sum[r]);
+
+    long long v1 = cal(w, l, pos - 1);
+    long long v2 = cal(w, pos + 1, r);
+
+    return max(max(v1, v2), value);
+}
+/*
+5
+7 2 4 6 5
+*/
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> w(n, 0);
+    for (int i = 0; i < n; i++)
+        cin >> w[i];
+
+    sum.resize(n);
+    sum[0] = w[0];
+    for (int i = 1; i < n; i++)
+        sum[i] = sum[i - 1] + w[i];
+
+    int l = 0, r = w.size() - 1;
+    long long ret = 0;
+    int minv = 0;
+
+    cout << cal(w, l, r) << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
+### 种花
+
+白花和红花，一个数k。给他们排列的时候，白花必须是k的整数倍（可以为0），输入一个区间[a,b]，表示在种[a,b]朵花的时候，一共能有多少种种法。
+
+递推公式：`f[i] = f[i-1]+f[i-k]`
+
+只能过50%，答案错误
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+3 2
+1 3
+2 3
+4 4
+
+*/
+
+int main()
+{
+	int t, k;
+	cin >> t;
+	cin >> k;
+	vector<unsigned long long> dp(100001, 0);
+
+	vector<int>va(t);
+	vector<int>vb(t);
+	int m1 = 100001, m2 = 0;
+	for (int n = 0; n < t; n++)
+	{
+		cin >> va[n] >> vb[n];
+		if (k == 0) {
+			cout << vb[n] - va[n] + 1 << endl;
+			continue;
+		}
+
+		if (va[n] < m1)
+			m1 = va[n];
+		if (vb[n] > m2)
+			m2 = vb[n];
+	}
+	if (k == 0)
+		return 0;
+
+	for (int i = 0; i < k; i++)
+		dp[i] = 1;
+	for (int i = k; i <= m2; i++)
+		dp[i] = dp[i - 1] + dp[i - k];
+
+	//	vector<long long > sum(100001, 0);
+	//	for (int i = 1; i <= m2; i++)
+	//		sum[i] = sum[i - 1] + dp[i];
+	int a, b;
+	for (int n = 0; n < t; n++)
+	{
+		if (k == 0) {
+			cout << 1 << endl;
+			continue;
+		}
+		unsigned long long ret = 0;
+		for (int i = va[n]; i <= vb[n]; i++)
+			ret += dp[i];
+		cout << ret << endl;
+	}
+
+	system("pause");
+	return 0;
+}
+```
