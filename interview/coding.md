@@ -972,7 +972,6 @@ int main()
 计算两个奇偶数的值,取较小值相加即可
 
 ```cpp
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -1024,7 +1023,6 @@ n个员工排队喝咖啡，有两个属性值a,b。排在第i位的员工满意
 对b-a进行排序。
 
 ```cpp
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -1087,9 +1085,9 @@ min(i,j)为[i,j]的最小值，sum[i,j]为[i,j]的和。
 
 之前面字节跳动被问过类似的题，当时用的二分法，超时了
 
+poj 2796
+
 ```cpp
-
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -1160,16 +1158,81 @@ int main()
 }
 ```
 
+这是一个单调栈的题目。poj 2796
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+6
+3 1 6 4 5 2
+*/
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> w(n, 0);
+    vector<long long> sum(n + 1, 0);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> w[i];
+        sum[i + 1] = w[i] + sum[i];
+    }
+
+    vector<int> left(n, 0);
+    vector<int> right(n, 0);
+
+    long long ret = 0;
+    stack<int> st;
+    for (int i = 0; i < n; i++)
+    {
+        while (!st.empty() && w[st.top()] >= w[i])
+            st.pop();
+
+        left[i] = st.empty() ? 0 : st.top() + 1;
+        st.push(i);
+    }
+
+    while (!st.empty())
+        st.pop();
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        while (!st.empty() && w[st.top()] >= w[i])
+            st.pop();
+        right[i] = st.empty() ? n : st.top();
+        st.push(i);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        ret = max(ret, (sum[right[i]] - sum[left[i]]) * w[i]);
+    }
+
+    cout << ret << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
 ### 种花
 
 白花和红花，一个数k。给他们排列的时候，白花必须是k的整数倍（可以为0），输入一个区间[a,b]，表示在种[a,b]朵花的时候，一共能有多少种种法。
 
 递推公式：`f[i] = f[i-1]+f[i-k]`
 
-只能过50%，答案错误
+只能过50%，答案错误.
+
+题目忘写取模了，中途给了提示没看到..血亏50%
 
 ```cpp
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
