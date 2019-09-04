@@ -3702,6 +3702,50 @@ public:
 
 ## [813. Largest Sum of Averages](https://leetcode.com/problems/largest-sum-of-averages/)
 
+将数组分成K份，对每一份求平均值，求能得到的平均值和的最大值。
+
+动态规划。 先求sum，以计算一段子数组的和，得到平均值。用dp[i][j]表示数组[0,i]，分成j份后得到的最大和。
+
+```cpp
+class Solution
+{
+public:
+    double largestSumOfAverages(vector<int> &A, int K)
+    {
+        int n = A.size();
+        vector<int> sum(n + 1, 0);
+        for (int i = 0; i < n; ++i)
+        {
+            sum[i + 1] = sum[i] + A[i];
+        }
+        if (K <= 1)
+        {
+            return (1.0 * sum[n]) / n;
+        }
+        if (K >= n)
+        {
+            return sum[n];
+        }
+        vector<vector<double>> dp(n + 1, vector<double>(K + 1, 0.0));
+        for (int i = 1; i <= n; ++i)
+        {
+            dp[i][1] = (1.0 * sum[i]) / i;
+        }
+        for (int k = 2; k <= K; ++k)
+        {
+            for (int i = k; i <= n; ++i)
+            {
+                for (int j = i - 1; j >= k - 1; --j)
+                {
+                    dp[i][k] = max(dp[i][k], dp[j][k - 1] + 1.0 * (sum[i] - sum[j]) / (i - j));
+                }
+            }
+        }
+        return dp[n][K];
+    }
+};
+```
+
 ## [814. Binary Tree Pruning](https://leetcode.com/problems/binary-tree-pruning/)
 
 ## [823. Binary Trees With Factors](https://leetcode.com/problems/binary-trees-with-factors/)
@@ -3714,6 +3758,8 @@ public:
 class Solution
 {
 public:
+
+
     int maxProfitAssignment(vector<int> &difficulty, vector<int> &profit, vector<int> &worker)
     {
         vector<pair<int, int>> p;
