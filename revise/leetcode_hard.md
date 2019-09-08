@@ -88,6 +88,39 @@ public:
 
 给一个括号字符串，求最长的合法括号子串
 
+动态规划，dp[i] = dp[i-1]+2;用leftCount
+
+然后要加上之前已经匹配的括号，以区分(())和()()
+
+```cpp
+class Solution
+{
+public:
+    int longestValidParentheses(string s)
+    {
+        vector<int> dp(s.length(), 0);
+        int result = 0;
+        int leftCount = 0;
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (s[i] == '(')
+            {
+                leftCount++;
+            }
+            else if (leftCount > 0)
+            {
+                dp[i] = dp[i - 1] + 2;
+                //前面已经的匹配的括号如()()
+                dp[i] += (i - dp[i]) >= 0 ? dp[i - dp[i]] : 0;
+                result = max(result, dp[i]);
+                leftCount--;
+            }
+        }
+        return result;
+    }
+};
+```
+
 ## [37. Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)
 
 解数独
