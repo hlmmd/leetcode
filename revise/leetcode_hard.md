@@ -177,3 +177,54 @@ public:
     }
 };
 ```
+
+## [41. First Missing Positive](https://leetcode.com/problems/first-missing-positive/)
+
+给一个整数数组，找到第一个没出现的正整数
+
+## [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
+
+## [44. Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)
+
+正则表达式?和\*
+
+## [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/)
+
+## [51. N-Queens](https://leetcode.com/problems/n-queens/)
+
+N 皇后问题
+
+## [57. Insert Interval](https://leetcode.com/problems/insert-interval/)
+
+将一个新的区间合并到一个已经排序的区间集中。
+
+## [72. Edit Distance](https://leetcode.com/problems/edit-distance/)
+
+字符串的编辑距离
+
+## [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)
+
+## [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
+
+## [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)
+
+01矩阵，找到最大的全1矩阵，返回面积。
+
+## [97. Interleaving String](https://leetcode.com/problems/interleaving-string/)
+
+## [99. Recover Binary Search Tree](https://leetcode.com/problems/recover-binary-search-tree/)
+
+## [115. Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)
+
+## [123. Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
+
+## [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+
+## [126. Word Ladder II](https://leetcode.com/problems/word-ladder-ii/)
+
+## [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)
+
+最长的连续序列。
+
+## [132. Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/)
+
