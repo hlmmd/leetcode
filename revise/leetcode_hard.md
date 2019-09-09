@@ -124,3 +124,56 @@ public:
 ## [37. Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)
 
 解数独
+
+重点就是判断添加一个数后，是否满足每一行每一列以及所有的小格内没有重复数字。
+
+```cpp
+class Solution
+{
+public:
+    bool isvalid(vector<vector<char>> &board)
+    {
+        //	print(board);
+        int n = 9;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (board[i][j] == '.')
+                {
+                    int xa = i / 3 * 3;
+                    int xb = j / 3 * 3;
+                    for (int x = 1 + '0'; x <= 9 + '0'; x++)
+                    {
+                        bool valid = true;
+
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (x == board[i][k] || x == board[k][j] || board[xa + k / 3][xb + k % 3] == x)
+                            {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        if (valid == false)
+                            continue;
+
+                        board[i][j] = x;
+                        if (isvalid(board))
+                            return true;
+                        else
+                            board[i][j] = '.';
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void solveSudoku(vector<vector<char>> &board)
+    {
+        isvalid(board);
+    }
+};
+```
