@@ -50,3 +50,92 @@ int main()
 }
 ```
 
+#### Senate Evacuation
+
+疏散议员。要保证剩下的议员中，不会有一个党派超过半数。
+
+主要思想：先排序，找到人数最少的两个党派，最后撤离。计算两者差值，然后撤离出部分人（从第二少的党派和最多的党派中选择），保证最少的两个党派相同。然后将其他的党派撤出（一次撤出一个人即可，优先撤出人数最多的党派中的一人，直到除了最少的两个党派外所有的党派都已经撤出），然后再撤出这最后两个党派。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    int T;
+    cin >> T;
+    for (int t = 0; t < T; t++)
+    {
+        int N;
+        cin >> N;
+        vector<pair<int, int>> nums(N);
+        for (int i = 0; i < N; i++)
+        {
+            cin >> nums[i].second;
+            nums[i].first = i + 'A';
+        }
+
+        string answer = "";
+        answer += "Case #";
+        answer += to_string((t + 1));
+        answer += ": ";
+
+        if (N == 2)
+        {
+
+            for (int i = 0; i < nums[0].second; i++)
+            {
+                answer += "AB ";
+            }
+        }
+        else
+        {
+            auto comp = [](pair<int, int> &p1, pair<int, int> &p2) {
+                return p1.second < p2.second;
+            };
+
+            sort(nums.begin(), nums.end(), comp);
+
+            int d = nums[1].second - nums[0].second;
+
+            for (int i = 0; i < d; i++)
+            {
+                answer += nums[1].first;
+                answer += nums.back().first;
+                answer += " ";
+            }
+            nums[1].second -= d;
+            nums[N - 1].second -= d;
+
+            while (1)
+            {
+                int i = N - 1;
+                if (nums[i].second == 0)
+                    break;
+                while (i >= 3 && nums[i].second <= nums[i - 1].second)
+                    i--;
+
+                answer += nums[i].first;
+                answer += " ";
+
+                nums[i].second--;
+            }
+
+            for (int i = 0; i < nums[0].second; i++)
+            {
+                answer += nums[0].first;
+                answer += nums[1].first;
+                answer += " ";
+            }
+        }
+
+        cout << answer << endl;
+    }
+    //system("pause");
+    return 0;
+}
+```
