@@ -182,6 +182,36 @@ public:
 
 给一个整数数组，找到第一个没出现的正整数
 
+主要是基于交换。每次将这个数换到其对应所处的位置上。即nums[i]==i+1
+
+```cpp
+class Solution
+{
+public:
+    int firstMissingPositive(vector<int> &nums)
+    {
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+
+            while (nums[i] > 0 && nums[i] <= nums.size() && nums[nums[i] - 1] != nums[i])
+            {
+                int temp = nums[i];
+                nums[i] = nums[temp - 1];
+                nums[temp - 1] = temp;
+            }
+        }
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] != i + 1)
+                return i + 1;
+        }
+        return nums.size() + 1;
+    }
+};
+```
+
 ## [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
 ## [44. Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)
