@@ -13,3 +13,13 @@
 [剑指offer 题解 ](CodingInterviews)
 
 [数据库复习笔记 ](Database)
+
+[设计模式 ](design_pattern)
+
+[google相关](google)
+
+[笔经面经](interview)
+
+[linux相关](linux)
+
+[leetcode集合](revise)
