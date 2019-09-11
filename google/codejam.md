@@ -139,3 +139,48 @@ int main()
     return 0;
 }
 ```
+
+#### cruise control
+
+一条长为D的路，Annie从0骑马出发，速度恒定为v。路上有很多别的马，位置为pos，速度为speed，处于后方的马不会超过前马，问Annie最大的速度为多少，可以满足不会超过别的马。
+
+只需要找到所有马中最慢的那一匹即可。所有在它西边的马会和它一起到达，所有在它东边的马不受影响。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+using namespace std;
+
+int main()
+{
+	int T;
+	cin >> T;
+
+	for (int t = 0; t < T; t++)
+	{
+		int D, N;
+		cin >> D >> N;
+
+		vector<int> pos(N, 0);
+		vector<int> speed(N, 0);
+
+		for (int i = 0; i < N; i++)
+		{
+			cin >> pos[i] >> speed[i];
+		}
+		double s = (double)D / (D - pos[0]) * speed[0];
+		for (int i = 1; i < N; i++)
+		{
+			double temp = (double)D / (D - pos[i]) * speed[i];
+			s = min(temp, s);
+		}
+		printf("Case #%d: %6lf\n", t + 1, s);
+	}
+
+	system("pause");
+	return 0;
+}
+```
