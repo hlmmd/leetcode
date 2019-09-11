@@ -209,11 +209,11 @@ sql查询优化
 
 实现memmove函数
 
-leetcode 23
+[leetcode 23](https://leetcode.com/problems/merge-k-sorted-lists/)
 
 **二叉树的中序遍历迭代器。即next()函数，每次按中序遍历返回二叉树的结点**
 
-
+参考[leetcode 94](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 
 
 
