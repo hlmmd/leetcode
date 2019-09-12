@@ -217,8 +217,7 @@ class Solution
     bool isMatch(string s, string p)
     {
 
-        vector<vector<bool>> dp(s.length() + 1,
-         vector<bool>(p.length() + 1, false));
+        vector<vector<int>> dp(s.length() + 1, vector<int>(p.length() + 1, false));
         dp[0][0] = true;
 
         for (int j = 1; j <= p.length(); j++)
