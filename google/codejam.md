@@ -184,3 +184,70 @@ int main()
 	return 0;
 }
 ```
+
+#### Bathroom Stalls
+
+主要思想：二分。要得到最大值，肯定是选择最中间的两个位置之一，即(X-1)/2和X/2中的一个。所以，每次把一个大的长度X一分为二，得到两个小的长度x0,x1，大的长度个数count(X)-1，小的长度个数count(x0)+=count(X)。用set保存长度，因为要求最大值,O(1)复杂度。用unordered_map保存个数，用于查询。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+#include <set>
+#include <unordered_map>
+using namespace std;
+
+int main()
+{
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++)
+    {
+        long long N, K;
+        cin >> N >> K;
+        set<long long> S;
+        S.insert(N);
+        unordered_map<long long, long long> count;
+        count[N] = 1;
+
+        long long p = 0;
+        for (long long i = 0; i < K; i++)
+        {
+            long long X = *S.rbegin();
+
+            long long x0 = (X - 1) / 2;
+            long long x1 = (X) / 2;
+
+            p += count[X];
+            if (p >= K)
+            {
+                printf("Case #%d: %lld %lld\n", t + 1, x1, x0);
+                break;
+            }
+
+            S.erase(X);
+            S.insert(x0);
+            S.insert(x1);
+            if (count.find(x0) == count.end())
+            {
+                count[x0] = count[X];
+            }
+            else
+                count[x0] += count[X];
+
+            if (count.find(x1) == count.end())
+            {
+                count[x1] = count[X];
+            }
+            else
+                count[x1] += count[X];
+        }
+    }
+
+    system("pause");
+    return 0;
+}
+```
