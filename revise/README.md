@@ -4,6 +4,7 @@
 
 ```cpp
 int findSubstring(string s){
+
         vector<int> map(128,0);
         int counter; // check whether the substring is valid
         int begin=0, end=0; //two pointers, one point to tail and one  head
