@@ -251,3 +251,86 @@ int main()
     return 0;
 }
 ```
+
+### Qualification Round
+
+#### Saving The Universe Again
+
+贪心算法。每次交换最右边的CS组合，这样得到的新的字符串对应的值是最小的。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+#include <set>
+#include <unordered_map>
+using namespace std;
+
+int cal(string &s)
+{
+    int ret = 0;
+    int v = 1;
+    for (int i = 0; i < s.length(); i++)
+    {
+        if (s[i] == 'S')
+        {
+            ret += v;
+        }
+        else
+            v <<= 1;
+    }
+
+    return ret;
+}
+
+int change(string &str)
+{
+    if (str.length() <= 1)
+        return 0;
+    for (int i = str.length() - 2; i >= 0; i--)
+    {
+        if (str[i] == 'C' && str[i + 1] == 'S')
+        {
+            swap(str[i], str[i + 1]);
+            return 1;
+        }
+    }
+    return 0;
+}
+int main()
+{
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++)
+    {
+        int D;
+        cin >> D;
+        string P;
+        cin >> P;
+
+        int temp = cal(P);
+        int step = 0;
+        while (temp > D)
+        {
+            if (change(P))
+            {
+                temp = cal(P);
+                step++;
+            }
+            else
+                break;
+        }
+        if (temp <= D)
+            cout << step << endl;
+        else
+        {
+            cout << "IMPOSSIBLE" << endl;
+        }
+    }
+    system("pause");
+    return 0;
+}
+```
