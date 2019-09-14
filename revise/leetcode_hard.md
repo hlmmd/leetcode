@@ -605,6 +605,51 @@ class Solution
 
 ## [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
 
+单调栈问题
+
+```cpp
+class Solution
+{
+public:
+    int largestRectangleArea(vector<int> &heights)
+    {
+        int ret = 0;
+
+        int n = heights.size();
+        vector<int> left(n, 1);
+        vector<int> right(n, 1);
+
+        stack<int> st;
+
+        for (int i = 0; i < n; i++)
+        {
+            while (!st.empty() && heights[st.top()] >= heights[i])
+                st.pop();
+            left[i] = st.empty() ? i + 1 : i - st.top();
+            st.push(i);
+        }
+
+        while (!st.empty())
+            st.pop();
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            while (!st.empty() && heights[st.top()] >= heights[i])
+                st.pop();
+            right[i] = st.empty() ? n - i : st.top() - i;
+            st.push(i);
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            ret = max(ret, heights[i] * (left[i] + right[i] - 1));
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)
 
 01矩阵，找到最大的全1矩阵，返回面积。
