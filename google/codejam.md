@@ -334,3 +334,79 @@ int main()
     return 0;
 }
 ```
+
+#### Trouble sort
+
+trouble排序，每次隔一个数进行交换，得到一个非递减序列。
+
+但是这个排序存在bug，如果排序完后序列未有序，则输出下标。
+
+将数组按下表的奇偶分成两个数组，分别排序，再合并起来判断。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+#include <set>
+#include <unordered_map>
+using namespace std;
+
+int main()
+{
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++)
+    {
+        int n;
+        cin >> n;
+
+        vector<int> n1;
+        vector<int> n2;
+
+        for (int i = 0; i < n; i++)
+        {
+            int t;
+            cin >> t;
+            if (i % 2 == 0)
+            {
+                n1.push_back(t);
+            }
+            else
+                n2.push_back(t);
+        }
+
+        sort(n1.begin(), n1.end());
+        sort(n2.begin(), n2.end());
+
+        vector<int> nums(n);
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (i % 2 == 0)
+                nums[i] = n1[i / 2];
+            else
+                nums[i] = n2[(i - 1) / 2];
+        }
+
+        int index = -1;
+        for (int i = 0; i < nums.size() - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                index = i;
+                break;
+            }
+        }
+
+        printf("Case #%d: ", t + 1);
+        if (index == -1)
+            cout << "OK" << endl;
+        else
+            cout << index << endl;
+    }
+    system("pause");
+    return 0;
+}
+```
