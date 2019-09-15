@@ -654,6 +654,8 @@ public:
 
 01矩阵，找到最大的全1矩阵，返回面积。
 
+可以转换为84题。可以看成从上往下，一共n个直方图，每个直方图的height[i]即是1的个数，如果为0，则height也为。
+
 ## [97. Interleaving String](https://leetcode.com/problems/interleaving-string/)
 
 ## [99. Recover Binary Search Tree](https://leetcode.com/problems/recover-binary-search-tree/)
