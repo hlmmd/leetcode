@@ -410,3 +410,91 @@ int main()
     return 0;
 }
 ```
+
+#### Go, Gopher!
+
+交互性题目，每次输出一个坐标，然后系统随机在这个点的一圈范围内选择一个点进行挖洞，当洞成一个矩形，且面积大于A后，返回0，0表示成功。
+
+将矩形固定为3*x 的形状，选取中间的点作为中心进行随机即可。如下所示，只选择\*作为中心点进行随机即可。
+
+```
+xxxxxxxxx
+x*xx*xx*x
+xxxxxxxxx
+```
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+#include <set>
+#include <unordered_map>
+using namespace std;
+
+int main()
+{
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++)
+    {
+        int a;
+        cin >> a;
+
+        vector<vector<int>> board(1001, vector<int>(1001, 0));
+
+        int len = a / 3 + (a % 3 != 0);
+
+        len -= 2;
+
+        vector<int> pos;
+        for (int i = 1; i <= len; i += 3)
+        {
+            pos.push_back(i + 1);
+        }
+        if (len % 3 != 1)
+            pos.push_back(len + 1);
+
+        int dx[] = {-1, 0, 1};
+        int dy[] = {-1, 0, 1};
+
+        int i = 0;
+        while (i < pos.size())
+        {
+            int y = 2;
+            int x = pos[i];
+            bool found = false;
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    if (board[dx[j] + x][dy[k] + y] == 0)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (found == false)
+            {
+                i++;
+                continue;
+            }
+
+            cout << x << " " << y << endl;
+            cin >> x >> y;
+            if (x == 0 && y == 0)
+                break;
+            else if (x == -1 && y == -1)
+                exit(0);
+
+            board[x][y] = 1;
+        }
+    }
+    system("pause");
+    return 0;
+}
+```
