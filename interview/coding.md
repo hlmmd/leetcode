@@ -1306,3 +1306,142 @@ int main()
 两道题，要求C语言
 
 第一题实现一个循环队列，第二题类似leetcode 670
+
+### 2019.9.16 英伟达
+
+题目类似Leetcode，只需要写一个类中的函数即可
+
+#### 棋子翻转
+
+很简单，考察基本逻辑
+
+int型参数不加&，一是int型拷贝开销小，二是可以让函数调用是，可以传x-1这种右值。
+
+```cpp
+class Flip
+{
+public:
+    int m, n;
+    bool FF(vector<vector<int>> &A, int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= m || y >= n)
+            return false;
+        A[x][y] = A[x][y] == 1 ? 0 : 1;
+        return true;
+    }
+
+    vector<vector<int>> flipChess(vector<vector<int>> A, vector<vector<int>> f)
+    {
+        // write code here
+        m = A.size();
+        n = A[0].size();
+        for (int i = 0; i < f.size(); i++)
+        {
+            int x = f[i][0] - 1;
+            int y = f[i][1] - 1;
+            FF(A, x - 1, y);
+            FF(A, x + 1, y);
+            FF(A, x, y - 1);
+            FF(A, x, y + 1);
+        }
+
+        return A;
+    }
+};
+```
+
+### 单词最短距离
+
+一篇文章有n个单词，求单词x单词y之间的最短距离。数据量<1000，直接记录下标，然后循环比较即可。
+
+```cpp
+
+class Distance
+{
+public:
+    int getDistance(vector<string> article, int n, string x, string y)
+    {
+        // write code here
+
+        vector<int> posx;
+        vector<int> posy;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (article[i] == x)
+            {
+                posx.push_back(i);
+            }
+            else if (article[i] == y)
+            {
+                posy.push_back(i);
+            }
+        }
+
+        int m = 1001;
+
+        for (int i = 0; i < posx.size(); i++)
+        {
+            for (int j = 0; j < posy.size(); j++)
+            {
+                m = min(m, abs(posx[i] - posy[j]));
+            }
+        }
+        return m;
+    }
+};
+```
+
+### 黑白二叉树 最长单色路径
+
+对于一棵由黑白点组成的二叉树，我们需要找到其中最长的单色简单路径，其中简单路径的定义是从树上的某点开始沿树边走不重复的点到树上的另一点结束而形成的路径，而路径的长度就是经过的点的数量(包括起点和终点)。而这里我们所说的单色路径自然就是只经过一种颜色的点的路径。你需要找到这棵树上最长的单色路径。
+
+给定一棵二叉树的根节点(树的点数小于等于300，请做到O(n)的复杂度)，请返回最长单色路径的长度。这里的节点颜色由点上的权值表示，权值为1的是黑点，为0的是白点。
+
+```cpp
+class LongestPath
+{
+public:
+    int findPath(TreeNode *root)
+    {
+        maxlen(root);
+        return ret;
+    }
+    int ret = 0;
+
+    int maxlen(TreeNode *root)
+    {
+        if (root == NULL)
+            return 0;
+
+        int r = 1;
+
+        int left = 0, right = 0;
+        if (root->left)
+        {
+            if (root->left->val == root->val)
+            {
+                left = maxlen(root->left);
+            }
+            else
+            {
+                maxlen(root->left);
+            }
+        }
+        if (root->right)
+        {
+            if (root->right->val == root->val)
+            {
+                right = maxlen(root->right);
+            }
+            else
+            {
+                maxlen(root->right);
+            }
+        }
+        ret = max(ret, left + right + 1);
+
+        return max(left, right) + 1;
+    }
+};
+```
