@@ -498,3 +498,7 @@ int main()
     return 0;
 }
 ```
+
+#### Cubic UFO
+
+数学问题
