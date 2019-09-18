@@ -502,3 +502,158 @@ int main()
 #### Cubic UFO
 
 数学问题
+
+### round A
+
+#### Waffle Choppers 
+
+切华夫饼。横着切H刀，竖着切V刀，使每一块上面的@个数相同。
+
+先只考虑横着切，每一块相同，可以求出一个横着切的解。同理求出竖着的解。这是**必要不充分**条件，所以需要再检查一下每块是不是都是total/((H+1)*(V+1))
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+#include <set>
+#include <unordered_map>
+using namespace std;
+
+int main()
+{
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++)
+    {
+
+        int R, C, H, V;
+        cin >> R >> C >> H >> V;
+        vector<string> waffle(R);
+
+        vector<int> line(R, 0);
+        vector<int> col(C, 0);
+
+        int total = 0;
+
+        for (int i = 0; i < R; i++)
+        {
+            cin >> waffle[i];
+            for (int j = 0; j < C; j++)
+            {
+                if (waffle[i][j] == '@')
+                {
+                    total++;
+                    line[i]++;
+                    col[j]++;
+                }
+            }
+        }
+        printf("Case #%d: ", t + 1);
+
+        if (total == 0)
+        {
+            cout << "POSSIBLE" << endl;
+            continue;
+        }
+
+        int f = (H + 1) * (V + 1);
+        if (total % f != 0)
+        {
+            cout << "IMPOSSIBLE" << endl;
+            continue;
+        }
+
+        int rowall = total / (H + 1);
+        int colall = total / (V + 1);
+
+        vector<int> rr;
+
+        vector<int> cc;
+
+        int temp = 0;
+        for (int i = 0; i < R; i++)
+        {
+            if (temp + line[i] <= rowall)
+            {
+                temp += line[i];
+            }
+            else if (temp == rowall)
+            {
+                rr.push_back(i);
+                temp = line[i];
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (rr.size() != H)
+        {
+            cout << "IMPOSSIBLE" << endl;
+            continue;
+        }
+
+        temp = 0;
+        for (int i = 0; i < C; i++)
+        {
+            if (temp + col[i] <= colall)
+            {
+                temp += col[i];
+            }
+            else if (temp == colall)
+            {
+                cc.push_back(i);
+                temp = col[i];
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (cc.size() != V)
+        {
+            cout << "IMPOSSIBLE" << endl;
+            continue;
+        }
+
+        rr.push_back(R);
+        cc.push_back(C);
+        for (int i = 0; i < rr.size(); i++)
+        {
+            for (int j = 0; j < cc.size(); j++)
+            {
+                int rs, re, cs, ce;
+                rs = (i == 0) ? 0 : rr[i - 1];
+                re = rr[i];
+                cs = (j == 0) ? 0 : cc[j - 1];
+                ce = cc[j];
+                int count = 0;
+                for (int x1 = rs; x1 < re; x1++)
+                {
+                    for (int x2 = cs; x2 < ce; x2++)
+                    {
+                        count += waffle[x1][x2] == '@';
+                    }
+                }
+                if (count != (total / f))
+                {
+                    goto end;
+                }
+            }
+        }
+
+        cout << "POSSIBLE" << endl;
+        continue;
+    end:
+        cout << "IMPOSSIBLE" << endl;
+    }
+    system("pause");
+    return 0;
+}
+```
