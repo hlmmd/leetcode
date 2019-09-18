@@ -697,6 +697,39 @@ public:
 
 ## [115. Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)
 
+求s有多少个t子序列。动态规划，首先dp[i][j]+=dp[i-1][j]，因为dp[i]包含dp[i-1]，然后考虑dp[i]包含s[i-1]的子序列，必须满足s[i-1]==s[j-1]才会选择s[i-1]，此时可以将两个字符串的最后一位去掉，即dp[i-1][j-1]。
+
+```cpp
+class Solution
+{
+public:
+    int numDistinct(string s, string t)
+    {
+
+        int m = s.length();
+        int n = t.length();
+        vector<vector<long long>> dp(m + 1, vector<long long>(n + 1));
+
+        for (int i = 0; i <= m; i++)
+            dp[i][0] = 1;
+
+        for (int i = 1; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                dp[i][j] += dp[i - 1][j];
+                if (s[i - 1] == t[j - 1])
+                {
+                    dp[i][j] += dp[i - 1][j - 1];
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
+};
+```
+
 ## [123. Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
 
 ## [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
