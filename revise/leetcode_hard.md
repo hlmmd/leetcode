@@ -730,9 +730,35 @@ public:
 };
 ```
 
-## [123. Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
-
 ## [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+
+求二叉树上的最大路径和，和求二叉树的最长半径类似
+
+```cpp
+class Solution
+{
+public:
+    int maxvalue;
+    int maxPathSum(TreeNode *root)
+    {
+        maxvalue = INT_MIN;
+        helper(root);
+        return maxvalue;
+    }
+
+    int helper(TreeNode *root)
+    {
+        if (root == NULL)
+        {
+            return 0;
+        }
+        int left = max(0, helper(root->left));
+        int right = max(0, helper(root->right));
+        maxvalue = max(maxvalue, left + right + root->val);
+        return max(left, right) + root->val;
+    }
+};
+```
 
 ## [126. Word Ladder II](https://leetcode.com/problems/word-ladder-ii/)
 
