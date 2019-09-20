@@ -766,5 +766,36 @@ public:
 
 最长的连续序列。
 
+可以先排序，再求值。但是要求O(n)复杂度
+
+```cpp
+class Solution
+{
+  public:
+	int longestConsecutive(vector<int> &nums)
+	{
+		sort(nums.begin(), nums.end());
+
+		if (nums.size() <= 0)
+			return 0;
+
+		vector<int> flags(nums.size(), 1);
+		int ret = flags[0];
+		for (int i = 1; i < nums.size(); i++)
+		{
+			if (nums[i] == (nums[i - 1] + 1))
+				flags[i] = flags[i - 1] + 1;
+			else if (nums[i] == nums[i - 1])
+			{
+				flags[i] = flags[i - 1];
+			}
+			ret = max(ret, flags[i]);
+		}
+
+		return ret;
+	}
+};
+```
+
 ## [132. Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/)
 
