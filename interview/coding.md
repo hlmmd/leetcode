@@ -1445,3 +1445,256 @@ public:
     }
 };
 ```
+
+### 2019.9.20 腾讯
+
+#### 电话号码
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+int main()
+{
+
+    int t;
+    cin >> t;
+    for (int x = 0; x < t; x++)
+    {
+        int n;
+        cin >> n;
+        string str;
+        cin >> str;
+
+        int len = 0;
+        for (; len < str.length(); len++)
+        {
+            if (str[len] == '8')
+                break;
+        }
+        int remain = str.length() - len;
+        if (remain >= 11)
+        {
+            cout << "YES" << endl;
+        }
+        else
+            cout << "NO" << endl;
+    }
+
+    system("pause");
+    return 0;
+}
+```
+
+#### 分工
+
+排序，贪心。
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+3
+1 8
+2 5
+1 2 
+*/
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    vector<pair<int, int>> dp(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> dp[i].first >> dp[i].second;
+    }
+
+    auto comp = [](pair<int, int> &p1, pair<int, int> &p2) { return p1.second < p2.second; };
+    sort(dp.begin(), dp.end(), comp);
+
+    long long maxtime = 0;
+
+    int left = 0, right = dp.size() - 1;
+    while (left <= right)
+    {
+        long long temp = dp[left].second + dp[right].second;
+        maxtime = max(temp, maxtime);
+        dp[left].first--;
+        if (dp[left].first == 0)
+            left++;
+        dp[right].first--;
+        if (dp[right].first == 0)
+            right--;
+    }
+    cout << maxtime << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
+#### 最小数
+
+每次找出最小数x，然后其他所有不为0的数-x，再
+
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+7 5
+5 8 10 3 6  10 8
+*/
+
+int main()
+{
+
+    int n, k;
+    cin >> n >> k;
+    vector<int> value(n);
+    for (int i = 0; i < n; i++)
+        cin >> value[i];
+
+    sort(value.begin(), value.end());
+
+    int index = 0;
+    int last = 0;
+
+    for (int i = 0; i < k; i++)
+    {
+        if (index >= n)
+        {
+            cout << 0 << endl;
+            continue;
+        }
+        cout << value[index] - last << endl;
+        last = value[index];
+        while (index < value.size() && value[index] == last)
+            index++;
+    }
+
+    system("pause");
+    return 0;
+}
+```
+
+#### 亦或运算
+
+两个大小为n的数组，两两求和，得到n^2个数，求这些数的亦或值。
+
+[解答](https://blog.csdn.net/hypHuangYanPing/article/details/80612781
+)
+
+#### 分组问题
+
+n个人，分成两组，要求两组人数差不超过1。并且两个组的战斗力差值最小。
+
+思路是先从大到小排序，然后dfs，当到达size()/2时，计算一次结果，取差值最小值。
+
+**然而20%**
+
+没注意题目是不是给定n>=2
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+2
+4
+5 9 4 7
+11
+9 13 18 18 12 4 18 3 22 19 20000
+*/
+
+#define BIG 100005
+
+int sum = 0;
+int mindist = BIG;
+
+int result = 0;
+
+void dfs(vector<int> &nums, int count, int index, int total)
+{
+	if (mindist == 0)
+		return;
+	if (index >= nums.size())
+		return;
+	if (nums.size() / 2 == count)
+	{
+		int dist = abs((sum - total) - total);
+		if (dist < mindist)
+		{
+			result = min(total, sum - total);
+			mindist = dist;
+		}
+
+		return;
+	}
+
+	if (total > sum / 2)
+		return;
+
+	for (int i = index; i < nums.size(); i++)
+	{
+		dfs(nums, count + 1, i + 1, total + nums[i]);
+	}
+
+}
+
+
+int main()
+{
+	int T;
+	cin >> T;
+	for (int t = 0; t < T; t++)
+	{
+		int n;
+		cin >> n;
+		vector<int> nums(n);
+		sum = 0;
+		mindist = BIG;
+		for (int i = 0; i < n; i++)
+		{
+			cin >> nums[i];
+			sum += nums[i];
+		}
+
+		auto comp = [](int &a, int &b) {return a > b; };
+		sort(nums.begin(), nums.end(), comp);
+
+		result = 0;
+		dfs(nums, 0, 0, 0);
+		cout << result << " " << sum - result << endl;
+
+	}
+
+	system("pause");
+	return 0;
+}
+```
