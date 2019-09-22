@@ -1446,9 +1446,9 @@ public:
 };
 ```
 
-### 2019.9.20 腾讯
+## 2019.9.20 腾讯
 
-#### 电话号码
+### 电话号码
 
 ```cpp
 #include <iostream>
@@ -1491,7 +1491,7 @@ int main()
 }
 ```
 
-#### 分工
+### 分工
 
 排序，贪心。
 
@@ -1547,7 +1547,7 @@ int main()
 }
 ```
 
-#### 最小数
+### 最小数
 
 每次找出最小数x，然后其他所有不为0的数-x，再
 
@@ -1598,14 +1598,14 @@ int main()
 }
 ```
 
-#### 亦或运算
+### 亦或运算
 
 两个大小为n的数组，两两求和，得到n^2个数，求这些数的亦或值。
 
 [解答](https://blog.csdn.net/hypHuangYanPing/article/details/80612781
 )
 
-#### 分组问题
+### 分组问题
 
 n个人，分成两组，要求两组人数差不超过1。并且两个组的战斗力差值最小。
 
@@ -1643,8 +1643,7 @@ void dfs(vector<int> &nums, int count, int index, int total)
 {
 	if (mindist == 0)
 		return;
-	if (index >= nums.size())
-		return;
+
 	if (nums.size() / 2 == count)
 	{
 		int dist = abs((sum - total) - total);
@@ -1696,5 +1695,144 @@ int main()
 
 	system("pause");
 	return 0;
+}
+```
+
+## 2019.9.22 微软
+
+### 不同字符串
+
+定义两个字符串s1,s2，如果s1交换i,j位两个字符，并且ij满足i+j%2==0，那么s1和s2相同。求一组字符串中不同字符串的个数。
+
+将每个字符串按奇偶拆分成两个子字符串，然后排序，放到一个pair中，再把pair放入set中，返回set的size即可。
+
+```cpp
+int func(int input1, const char *input2[])
+{
+    set<pair<string, string>> ss;
+    for (int n = 0; n < input1; n++)
+    {
+        vector<char> s1;
+        vector<char> s2;
+        for (int i = 0; input2[n][i]; i++)
+        {
+            if (i % 2 == 0)
+                s1.push_back(input2[n][i]);
+            else
+                s2.push_back(input2[n][i]);
+        }
+        sort(s1.begin(), s1.end());
+        sort(s2.begin(), s2.end());
+
+        pair<string, string> p;
+        for (int i = 0; i < s1.size(); i++)
+            p.first += s1[i];
+        for (int i = 0; i < s2.size(); i++)
+            p.second += s2[i];
+
+        ss.insert(p);
+    }
+    return ss.size();
+}
+```
+
+### 熟练度问题
+
+一开始熟练度为0，给一个数组表示锻炼，长度为K，每个元素是素数，如[2,3,5,7...]，求最少需要锻炼多少次，能够到达刚好N熟练度，如果不能实现，返回-1
+
+同leetcode 322找零问题，加了一个求质数
+
+```cpp
+int minDays(int input1, int input2)
+{
+    vector<int> prime;
+    int n = 2;
+    while (1)
+    {
+        if (prime.size() >= input2)
+            break;
+        bool flag = false;
+        for (int i = 2; i <= n / 2; i++)
+        {
+            if (n % i == 0)
+            {
+                flag = true;
+                break;
+            }
+        }
+        if (flag == false)
+            prime.push_back(n);
+        n++;
+    }
+
+    vector<int> dp(input1 + 1, input1);
+    dp[0] = 0;
+    for (int i = 1; i <= input1; i++)
+    {
+        for (int j = 0; j < prime.size(); j++)
+        {
+            if (i < prime[j])
+                break;
+            dp[i] = min(dp[i], dp[i - prime[j]] + 1);
+        }
+    }
+
+    return dp[input1] == input1 ? -1 : dp[input1];
+}
+```
+
+### 特殊的数
+
+如果一个数能够拆成两个数的和，且n2 = reverse(n1)，那么这是一个特殊的数
+
+求数组中有多少个特殊的数。
+
+只会暴力求解。
+
+非暴力求解目前能想到考虑某一位能够由哪两个数相加得到，以及是否产生进位等。如
+
+6 = [0,6],[1,5],[2,4],[3,3],[7,9],[8,8]
+
+```cpp
+int is_special(const char *input1[], int input2)
+{
+    vector<int> nums(input2);
+    for (int i = 0; i < input2; i++)
+    {
+        nums[i] = atoi(input1[i]);
+    }
+    int count = 0;
+
+    for (int i = 0; i < input2; i++)
+    {
+        if (nums[i] == 0)
+        {
+            count++;
+            break;
+        }
+        int len = strlen(input1[i]);
+
+        int begin = 1;
+        for (int i = 1; i < len - 1; i++)
+            begin *= 10;
+
+        for (int n = begin; n <= nums[i]; n++)
+        {
+            string sr = "";
+            int temp = n;
+            while (temp)
+            {
+                sr += temp % 10 + '0';
+                temp /= 10;
+            }
+            //   reverse(sr.begin(),sr.end());
+            if (atoi(sr.c_str()) + n == nums[i])
+            {
+                count++;
+                break;
+            }
+        }
+    }
+    return count;
 }
 ```
