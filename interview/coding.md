@@ -1810,13 +1810,8 @@ int is_special(const char *input1[], int input2)
             count++;
             break;
         }
-        int len = strlen(input1[i]);
 
-        int begin = 1;
-        for (int i = 1; i < len - 1; i++)
-            begin *= 10;
-
-        for (int n = begin; n <= nums[i]; n++)
+        for (int n = 1 ; n <= nums[i]; n++)
         {
             string sr = "";
             int temp = n;
@@ -1825,7 +1820,6 @@ int is_special(const char *input1[], int input2)
                 sr += temp % 10 + '0';
                 temp /= 10;
             }
-            //   reverse(sr.begin(),sr.end());
             if (atoi(sr.c_str()) + n == nums[i])
             {
                 count++;
