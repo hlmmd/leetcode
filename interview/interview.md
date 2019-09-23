@@ -225,5 +225,16 @@ sql查询优化
 
 参考[leetcode 94](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 
+## 2019.9.23 ucloud 现场
 
+内核有哪些功能模块
 
+vfs系统的作用
+
+虚函数表存在哪里？
+
+errno是线程安全的么
+
+其他的记不得了，答上来的不多
+
+算法题问了二叉树层序遍历、stl 迭代器失效问题，该怎么写
