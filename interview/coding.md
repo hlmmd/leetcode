@@ -1,5 +1,99 @@
 # 编程题
 
+## 2019.3.17 招行
+
+### 修理桌子
+
+```
+Arthur最近搬到了新的别墅，别墅特别大，原先的桌子显得比较小，所以他决定换一张新的桌子。他买了一张特别大的桌子，桌子是由很多条桌腿进行支撑的，可是回到家之后他发现桌子不稳，原来是桌子腿长度不太相同。他想要自己把桌子修理好，所以他决定移除掉一些桌腿来让桌子变得平稳。桌子腿总共有n条腿，第i条腿长度为li，Arthur移除第i桌腿要花费代价为di。假设k条腿桌子平稳的条件:超过一半桌腿能够达到桌腿长度的最大值。例如：一条腿的桌子是平稳的，两条腿的桌子腿一样长时是平稳的。请你帮Arthur计算一下是桌子变平稳的最小总代价。
+
+输入描述:
+输入:
+    第一行数据是一个整数：n (1≤n≤105)，n表示桌腿总数。
+    第二行数据是n个整数：l1, l2, ..., ln (1≤li≤105)，表示每条桌腿的长度。
+    第三行数据是n个整数：d1, d2, ..., dn (1≤di≤200)，表示移除每条桌腿的代价。
+
+输出描述:
+输出:
+    输出让桌子变平稳的最小总代价
+```
+
+先按腿长排序，从大往小指定腿长。那么最后剩下的，必然是当前腿长，n条，以及n-1条代价最大的小退长。所以，对小于当前腿长的数组按代价降序排列，计算总代价。
+
+```cpp
+#include <climits>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+/*
+6
+2 2 1 1 3 3
+4 3 5 5 2 1
+
+*/
+
+int main()
+{
+
+    int n;
+    cin >> n;
+    vector<pair<int, int>> p(n);
+    vector<int> len(n);
+    vector<int> D(n);
+    for (int i = 0; i < n; i++)
+        cin >> p[i].first;
+    for (int i = 0; i < n; i++)
+        cin >> p[i].second;
+
+    auto comp = [](pair<int, int> &p1, pair<int, int> &p2) { return p1.first > p2.first; };
+    auto comp2 = [](pair<int, int> &p1, pair<int, int> &p2) { return p1.second > p2.second; };
+
+    sort(p.begin(), p.end(), comp);
+
+    int mind = INT_MAX;
+
+    int d1 = 0;
+
+    int last = 0;
+    int templen = p[0].first;
+    int bigpart = 0;
+    int tempd = 0;
+    for (int i = 0; i < p.size(); i++)
+    {
+        if (p[i].first != templen)
+        {
+            tempd = 0;
+            int len = i - last;
+            templen = p[i].first;
+            vector<pair<int, int>> remain(p.begin() + i, p.end());
+            sort(remain.begin(), remain.end(), comp2);
+
+            for (int i = len - 1; i < remain.size(); i++)
+            {
+                tempd += remain[i].second;
+            }
+            tempd += bigpart;
+
+            mind = min(mind, tempd);
+
+            for (int j = last; j < i; j++)
+                bigpart += p[j].second;
+
+            last = i;
+        }
+    }
+    cout << mind << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
 ## 招行M-geeker初赛
 
 注意：需要用long long int 的一概用long long int
