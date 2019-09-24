@@ -2074,3 +2074,123 @@ int main()
     return 0;
 }
 ```
+
+## 2019.9.24 leetcode 竞赛
+
+###  猜数字
+
+送分题
+
+```cpp
+class Solution
+{
+public:
+    int game(vector<int> &guess, vector<int> &answer)
+    {
+        int count = 0;
+        for (int i = 0; i < guess.size(); i++)
+        {
+            if (guess[i] == answer[i])
+                count++;
+        }
+        return count;
+    }
+};
+```
+
+###  分式化简
+
+a0+1/((a1+1/a2+...) )
+
+化简一个分式成分子分母的样式。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> fraction(vector<int> &cont)
+    {
+
+        vector<int> r(2);
+        auto ret = helper(cont, 0);
+        r[0] = ret.first;
+        r[1] = ret.second;
+
+        return r;
+    }
+
+    pair<int, int> helper(vector<int> &cont, int begin)
+    {
+        pair<int, int> ret = {0, 1};
+        if (begin >= cont.size())
+            return ret;
+
+        auto p = helper(cont, begin + 1);
+        if (begin != 0)
+        {
+            ret.second = cont[begin] * p.second + p.first;
+            ret.first = p.second;
+        }
+        else
+        {
+            ret.first = cont[begin] * p.second + p.first;
+            ret.second = p.second;
+        }
+
+        return ret;
+    }
+};
+```
+
+### 机器人冒险
+
+给定一个序列，U表示向上走，R表示向右走，机器人循环执行。一开始在(0,0)，判断能否走到(x,y)，并且不碰到任何的障碍。（到达终点时碰到障碍也返回true）
+
+x+y是走的步数，通过步数计算走过了多少个循环，然后再计算具体的位置。判断障碍时也先判断ox+oy是不是比x+y小,只有小的时候才需要检测
+
+```cpp
+class Solution
+{
+public:
+    bool canreach(string &command, int cx, int cy, int x, int y)
+    {
+        int all = x + y;
+        int n = all / (cx + cy);
+        int mod = all % (cx + cy);
+        int sx = n * cx;
+        int sy = n * cy;
+
+        for (int i = 0; i < mod; i++)
+        {
+            if (command[i] == 'U')
+                sy++;
+            else
+                sx++;
+        }
+        return sx == x && sy == y;
+    }
+
+    bool robot(string command, vector<vector<int>> &obstacles, int x, int y)
+    {
+
+        int cx = 0, cy = 0;
+        for (int i = 0; i < command.size(); i++)
+        {
+            if (command[i] == 'U')
+                cy++;
+            else
+                cx++;
+        }
+        if (canreach(command, cx, cy, x, y) == false)
+            return false;
+
+        for (int i = 0; i < obstacles.size(); i++)
+        {
+            if ((obstacles[i][0] + obstacles[i][1] < x + y) && canreach(command, cx, cy, obstacles[i][0], obstacles[i][1]))
+                return false;
+        }
+
+        return true;
+    }
+};
+```
