@@ -799,7 +799,33 @@ class Solution
 
 ## [132. Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/)
 
+一个字符串能够拆分成多少个回文序列
 
+```cpp
+class Solution
+{
+public:
+    int minCut(string s)
+    {
+        int n = s.size();
+        vector<int> dp(n + 1, 0);
+
+        //s的(0,i)子串最大切分数目为i-1，即全部分成单个字符，注意，要将字符串为0赋值为-1
+        for (int i = 0; i < dp.size(); i++)
+            dp[i] = i - 1;
+        for (int i = 0; i < n; i++)
+        {
+            //分奇偶两种情况。j表示到i的距离。如果从i-j到i+j都是回文串，
+            //那么对 dp[i+j+1]，可以将[i-j]到[i+j]作为一个分割。其值是dp[i-j]+1，与原值比较取较小值即可
+            for (int j = 0; j <= i && i + j < n && s[i - j] == s[i + j]; j++)
+                dp[i + j + 1] = min(dp[i + j + 1], dp[i - j] + 1);
+            for (int j = 1; j <= i + 1 && i + j < n && s[i + 1 - j] == s[i + j]; j++)
+                dp[i + j + 1] = min(dp[i + j + 1], dp[i + 1 - j] + 1);
+        }
+        return dp[n];
+    }
+};
+```
 
 ## [135. Candy](https://leetcode.com/problems/candy/)
 
