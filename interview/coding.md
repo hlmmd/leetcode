@@ -1924,3 +1924,153 @@ int is_special(const char *input1[], int input2)
     return count;
 }
 ```
+
+## 2019.9.24 声网agora
+
+这个笔试没有设置开始时间，随时可以做。两个小时，18道单选+4道多选+2道编程。选择题比较难，编程题简单。
+
+### 砝码称重
+
+给定一个n维数组，每个数表示一个砝码重量，假设每种砝码有无数个，问这些不同重量的砝码能否通过天平称量任何一个物体的重量（整数）
+
+就是求是不是存在两个互质的数。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+#include <set>
+using namespace std;
+
+int cal(int a, int b)
+{
+    int m = min(a, b);
+    int m2 = max(a, b);
+    if (m2 % m == 0)
+        return m;
+    return cal(m2 % m, m);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> weight(n);
+    for (int i = 0; i < n; i++)
+        cin >> weight[i];
+
+    //sort(weight.begin(), weight.end());
+
+    if (weight[0] == 1)
+    {
+        cout << "YES" << endl;
+        return 0;
+    }
+
+    int x = weight[0];
+    for (int i = 1; i < weight.size(); i++)
+    {
+        int t = cal(weight[i], x);
+        x = min(x, t);
+
+        if (x == 1)
+        {
+            cout << "YES" << endl;
+            return 0;
+        }
+    }
+    cout << "NO" << endl;
+
+    system("pause");
+    return 0;
+}
+```
+
+### 字符串转换
+
+给定字符串s、t、p。s是原始字符，t是目标字母。问，每次操作都是将p中的任意一个字符移动到s中的任意位置，问s能不能变成t。
+
+s要能变成t需要满足两个条件，一是s+p的各个字母个数大于t中的字母个数，二是s必须是t的一个子序列。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <stack>
+#include <set>
+using namespace std;
+
+/*
+4
+ab
+acxb
+cax
+a
+aaaa
+aaabbcc
+a
+aaaa
+aabbcc
+ab
+baaa
+aaaaa
+*/
+
+bool isSubsequence(string s, string t)
+{
+    int i = 0, j = 0;
+    while (i < s.length() && j < t.length())
+    {
+        if (s[i] == t[j])
+            i++;
+        j++;
+    }
+    return i == s.length();
+}
+
+int main()
+{
+    int q;
+    cin >> q;
+    for (int qq = 0; qq < q; qq++)
+    {
+        string s, t, p;
+        cin >> s >> t >> p;
+        bool flag = true;
+        vector<int> count(128, 0);
+        if (!isSubsequence(s, t))
+        {
+            cout << "NO" << endl;
+            continue;
+        }
+
+        for (int i = 0; i < s.length(); i++)
+            count[s[i]]++;
+
+        for (int i = 0; i < p.length(); i++)
+            count[p[i]]++;
+
+        for (int i = 0; i < t.length(); i++)
+        {
+            if (count[t[i]] <= 0)
+            {
+                flag = false;
+                break;
+            }
+            count[t[i]]--;
+        }
+        if (flag)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
+    }
+
+    system("pause");
+    return 0;
+}
+```
