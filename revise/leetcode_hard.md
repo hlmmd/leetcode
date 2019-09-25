@@ -829,9 +829,45 @@ public:
 
 ## [135. Candy](https://leetcode.com/problems/candy/)
 
+给n个小朋友发糖果，每个人至少一个，每个人有一个期望值，如果比相邻的两个人期望值高，那么要拿到更多的糖，问最少发多少糖能满足要求
+
+```cpp
+class Solution
+{
+public:
+    int candy(vector<int> &ratings)
+    {
+        if (ratings.size() <= 1)
+            return ratings.size();
+
+        vector<int> nums(ratings.size(), 1);
+
+        for (int i = 1; i < nums.size(); i++)
+        {
+            if (ratings[i] > ratings[i - 1])
+                nums[i] = nums[i - 1] + 1;
+        }
+
+        for (int i = nums.size() - 2; i >= 0; i--)
+        {
+            if (ratings[i] > ratings[i + 1])
+                nums[i] = max(nums[i], nums[i + 1] + 1);
+        }
+
+        int result = 0;
+        for (auto &num : nums)
+            result += num;
+
+        return result;
+    }
+};
+```
+
 ## [140. Word Break II](https://leetcode.com/problems/word-break-ii/)
 
 ## [145. Binary Tree Postorder Traversal](https://leetcode.com/problems/binary-tree-postorder-traversal/)
+
+## [146. LRU Cache](https://leetcode.com/problems/lru-cache/)
 
 ## [164. Maximum Gap](https://leetcode.com/problems/maximum-gap/)
 
