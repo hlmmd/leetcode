@@ -871,6 +871,63 @@ public:
 
 ## [146. LRU Cache](https://leetcode.com/problems/lru-cache/)
 
+实现一个LRU，使get()获取一个页面put()添加一个页面的时间复杂度均为O(1)
+
+使用哈希表+双向链表。
+
+Cachelist是一个list，用来实现O(1)时间内删除结点。当一个结点被touch(put或者get时)，将其从原链表中删除，再插入表头。如果发生缺页，没有命中，那么直接删除表尾，将新的页面加入表头。
+
+```cpp
+class LRUCache
+{
+  public:
+    int cap;
+    list<int> Cachelist;
+    unordered_map<int, list<int>::iterator> pos_dict;
+    unordered_map<int, int> value_dict;
+
+    LRUCache(int capacity)
+    {
+        cap = capacity;
+    }
+
+    int get(int key)
+    {
+        if (value_dict.find(key) == value_dict.end())
+            return -1;
+        touch(key);
+        return value_dict[key];
+    }
+    int touch(int key)
+    {
+
+        auto pos = pos_dict.find(key);
+        if (pos == pos_dict.end() && Cachelist.size() == cap)
+        {
+            int old = Cachelist.back();
+            Cachelist.pop_back();
+            value_dict.erase(old);
+            pos_dict.erase(old);
+        }
+        else if (pos != pos_dict.end())
+        {
+            Cachelist.erase(pos[key]);
+        }
+
+        Cachelist.push_front(key);
+        pos_dict[key] = Cachelist.begin();
+
+        return 0;
+    }
+    void put(int key, int value)
+    {
+
+        touch(key);
+        cache[key] = value;
+    }
+};
+```
+
 ## [164. Maximum Gap](https://leetcode.com/problems/maximum-gap/)
 
 ## [174. Dungeon Game](https://leetcode.com/problems/dungeon-game/)
