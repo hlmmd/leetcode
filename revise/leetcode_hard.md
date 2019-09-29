@@ -930,6 +930,65 @@ class LRUCache
 
 ## [164. Maximum Gap](https://leetcode.com/problems/maximum-gap/)
 
+一个未排序的数组，求当数组有序后，相邻两个数的最大差值。要求时间复杂度O(n)
+
+最简单就是直接排序，但是时间复杂度不满足。需要使用桶排序。
+
+将数组分组。因为最大的gap不会小于 (maxV - minV) / (nums.size() - 1)，所以将数组分成(maxV - minV) / bucketsize + 1个桶，每个桶内的两个数必定不会符合要求，因为其差值小于bucketsize。所以gap的值一定是在两个桶之间取得的。用下一个桶的最小值减去上一个桶的最大值，就能获得一个gap，取最大值即可。
+
+```cpp
+class Solution
+{
+  public:
+    int maximumGap(vector<int> &nums)
+    {
+
+        if (nums.size() <= 1)
+            return 0;
+
+        int minV = INT_MAX;
+        int maxV = INT_MIN;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] > maxV)
+                maxV = nums[i];
+            if (nums[i] < minV)
+                minV = nums[i];
+        }
+
+        int bucketsize = (maxV - minV) / (nums.size() - 1);
+
+        if (bucketsize < 1)
+            bucketsize = 1;
+        int bucketnum = (maxV - minV) / bucketsize + 1;
+
+        vector<int> minbucket(bucketnum, INT_MAX);
+        vector<int> maxbucket(bucketnum, INT_MIN);
+
+        for (auto num : nums)
+        {
+            int pos = (num - minV) / bucketsize;
+            minbucket[pos] = min(num, minbucket[pos]);
+            maxbucket[pos] = max(num, maxbucket[pos]);
+        }
+
+        int i = 0, j;
+        int gap = maxbucket[0] - minbucket[0];
+        while (i < bucketnum)
+        {
+            j = i + 1;
+            while (j < bucketnum && minbucket[j] == INT_MAX && maxbucket[j] == INT_MIN)
+                j++;
+            if (j == bucketnum)
+                break;
+            gap = max(gap, minbucket[j] - maxbucket[i]);
+            i = j;
+        }
+        return gap;
+    }
+};
+```
+
 ## [174. Dungeon Game](https://leetcode.com/problems/dungeon-game/)
 
 ## [188. Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)
