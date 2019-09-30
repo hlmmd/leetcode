@@ -991,6 +991,33 @@ class Solution
 
 ## [174. Dungeon Game](https://leetcode.com/problems/dungeon-game/)
 
+打怪游戏。最少需要多少初始血量才能救到公主。主要难点是必须保证每一步的血量都不低于1。
+
+依然是动态规划，不过是在底部和右侧添加dummy，并从右下角往左上角遍历。当需要的血量>0时，记为1.
+
+```cpp
+class Solution
+{
+  public:
+    int calculateMinimumHP(vector<vector<int>> &dungeon)
+    {
+        int M = dungeon.size();
+        int N = dungeon[0].size();
+        vector<vector<int>> hp(M + 1, vector<int>(N + 1, INT_MAX));
+        hp[M][N - 1] = 1;
+        for (int i = M - 1; i >= 0; i--)
+        {
+            for (int j = N - 1; j >= 0; j--)
+            {
+                int need = min(hp[i + 1][j], hp[i][j + 1]) - dungeon[i][j];
+                hp[i][j] = need <= 0 ? 1 : need;
+            }
+        }
+        return hp[0][0];
+    }
+};
+```
+
 ## [188. Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
 ## [212. Word Search II](https://leetcode.com/problems/word-search-ii/)
