@@ -1020,6 +1020,55 @@ class Solution
 
 ## [188. Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
+买卖股票的时机。当有至多k次交易机会时，最大能够获利多少？
+
+当k的值比较大的时候，可以简单计算，因为交易次数充足。
+
+当k较小时，使用动态规划，dp[k][len]表示股票[0,len]序列在最多k次交易的情况下能够获得的最大利润。
+
+动态规划基本公式：
+
+```cpp
+    dp[k, i] = max(dp[k, i-1], prices[i] - prices[j] + dp[k-1, j-1]), j=[0..i-1]
+```
+
+先对k循环，再对len循环。tmpmin用来记录当前最小的买入值。用price[j]-tmpmin能够获取当前的最大利润。对于股票prices[j]，如果没有使用，那么dp[i][j]=dp[i][j-1]，如果使用了，那么dp[i][j] = prices[j]-tmpmin。
+
+tmpmin则可以`prices[j] - dp[i - 1][j - 1]`计算得来。即在prices[j]的基础上减去之前计算的结果，求一个最小值。
+
+```cpp
+class Solution
+{
+  public:
+    int maxProfit(int k, vector<int> &prices)
+    {
+        int len = prices.size();
+        if (k >= len / 2)
+        {
+            int ret = 0;
+            for (int i = 1; i < len; i++)
+                //当交易次数充足时，只要是递增的相邻两数，都可以获利
+                if (prices[i] > prices[i - 1])
+                    ret += prices[i] - prices[i - 1];
+            return ret;
+        }
+
+        vector<vector<int>> dp(k + 1, vector<int>(len, 0));
+        for (int i = 1; i <= k; i++)
+        {
+            int tmpmin = prices[0];
+            for (int j = 1; j < len; j++)
+            {
+                tmpmin = min(tmpmin, prices[j] - dp[i - 1][j - 1]);
+                dp[i][j] = max(dp[i][j - 1], prices[j] - tmpmin);
+            }
+        }
+
+        return dp[k][len - 1];
+    }
+};
+```
+
 ## [212. Word Search II](https://leetcode.com/problems/word-search-ii/)
 
 ## [214. Shortest Palindrome](https://leetcode.com/problems/shortest-palindrome/)
