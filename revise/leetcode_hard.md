@@ -1164,6 +1164,40 @@ class Solution
 
 ## [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
+给定一个数组，求所有长度为k的每一个滑动窗口中的最大值。
+
+使用deque(双向队列)，队列中的数保持递减、个数小于k。这样既能满足滑动窗口大小的要求，又能在需要求最大值的时候，直接取队头。而且当窗口大小到达k时，可以直接把队头pop掉。
+
+```cpp
+class Solution
+{
+  public:
+    vector<int> maxSlidingWindow(vector<int> &nums, int k)
+    {
+
+        deque<int> dq;
+        vector<int> ret;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            //当滑动窗口的大小大于k时，将第一个数出队列。
+            if (!dq.empty() && dq.front() == i - k)
+                dq.pop_front();
+            //比较队尾和Nums[i]的关系，如果比nums[i]小，
+            //这些值一定不能成为最终选用的值，不考虑，直接出队即可。
+            while (!dq.empty() && nums[dq.back()] < nums[i])
+                dq.pop_back();
+
+            dq.push_back(i);
+
+            //从k-1下表开始，开始写入答案，队头即最大值。
+            if (i >= k - 1)
+                ret.push_back(nums[dq.front()]);
+        }
+        return ret;
+    }
+};
+```
+
 ## [282. Expression Add Operators](https://leetcode.com/problems/expression-add-operators/)
 
 ## [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
