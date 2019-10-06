@@ -1204,6 +1204,125 @@ class Solution
 
 ## [297. Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
 
+如何序列化一个二叉树并恢复。
+
+给出 先序（递归）、层序（队列）两种方法。
+
+```cpp
+class Codec
+{
+  public:
+    string serialize(TreeNode *root)
+    {
+        ostringstream out;
+        serialize(root, out);
+        return out.str();
+    }
+
+    TreeNode *deserialize(string data)
+    {
+        istringstream in(data);
+        return deserialize(in);
+    }
+
+  private:
+    void serialize(TreeNode *root, ostringstream &out)
+    {
+        if (root)
+        {
+            out << root->val << ' ';
+            serialize(root->left, out);
+            serialize(root->right, out);
+        }
+        else
+        {
+            out << "# ";
+        }
+    }
+
+    TreeNode *deserialize(istringstream &in)
+    {
+        string val;
+        in >> val;
+        if (val == "#")
+            return nullptr;
+        TreeNode *root = new TreeNode(stoi(val));
+        root->left = deserialize(in);
+        root->right = deserialize(in);
+        return root;
+    }
+};
+
+class Codec
+{
+  public:
+    // Encodes a tree to a single string.
+    string serialize(TreeNode *root) const
+    {
+        if (!root)
+            return "[]";
+
+        ostringstream os;
+        os << "[" << root->val;
+        int null_count = 0;
+        queue<TreeNode *> q({root->left, root->right});
+        while (!q.empty())
+        {
+            auto node = q.front();
+            q.pop();
+            if (node)
+            {
+                os << ',' << node->val;
+                if (null_count > 0)
+                {
+                    os << ":" << null_count;
+                    null_count = 0;
+                }
+                q.push(node->left);
+                q.push(node->right);
+            }
+            else
+            {
+                ++null_count;
+            }
+        }
+
+        os << "]";
+        return os.str();
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode *deserialize(string data) const
+    {
+        istringstream is(data);
+        TreeNode *root = nullptr;
+        queue<TreeNode **> q({&root});
+
+        int value, null_count;
+        char sep;
+        is >> sep >> value;
+        while (is)
+        {
+            if (is.peek() == ':')
+            {
+                is >> sep >> null_count;
+                for (int i = 0; i < null_count; ++i)
+                    q.pop();
+            }
+
+            TreeNode *node = new TreeNode(value);
+            q.push(&node->left);
+            q.push(&node->right);
+            *(q.front()) = node;
+            q.pop();
+
+            is >> sep >> value;
+        }
+        return root;
+    }
+};
+```
+
 ## [301. Remove Invalid Parentheses](https://leetcode.com/problems/remove-invalid-parentheses/)
 
 ## [312. Burst Balloons](https://leetcode.com/problems/burst-balloons/)
