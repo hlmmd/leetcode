@@ -1326,3 +1326,5 @@ class Codec
 ## [301. Remove Invalid Parentheses](https://leetcode.com/problems/remove-invalid-parentheses/)
 
 ## [312. Burst Balloons](https://leetcode.com/problems/burst-balloons/)
+
+## [315. Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
