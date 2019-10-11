@@ -2206,3 +2206,148 @@ public:
 求将区间合并了之后会少掉多少个区间。
 
 ### 拓扑排序
+
+## 2019.10.11 依图
+
+### 单调栈问题
+
+一排基站，给定高度和信号强度，信号向左右传播，会被比自己高的信号塔吸收。所以每个信号塔会吸收0-2个信号，问吸收信号强度的信号塔的强度是多少？
+
+```cpp
+#include <climits>
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <map>
+#include <vector>
+#include <stack>
+using namespace std;
+
+int main()
+{
+	int N;
+	cin >> N;
+	vector<int> height(N);
+	vector<int> v(N);
+	vector<int>left(N);
+	vector<int>right(N);
+
+	for (int i = 0; i < N; i++)
+		cin >> height[i] >>v[i];
+
+	stack<int> st;
+
+	for (int i = 0; i < N; i++)
+	{
+		while (!st.empty() && height[st.top()] <= height[i])
+		{
+			st.pop();
+		}
+		left[i] = st.empty() ? -1 : st.top();
+		st.push(i);
+	}
+	while (!st.empty())
+		st.pop();
+
+	for (int i = N-1; i >=0 ; i--)
+	{
+		while (!st.empty() && height[st.top()] <= height[i])
+		{
+			st.pop();
+		}
+		right[i] = st.empty() ? -1 : st.top();
+		st.push(i);
+	}
+
+	vector<int> r(N, 0);
+	for (int i = 0; i < N; i++)
+	{
+		if (left[i] != -1)
+		{
+			r[left[i]] += v[i];
+		}
+
+		if (right[i] != -1)
+		{
+			r[right[i]] += v[i];
+		}
+	}
+
+	int maxret = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (maxret < r[i])
+			maxret = r[i];
+	}
+
+	cout << maxret << endl;
+	system("pause");
+	return 0;
+}
+```
+
+### 套盒问题
+
+一堆盒子，体积不同，大盒子如果体积是小盒子两倍及以上，那么可以把小盒子放进大盒子。问全部套起来之后，最少剩多少个盒子。
+
+```cpp
+#include <climits>
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <map>
+#include <vector>
+#include <stack>
+#include <unordered_map>
+using namespace std;
+
+/*
+4
+1 2 3 4
+*/
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+    sort(v.begin(), v.end());
+    unordered_map<int, int> mymap;
+    for (int i = 0; i < n; i++)
+    {
+        mymap[v[i]]++;
+    }
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int val = v[i];
+        if (mymap[val] > 0)
+        {
+            count++;
+            mymap[val]--;
+            while (1)
+            {
+                val = val * 2;
+                int j = lower_bound(v.begin(), v.end(), val) - v.begin();
+                if (j >= v.size())
+                    break;
+                for (; j < v.size(); j++)
+                {
+                    if (mymap[v[j]] > 0)
+                    {
+                        mymap[v[j]]--;
+                        val = v[j];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    cout << count << endl;
+
+    system("pause");
+    return 0;
+}
+```
