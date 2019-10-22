@@ -3877,3 +3877,46 @@ public:
     }
 };
 ```
+
+## [842. Split Array into Fibonacci Sequence](https://leetcode.com/problems/split-array-into-fibonacci-sequence/)
+
+## [845. Longest Mountain in Array](https://leetcode.com/problems/longest-mountain-in-array/)
+
+## [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/)
+
+## [848. Shifting Letters](https://leetcode.com/problems/shifting-letters/)
+
+## [853. Car Fleet](https://leetcode.com/problems/car-fleet/)
+
+## [855. Exam Room](https://leetcode.com/problems/exam-room/)
+
+## [856. Score of Parentheses](https://leetcode.com/problems/score-of-parentheses/)
+
+## [861. Score After Flipping Matrix](https://leetcode.com/problems/score-after-flipping-matrix/)
+
+## [863. All Nodes Distance K in Binary Tree](https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/)
+
+## [865. Smallest Subtree with all the Deepest Nodes](https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/)
+
+## [869. Reordered Power of 2](https://leetcode.com/problems/reordered-power-of-2/)
+
+## [870. Advantage Shuffle](https://leetcode.com/problems/advantage-shuffle/)
+
+## [873. Length of Longest Fibonacci Subsequence](https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/)
+
+## [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)
+
+## [880. Decoded String at Index](https://leetcode.com/problems/decoded-string-at-index/)
+
+## [881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)
+
+## [886. Possible Bipartition](https://leetcode.com/problems/possible-bipartition/)
+
+## [889. Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/)
+
+## [890. Find and Replace Pattern](https://leetcode.com/problems/find-and-replace-pattern/)
+
+## [894. All Possible Full Binary Trees](https://leetcode.com/problems/all-possible-full-binary-trees/)
+
+## [898. Bitwise ORs of Subarrays](https://leetcode.com/problems/bitwise-ors-of-subarrays/)
+
