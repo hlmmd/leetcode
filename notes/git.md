@@ -115,8 +115,29 @@ git merge
 
 当两个分支对同一文件相同地方进行了修改时，需要手动进行合并
 
+分支管理
 
+git branch -v 查看每个分支最后一次提交
 
+git branch --merged
+
+git branch --no-merged
+
+查看已经合并或者尚未合并的分支
+
+分支开发工作流
+
+* 长期分支
+* 特性分支 
+* 远程分支
+
+跟踪分支
+
+拉取
+
+git pull = git fetch + git merge
+
+变基
 
 
 
