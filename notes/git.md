@@ -139,7 +139,9 @@ git pull = git fetch + git merge
 
 变基
 
+git 中整合不同分支的主要修改方法有两种：merge和rebase
 
+rebase命令将某一分支上的修改都移动到另一分支上。
 
 
 
