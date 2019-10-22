@@ -3846,3 +3846,34 @@ public:
     }
 };
 ```
+
+## [841. Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/)
+
+给定N个房间，一开始只有0号房间开放，每个房间都含有一些钥匙，能打开对应的门。问能否打开所有的门。
+
+可以用dfs也可以用bfs。bfs一般用来求最短的解。
+
+```cpp
+class Solution
+{
+public:
+    bool canVisitAllRooms(vector<vector<int>> &rooms)
+    {
+        unordered_set<int> visited = {0};
+        queue<int> q;
+        q.push(0);
+        while (!q.empty())
+        {
+            int index = q.front();
+            q.pop();
+            for (auto id : rooms[index])
+                if (visited.find(id) == visited.end())
+                {
+                    visited.insert(id);
+                    q.push(id);
+                }
+        }
+        return visited.size() == rooms.size();
+    }
+};
+```
