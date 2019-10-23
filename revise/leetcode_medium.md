@@ -3880,6 +3880,56 @@ public:
 
 ## [842. Split Array into Fibonacci Sequence](https://leetcode.com/problems/split-array-into-fibonacci-sequence/)
 
+一个由数字组成的字符串，能否拆分为多个数字，满足斐波那契数列的性质。每个数字不超过int范围，不含有前导零，最少三个数。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> splitIntoFibonacci(string S)
+    {
+        vector<int> nums;
+        if (S.size() < 3)
+            return nums;
+        helper(S, nums, 0);
+
+        return nums;
+    }
+
+    bool helper(string &S, vector<int> &nums, int index)
+    {
+        if (index >= S.size() && nums.size() >= 3)
+            return true;
+
+        long long temp = 0;
+        for (int i = index; i < S.size(); i++)
+        {
+            temp = temp * 10 + S[i] - '0';
+            if (temp > INT_MAX)
+                return false;
+            if (S[index] == '0' && i > index)
+                return false;
+            if (nums.size() >= 2 && ((long long)nums[nums.size() - 2] + nums[nums.size() - 1] < temp))
+            {
+                return false;
+            }
+
+            if (nums.size() < 2 || ((long long)nums[nums.size() - 2] + nums[nums.size() - 1] == temp))
+            {
+                nums.push_back(temp);
+                if (helper(S, nums, i + 1))
+                {
+                    return true;
+                }
+
+                nums.pop_back();
+            }
+        }
+        return false;
+    }
+};
+```
+
 ## [845. Longest Mountain in Array](https://leetcode.com/problems/longest-mountain-in-array/)
 
 ## [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/)
