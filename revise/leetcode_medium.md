@@ -3959,6 +3959,38 @@ public:
 
 ## [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/)
 
+问能不能将一个数组分成大小为W的子数组，且每个子数组都是连续的数。
+
+```cpp
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int W) {
+        
+        if( hand.size() %W !=0)
+            return false;
+        map<int,int> mp;
+        for(int i=0 ;i<hand.size();i++)
+            mp[hand[i]]++;
+        
+        for(auto it = mp.begin();it!=mp.end();it++)
+        {
+            if(it->second>0)
+            {
+            
+                for(int i= W-1;i>=0;i--)
+                {
+                    mp[it->first+i] -= it->second;
+                    if(mp[it->first+i]<0)
+                        return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+};
+```
+
 ## [848. Shifting Letters](https://leetcode.com/problems/shifting-letters/)
 
 ## [853. Car Fleet](https://leetcode.com/problems/car-fleet/)
