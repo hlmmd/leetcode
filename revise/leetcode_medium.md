@@ -3993,6 +3993,21 @@ public:
 
 ## [848. Shifting Letters](https://leetcode.com/problems/shifting-letters/)
 
+```cpp
+class Solution
+{
+public:
+    string shiftingLetters(string S, vector<int> &shifts)
+    {
+        for (int i = shifts.size() - 2; i >= 0; i--)
+            shifts[i] = (shifts[i] + shifts[i + 1]) % 26;
+        for (int i = 0; i < shifts.size(); i++)
+            S[i] = (S[i] - 'a' + shifts[i]) % 26 + 'a';
+        return S;
+    }
+};
+```
+
 ## [853. Car Fleet](https://leetcode.com/problems/car-fleet/)
 
 ## [855. Exam Room](https://leetcode.com/problems/exam-room/)
