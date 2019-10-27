@@ -4010,6 +4010,51 @@ public:
 
 ## [853. Car Fleet](https://leetcode.com/problems/car-fleet/)
 
+google codejam那道题
+
+
+```cpp
+class Solution
+{
+public:
+    int carFleet(int target, vector<int> &position, vector<int> &speed)
+    {
+
+        int n = position.size();
+        if (n == 0)
+            return 0;
+
+        vector<pair<int, int>> p(n);
+        for (int i = 0; i < n; i++)
+        {
+            p[i].first = position[i];
+            p[i].second = speed[i];
+        }
+
+        auto comp = [](pair<int, int> p1, pair<int, int> p2) { return p1.first > p2.first; };
+        sort(p.begin(), p.end(), comp);
+
+        vector<double> time(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            time[i] = (double)(target - p[i].first) / p[i].second;
+        }
+        double pre = time[0];
+
+        int ret = 1;
+        for (int i = 1; i < n; i++)
+            if (time[i] > pre)
+            {
+                ret++;
+                pre = time[i];
+            }
+
+        return ret;
+    }
+};
+```
+
 ## [855. Exam Room](https://leetcode.com/problems/exam-room/)
 
 ## [856. Score of Parentheses](https://leetcode.com/problems/score-of-parentheses/)
