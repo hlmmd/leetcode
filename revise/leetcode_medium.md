@@ -4057,6 +4057,53 @@ public:
 
 ## [855. Exam Room](https://leetcode.com/problems/exam-room/)
 
+这个也类似codejam的题，但是增加了离开座位
+
+```cpp
+class ExamRoom
+{
+public:
+    int N;
+    vector<int> L;
+    ExamRoom(int n)
+    {
+        N = n;
+    }
+
+    int seat()
+    {
+        if (L.size() == 0)
+        {
+            L.push_back(0);
+            return 0;
+        }
+        int d = max(L[0], N - 1 - L[L.size() - 1]);
+        for (int i = 0; i < L.size() - 1; ++i)
+            d = max(d, (L[i + 1] - L[i]) / 2);
+        if (L[0] == d)
+        {
+            L.insert(L.begin(), 0);
+            return 0;
+        }
+        for (int i = 0; i < L.size() - 1; ++i)
+            if ((L[i + 1] - L[i]) / 2 == d)
+            {
+                L.insert(L.begin() + i + 1, (L[i + 1] + L[i]) / 2);
+                return L[i + 1];
+            }
+        L.push_back(N - 1);
+        return N - 1;
+    }
+
+    void leave(int p)
+    {
+        for (int i = 0; i < L.size(); ++i)
+            if (L[i] == p)
+                L.erase(L.begin() + i);
+    }
+};
+```
+
 ## [856. Score of Parentheses](https://leetcode.com/problems/score-of-parentheses/)
 
 ## [861. Score After Flipping Matrix](https://leetcode.com/problems/score-after-flipping-matrix/)
