@@ -4106,6 +4106,28 @@ public:
 
 ## [856. Score of Parentheses](https://leetcode.com/problems/score-of-parentheses/)
 
+计算括号的分值。
+
+```cpp
+class Solution {
+public:
+       int scoreOfParentheses(string S) {
+        stack<int> stack;
+        int cur = 0;
+        for (char i : S)
+            if (i == '(') {
+                stack.push(cur);
+                cur = 0;
+            }
+            else {
+                cur += stack.top() + max(cur, 1);
+                stack.pop();
+            }
+        return cur;
+    }
+};
+```
+
 ## [861. Score After Flipping Matrix](https://leetcode.com/problems/score-after-flipping-matrix/)
 
 ## [863. All Nodes Distance K in Binary Tree](https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/)
