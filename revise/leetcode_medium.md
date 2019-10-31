@@ -4130,6 +4130,35 @@ public:
 
 ## [861. Score After Flipping Matrix](https://leetcode.com/problems/score-after-flipping-matrix/)
 
+对一个01矩阵进行翻转，求每行的和最多是多少
+
+```cpp
+class Solution
+{
+public:
+    int matrixScore(vector<vector<int>> &A)
+    {
+        int M = A.size();
+        int N = A[0].size();
+
+        int ret = 0;
+        //先按行翻，将第一位全部翻为1，再依次翻列
+        ret += (1 << N - 1) * M;
+
+        for (int j = 1; j < N; j++)
+        {
+            int colcount = 0;
+            //翻完之后，所有A[i][j]==A[i][1]的都是1
+            for (int i = 0; i < M; i++)
+                colcount += (A[i][j] == A[i][0]);
+            //如果1的个数少于一般，就进行列翻转
+            ret += max(colcount, M - colcount) * (1 << (N - 1 - j));
+        }
+        return ret;
+    }
+};
+```
+
 ## [863. All Nodes Distance K in Binary Tree](https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/)
 
 ## [865. Smallest Subtree with all the Deepest Nodes](https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/)
