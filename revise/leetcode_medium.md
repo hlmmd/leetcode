@@ -4167,6 +4167,32 @@ public:
 
 ## [869. Reordered Power of 2](https://leetcode.com/problems/reordered-power-of-2/)
 
+将N转为字符串，排序，再将所有2的倍数转为字符串，排序。如果有相同的，就返回true
+
+```cpp
+class Solution
+{
+public:
+    bool reorderedPowerOf2(int N)
+    {
+
+        string num = to_string(N);
+        sort(num.begin(), num.end());
+
+        for (int i = 0; i < 30; i++)
+        {
+            int n = 1 << i;
+            string temp = to_string(n);
+            sort(temp.begin(), temp.end());
+            if (temp == num)
+                return true;
+        }
+
+        return false;
+    }
+};
+```
+
 ## [870. Advantage Shuffle](https://leetcode.com/problems/advantage-shuffle/)
 
 ## [873. Length of Longest Fibonacci Subsequence](https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/)
