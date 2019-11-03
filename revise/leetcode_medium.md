@@ -4195,6 +4195,26 @@ public:
 
 ## [870. Advantage Shuffle](https://leetcode.com/problems/advantage-shuffle/)
 
+每次找大于当前数的最小值，如果没有找到，就取最小值。
+
+```cpp
+class Solution
+{
+public:
+    vector<int> advantageCount(vector<int> &A, vector<int> &B)
+    {
+        multiset<int> s(begin(A), end(A));
+        for (auto i = 0; i < B.size(); ++i)
+        {
+            auto p = *s.rbegin() <= B[i] ? s.begin() : s.upper_bound(B[i]);
+            A[i] = *p;
+            s.erase(p);
+        }
+        return A;
+    }
+};
+```
+
 ## [873. Length of Longest Fibonacci Subsequence](https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/)
 
 ## [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)
