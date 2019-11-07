@@ -4221,8 +4221,6 @@ public:
 
 ## [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)
 
-
-
 ## [880. Decoded String at Index](https://leetcode.com/problems/decoded-string-at-index/)
 
 ## [881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)
