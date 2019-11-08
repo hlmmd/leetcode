@@ -4221,6 +4221,23 @@ public:
 
 ## [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)
 
+利用二分法求出最小的速度。
+
+```cpp
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int H) {
+        int l = 1, r = 1000000000;
+        while (l < r) {
+            int m = (l + r) / 2, total = 0;
+            for (int p : piles) total += (p + m - 1) / m;
+            if (total > H) l = m + 1; else r = m;
+        }
+        return l;
+    }
+};
+```
+
 ## [880. Decoded String at Index](https://leetcode.com/problems/decoded-string-at-index/)
 
 ## [881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)
