@@ -4240,6 +4240,32 @@ public:
 
 ## [880. Decoded String at Index](https://leetcode.com/problems/decoded-string-at-index/)
 
+```cpp
+class Solution
+{
+public:
+    string decodeAtIndex(string S, int K)
+    {
+        long long N = 0, i;
+        for (i = 0; N < K; ++i)
+            N = isdigit(S[i]) ? N * (S[i] - '0') : N + 1;
+        while (i--)
+            if (isdigit(S[i]))
+            {
+                N /= S[i] - '0';
+                K %= N;
+            }
+            else if (K % N  == 0)
+            {
+                return string(1, S[i]);
+            }
+            else
+                N--;
+        return "";
+    }
+};
+```
+
 ## [881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)
 
 ## [886. Possible Bipartition](https://leetcode.com/problems/possible-bipartition/)
