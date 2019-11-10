@@ -4268,6 +4268,38 @@ public:
 
 ## [881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)
 
+先排序，然后用两指针，检查最大最小值能否装进一个船。如果不能则把重的装进去
+
+```cpp
+class Solution
+{
+public:
+    int numRescueBoats(vector<int> &people, int limit)
+    {
+
+        sort(people.begin(), people.end());
+
+        int high = people.size() - 1;
+        int low = 0;
+        int count = 0;
+        while (low <= high)
+        {
+            count++;
+            if (low == high)
+                break;
+            else if (people[high] + people[low] > limit)
+                high--;
+            else
+            {
+                high--;
+                low++;
+            }
+        }
+        return count;
+    }
+};
+```
+
 ## [886. Possible Bipartition](https://leetcode.com/problems/possible-bipartition/)
 
 ## [889. Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/)
