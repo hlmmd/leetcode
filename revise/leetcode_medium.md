@@ -4300,7 +4300,7 @@ public:
 
 ## [886. Possible Bipartition](https://leetcode.com/problems/possible-bipartition/)
 
-
+用DFS
 
 ## [889. Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/)
 
