@@ -4306,7 +4306,46 @@ public:
 
 ## [890. Find and Replace Pattern](https://leetcode.com/problems/find-and-replace-pattern/)
 
+用map将所有字符串归一化，比较结果即可。
 
+```cpp
+class Solution
+{
+public:
+    vector<string> findAndReplacePattern(vector<string> &words, string pattern)
+    {
+        vector<string> ret;
+
+        for (int i = 0; i < words.size(); i++)
+        {
+            if (normal(words[i]) == normal(pattern))
+            {
+                ret.push_back(words[i]);
+            }
+        }
+        return ret;
+    }
+
+    string normal(string input)
+    {
+        unordered_map<char, int> map;
+        for (int i = 0; i < input.size(); i++)
+        {
+            if (map.find(input[i]) == map.end())
+            {
+                map[input[i]] = map.size();
+            }
+        }
+
+        string ret;
+        for (int i = 0; i < input.size(); i++)
+        {
+            ret += map[input[i]] + 'a';
+        }
+        return ret;
+    }
+};
+```
 
 ## [894. All Possible Full Binary Trees](https://leetcode.com/problems/all-possible-full-binary-trees/)
 
