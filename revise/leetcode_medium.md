@@ -4351,3 +4351,165 @@ public:
 
 ## [898. Bitwise ORs of Subarrays](https://leetcode.com/problems/bitwise-ors-of-subarrays/)
 
+```cpp
+class Solution
+{
+public:
+    int subarrayBitwiseORs(vector<int> A)
+    {
+        unordered_set<int> res, cur, cur2;
+        for (int i : A)
+        {
+            cur2 = {i};
+            for (int j : cur)
+                cur2.insert(i | j);
+            cur = cur2;
+            for (int j : cur)
+                res.insert(j);
+        }
+        return res.size();
+    }
+};
+```
+
+## [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/)
+
+## [907. Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/)
+
+## [915. Partition Array into Disjoint Intervals](https://leetcode.com/problems/partition-array-into-disjoint-intervals/)
+
+## [916. Word Subsets](https://leetcode.com/problems/word-subsets/)
+
+## [918. Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)
+
+## [919. Complete Binary Tree Inserter](https://leetcode.com/problems/complete-binary-tree-inserter/)
+
+## [921. Minimum Add to Make Parentheses Valid](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/)
+
+## [923. 3Sum With Multiplicity](https://leetcode.com/problems/3sum-with-multiplicity/)
+
+## [926. Flip String to Monotone Increasing](https://leetcode.com/problems/flip-string-to-monotone-increasing)
+
+## [930. Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)
+
+## [931. Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum/)
+
+## [934. Shortest Bridge](https://leetcode.com/problems/shortest-bridge/)
+
+## [935. Knight Dialer](https://leetcode.com/problems/knight-dialer/)
+
+## [939. Minimum Area Rectangle](https://leetcode.com/problems/minimum-area-rectangle/)
+
+## [945. Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/)
+
+## [946. Validate Stack Sequences](https://leetcode.com/problems/validate-stack-sequences/)
+
+## [947. Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/)
+
+## [950. Reveal Cards In Increasing Order](https://leetcode.com/problems/reveal-cards-in-increasing-order/)
+
+## [951. Flip Equivalent Binary Trees](https://leetcode.com/problems/flip-equivalent-binary-trees/)
+
+## [954. Array of Doubled Pairs](https://leetcode.com/problems/array-of-doubled-pairs/)
+
+## [955. Delete Columns to Make Sorted II](https://leetcode.com/problems/delete-columns-to-make-sorted-ii/)
+
+## [958. Check Completeness of a Binary Tree](https://leetcode.com/problems/check-completeness-of-a-binary-tree/)
+
+## [959. Regions Cut By Slashes](https://leetcode.com/problems/regions-cut-by-slashes/)
+
+## [962. Maximum Width Ramp](https://leetcode.com/problems/maximum-width-ramp/)
+
+## [967. Numbers With Same Consecutive Differences](https://leetcode.com/problems/numbers-with-same-consecutive-differences/)
+
+## [971. Flip Binary Tree To Match Preorder Traversal](https://leetcode.com/problems/flip-binary-tree-to-match-preorder-traversal/)
+
+## [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
+
+## [974. Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
+
+## [978. Longest Turbulent Subarray](https://leetcode.com/problems/longest-turbulent-subarray/)
+
+## [979. Distribute Coins in Binary Tree](981. Time Based Key-Value Store)
+
+## [983. Minimum Cost For Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/)
+
+## [986. Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/)
+
+## [988. Smallest String Starting From Leaf](https://leetcode.com/problems/smallest-string-starting-from-leaf/)
+
+## [990. Satisfiability of Equality Equations](https://leetcode.com/problems/satisfiability-of-equality-equations/)
+
+## [991. Broken Calculator](https://leetcode.com/problems/broken-calculator/)
+
+## [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)
+
+## [1006. Clumsy Factorial](https://leetcode.com/problems/clumsy-factorial/)
+
+## [1007. Minimum Domino Rotations For Equal Row](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/)
+
+## [1008. Construct Binary Search Tree from Preorder Traversal](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/)
+
+## [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)
+
+## [1014. Best Sightseeing Pair](https://leetcode.com/problems/best-sightseeing-pair/)
+
+## [1019. Next Greater Node In Linked List](https://leetcode.com/problems/next-greater-node-in-linked-list/)
+
+## [1020. Number of Enclaves](https://leetcode.com/problems/number-of-enclaves/)
+
+## [1023. Camelcase Matching](https://leetcode.com/problems/camelcase-matching/)
+
+## [1024. Video Stitching](https://leetcode.com/problems/video-stitching/)
+
+## [1026. Maximum Difference Between Node and Ancestor](https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/)
+
+## [1027. Longest Arithmetic Sequence](https://leetcode.com/problems/longest-arithmetic-sequence/)
+
+## [1031. Maximum Sum of Two Non-Overlapping Subarrays](https://leetcode.com/problems/maximum-sum-of-two-non-overlapping-subarrays/)
+
+## [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/)
+
+## [1038. Binary Search Tree to Greater Sum Tree](https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/)
+
+## [1039. Minimum Score Triangulation of Polygon](https://leetcode.com/problems/minimum-score-triangulation-of-polygon/)
+
+## [1043. Partition Array for Maximum Sum](https://leetcode.com/problems/partition-array-for-maximum-sum/)
+
+## [1048. Longest String Chain](https://leetcode.com/problems/longest-string-chain/)
+
+## [1049. Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)
+
+## [1052. Grumpy Bookstore Owner](https://leetcode.com/problems/grumpy-bookstore-owner/)
+
+## [1054. Distant Barcodes](https://leetcode.com/problems/distant-barcodes/)
+
+## [1072. Flip Columns For Maximum Number of Equal Rows](https://leetcode.com/problems/flip-columns-for-maximum-number-of-equal-rows/)
+
+## [1073. Adding Two Negabinary Numbers](https://leetcode.com/problems/adding-two-negabinary-numbers/)
+
+## [1079. Letter Tile Possibilities](https://leetcode.com/problems/letter-tile-possibilities/)
+
+## [1081. Smallest Subsequence of Distinct Characters](https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/)
+
+## [1091. Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
+
+## [1094. Car Pooling](https://leetcode.com/problems/car-pooling/)
+
+## [1105. Filling Bookcase Shelves](https://leetcode.com/problems/filling-bookcase-shelves/)
+
+## [1109. Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)
+
+## [1110. Delete Nodes And Return Forest](https://leetcode.com/problems/delete-nodes-and-return-forest/)
+
+## [1115. Print FooBar Alternately](https://leetcode.com/problems/print-foobar-alternately/)
+
+## [1117. Building H2O](https://leetcode.com/problems/building-h2o/)
+
+## [1124. Longest Well-Performing Interval](https://leetcode.com/problems/longest-well-performing-interval/)
+
+## [1129. Shortest Path with Alternating Colors](https://leetcode.com/problems/shortest-path-with-alternating-colors/)
+
+## [1130. Minimum Cost Tree From Leaf Values](https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/)
+
+## [1139. Largest 1-Bordered Square](https://leetcode.com/problems/largest-1-bordered-square/)
