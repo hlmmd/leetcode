@@ -4430,7 +4430,9 @@ public:
 
 ## [978. Longest Turbulent Subarray](https://leetcode.com/problems/longest-turbulent-subarray/)
 
-## [979. Distribute Coins in Binary Tree](981. Time Based Key-Value Store)
+## [979. Distribute Coins in Binary Tree](https://leetcode.com/problems/distribute-coins-in-binary-tree/)
+
+## [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/)
 
 ## [983. Minimum Cost For Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/)
 
