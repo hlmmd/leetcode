@@ -4374,6 +4374,28 @@ public:
 
 ## [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/)
 
+```cpp
+class StockSpanner
+{
+public:
+    StockSpanner()
+    {
+    }
+    stack<pair<int, int>> s;
+    int next(int price)
+    {
+        int res = 1;
+        while (!s.empty() && s.top().first <= price)
+        {
+            res += s.top().second;
+            s.pop();
+        }
+        s.push({price, res});
+        return res;
+    }
+};
+```
+
 ## [907. Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/)
 
 ## [915. Partition Array into Disjoint Intervals](https://leetcode.com/problems/partition-array-into-disjoint-intervals/)
