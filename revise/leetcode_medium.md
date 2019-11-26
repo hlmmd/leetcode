@@ -4402,6 +4402,29 @@ stack
 
 ## [915. Partition Array into Disjoint Intervals](https://leetcode.com/problems/partition-array-into-disjoint-intervals/)
 
+```cpp
+class Solution
+{
+public:
+    int partitionDisjoint(vector<int> &A)
+    {
+        int num = A[0];
+        int size = 0;
+        int maxnum = num;
+        for (int i = 1; i < A.size(); i++)
+        {
+            maxnum = max(maxnum, A[i]);
+            if (A[i] < num)
+            {
+                num = maxnum;
+                size = i;
+            }
+        }
+        return size + 1;
+    }
+};
+```
+
 ## [916. Word Subsets](https://leetcode.com/problems/word-subsets/)
 
 ## [918. Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)
