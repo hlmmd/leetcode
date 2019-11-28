@@ -4466,6 +4466,26 @@ public:
 
 ## [918. Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)
 
+```cpp
+class Solution
+{
+public:
+    int maxSubarraySumCircular(vector<int> &A)
+    {
+        int total = 0, maxSum = -30000, curMax = 0, minSum = 30000, curMin = 0;
+        for (int a : A)
+        {
+            curMax = max(curMax + a, a);
+            maxSum = max(maxSum, curMax);
+            curMin = min(curMin + a, a);
+            minSum = min(minSum, curMin);
+            total += a;
+        }
+        return maxSum > 0 ? max(maxSum, total - minSum) : maxSum;
+    }
+};
+```
+
 ## [919. Complete Binary Tree Inserter](https://leetcode.com/problems/complete-binary-tree-inserter/)
 
 ## [921. Minimum Add to Make Parentheses Valid](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/)
