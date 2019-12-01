@@ -4492,7 +4492,24 @@ public:
 
 ## [921. Minimum Add to Make Parentheses Valid](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/)
 
-
+```cpp
+class Solution
+{
+public:
+    int minAddToMakeValid(string S)
+    {
+        int left = 0, right = 0;
+        for (char c : S)
+            if (c == '(')
+                right++;
+            else if (right > 0)
+                right--;
+            else
+                left++;
+        return left + right;
+    }
+};
+```
 
 ## [923. 3Sum With Multiplicity](https://leetcode.com/problems/3sum-with-multiplicity/)
 
