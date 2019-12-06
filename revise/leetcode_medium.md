@@ -4549,6 +4549,8 @@ dp
 
 ## [934. Shortest Bridge](https://leetcode.com/problems/shortest-bridge/)
 
+bfs每次拓展一格小岛，直到两个岛相连。
+
 ## [935. Knight Dialer](https://leetcode.com/problems/knight-dialer/)
 
 ## [939. Minimum Area Rectangle](https://leetcode.com/problems/minimum-area-rectangle/)
