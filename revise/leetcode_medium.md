@@ -4553,6 +4553,8 @@ bfs每次拓展一格小岛，直到两个岛相连。
 
 ## [935. Knight Dialer](https://leetcode.com/problems/knight-dialer/)
 
+dp，map
+
 ## [939. Minimum Area Rectangle](https://leetcode.com/problems/minimum-area-rectangle/)
 
 ## [945. Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/)
