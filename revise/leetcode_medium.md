@@ -4557,7 +4557,35 @@ dp，map
 
 ## [939. Minimum Area Rectangle](https://leetcode.com/problems/minimum-area-rectangle/)
 
+先用set存储所有的点信息。用map中的key表示x坐标值，其对应一个set，保存y坐标值。这样就记录了所有的点。
 
+遍历，选取两个不同的x坐标，表示矩形的上下边。如果对应的set大小小于2，那么不可能构成直线。然后求两个set的交集，表示相同的y坐标，能够构成边。因为要求的是最小值，所以一定是相邻的两个边。（所以需要用有序的set，不能用unordered_set)
+
+```cpp
+class Solution
+{
+public:
+    int minAreaRect(vector<vector<int>> &points)
+    {
+        int res = INT_MAX;
+        unordered_map<int, set<int>> x;
+        for (auto p : points)
+            x[p[0]].insert(p[1]);
+        for (auto i = x.begin(); i != x.end(); ++i)
+            for (auto j = next(i); j != x.end(); ++j)
+            {
+                if (i->second.size() < 2 || j->second.size() < 2)
+                    continue;
+                vector<int> y;
+                set_intersection(begin(i->second), end(i->second),
+                                 begin(j->second), end(j->second), back_inserter(y));
+                for (int k = 1; k < y.size(); ++k)
+                    res = min(res, abs(j->first - i->first) * (y[k] - y[k - 1]));
+            }
+        return res == INT_MAX ? 0 : res;
+    }
+};
+```
 
 ## [945. Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/)
 
