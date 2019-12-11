@@ -4589,6 +4589,24 @@ public:
 
 ## [945. Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/)
 
+```cpp
+class Solution
+{
+public:
+    int minIncrementForUnique(vector<int> &A)
+    {
+        sort(A.begin(), A.end());
+        int res = 0, need = 0;
+        for (int a : A)
+        {
+            res += max(need - a, 0);
+            need = max(a, need) + 1;
+        }
+        return res;
+    }
+};
+```
+
 ## [946. Validate Stack Sequences](https://leetcode.com/problems/validate-stack-sequences/)
 
 ## [947. Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/)
