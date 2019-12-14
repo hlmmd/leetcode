@@ -4609,7 +4609,32 @@ public:
 
 ## [946. Validate Stack Sequences](https://leetcode.com/problems/validate-stack-sequences/)
 
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
 
+构建一个栈来模拟进栈出栈，每次循环将pushV的内容进栈。并观察popV的数和栈顶是否相同，如果相同就同时出栈（对于popV来说是popindex++)。这样，执行到最后，如果栈是空的，那就是可能的出栈序列。
+
+```cpp
+class Solution
+{
+public:
+    bool validateStackSequences(vector<int> &pushV, vector<int> &popV)
+    {
+        stack<int> st;
+
+        int popindex = 0;
+        for (int i = 0; i < pushV.size(); i++)
+        {
+            st.push(pushV[i]);
+            while (!st.empty() && popindex < popV.size() && popV[popindex] == st.top())
+            {
+                popindex++;
+                st.pop();
+            }
+        }
+        return st.empty();
+    }
+};
+```
 
 ## [947. Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/)
 
