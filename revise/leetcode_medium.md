@@ -4650,8 +4650,6 @@ public:
 
 
 
-## [955. Delete Columns to Make Sorted II](https://leetcode.com/problems/delete-columns-to-make-sorted-ii/)
-
 ## [958. Check Completeness of a Binary Tree](https://leetcode.com/problems/check-completeness-of-a-binary-tree/)
 
 ## [959. Regions Cut By Slashes](https://leetcode.com/problems/regions-cut-by-slashes/)
