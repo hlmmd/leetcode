@@ -4684,8 +4684,6 @@ public:
 
 ## [971. Flip Binary Tree To Match Preorder Traversal](https://leetcode.com/problems/flip-binary-tree-to-match-preorder-traversal/)
 
-## [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
-
 ## [974. Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
 
 ## [978. Longest Turbulent Subarray](https://leetcode.com/problems/longest-turbulent-subarray/)
