@@ -4686,6 +4686,24 @@ public:
 
 ## [974. Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
 
+求所有和是K的倍数的子数组。主要是用%运算，将子数组的和简化为0-K-1，然后利用prefix sum 统计个数
+
+```cpp
+class Solution {
+public:
+     int subarraysDivByK(vector<int>& A, int K) {
+        vector<int> count(K);
+        count[0] = 1;
+        int prefix = 0, res = 0;
+        for (int a : A) {
+            prefix = (prefix + a % K + K) % K;
+            res += count[prefix]++;
+        }
+        return res;
+    }
+};
+```
+
 ## [978. Longest Turbulent Subarray](https://leetcode.com/problems/longest-turbulent-subarray/)
 
 ## [979. Distribute Coins in Binary Tree](https://leetcode.com/problems/distribute-coins-in-binary-tree/)
