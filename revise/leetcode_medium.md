@@ -4706,6 +4706,50 @@ public:
 
 ## [978. Longest Turbulent Subarray](https://leetcode.com/problems/longest-turbulent-subarray/)
 
+```cpp
+class Solution
+{
+public:
+    int maxTurbulenceSize(vector<int> &A)
+    {
+
+        int ret = 0, temp = 0;
+
+        int cur = 0, pre = 0;
+
+        if (A.size() == 1)
+            return 1;
+
+        for (int i = 1; i < A.size(); i++)
+        {
+            if (A[i - 1] < A[i])
+            {
+                cur = 1;
+            }
+            else if (A[i - 1] == A[i])
+                cur = 0;
+            else
+                cur = -1;
+
+            if (cur == 0)
+            {
+                temp = 1;
+            }
+            else if (cur + pre == 0)
+            {
+                temp++;
+            }
+            else
+                temp = 2;
+            ret = max(ret, temp);
+            pre = cur;
+        }
+
+        return ret;
+    }
+};
+```
+
 ## [979. Distribute Coins in Binary Tree](https://leetcode.com/problems/distribute-coins-in-binary-tree/)
 
 ## [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/)
