@@ -4756,7 +4756,42 @@ public:
 
 ## [983. Minimum Cost For Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/)
 
-dp
+dp.一年365天，利用dp计算每一天最少的开销。
+
+```cpp
+class Solution
+{
+public:
+    int mincostTickets(vector<int> &days, vector<int> &costs)
+    {
+
+        unordered_set<int> travel;
+        for (int i = 0; i < days.size(); i++)
+        {
+            travel.insert(days[i]);
+        }
+
+        vector<int> dp(366, 0);
+        for (int i = 1; i <= 365; i++)
+        {
+            if (travel.find(i) == travel.end())
+            {
+                dp[i] = dp[i - 1];
+            }
+
+            else
+            {
+                dp[i] = dp[i - 1] + costs[0];
+
+                dp[i] = min(dp[i], dp[max(0, i - 7)] + costs[1]);
+                dp[i] = min(dp[i], dp[max(0, i - 30)] + costs[2]);
+            }
+        }
+
+        return dp[365];
+    }
+};
+```
 
 ## [986. Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/)
 
