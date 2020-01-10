@@ -4801,7 +4801,7 @@ public:
 
 ## [990. Satisfiability of Equality Equations](https://leetcode.com/problems/satisfiability-of-equality-equations/)
 
-！
+union find
 
 ## [991. Broken Calculator](https://leetcode.com/problems/broken-calculator/)
 
