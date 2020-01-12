@@ -4805,7 +4805,24 @@ union find
 
 ## [991. Broken Calculator](https://leetcode.com/problems/broken-calculator/)
 
+wdnmd
 
+```cpp
+class Solution
+{
+public:
+    int brokenCalc(int X, int Y)
+    {
+        int res = 0;
+        while (Y > X)
+        {
+            Y = Y % 2 > 0 ? Y + 1 : Y / 2;
+            res++;
+        }
+        return res + X - Y;
+    }
+};
+```
 
 ## [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)
 
