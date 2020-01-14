@@ -4826,6 +4826,30 @@ public:
 
 ## [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)
 
+```cpp
+class Solution
+{
+public:
+    int longestOnes(vector<int> &A, int K)
+    {
+        int i = 0, j;
+        for (j = 0; j < A.size(); j++)
+        {
+            if (A[j] == 0)
+                K--;
+            if (K < 0)
+            {
+
+                if (A[i] == 0)
+                    K++;
+                i++;
+            }
+        }
+        return j - i;
+    }
+};
+```
+
 ## [1006. Clumsy Factorial](https://leetcode.com/problems/clumsy-factorial/)
 
 ## [1007. Minimum Domino Rotations For Equal Row](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/)
