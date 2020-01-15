@@ -4850,8 +4850,6 @@ public:
 };
 ```
 
-## [1006. Clumsy Factorial](https://leetcode.com/problems/clumsy-factorial/)
-
 ## [1007. Minimum Domino Rotations For Equal Row](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/)
 
 ## [1008. Construct Binary Search Tree from Preorder Traversal](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/)
