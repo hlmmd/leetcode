@@ -4885,7 +4885,25 @@ public:
 
 ## [1014. Best Sightseeing Pair](https://leetcode.com/problems/best-sightseeing-pair/)
 
+ A[i]+i + A[j]-j,记录j前面最大的A[i]+i
 
+```cpp
+class Solution
+{
+public:
+    int maxScoreSightseeingPair(vector<int> &A)
+    {
+        int ret = 0;
+        int pre = A[0];
+        for (int j = 1; j < A.size(); j++)
+        {
+            pre = max(pre, A[j - 1] + j - 1);
+            ret = max(ret, pre + A[j] - j);
+        }
+        return ret;
+    }
+};
+```
 
 ## [1019. Next Greater Node In Linked List](https://leetcode.com/problems/next-greater-node-in-linked-list/)
 
