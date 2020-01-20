@@ -4907,6 +4907,8 @@ public:
 
 ## [1019. Next Greater Node In Linked List](https://leetcode.com/problems/next-greater-node-in-linked-list/)
 
+
+
 ## [1020. Number of Enclaves](https://leetcode.com/problems/number-of-enclaves/)
 
 ## [1023. Camelcase Matching](https://leetcode.com/problems/camelcase-matching/)
