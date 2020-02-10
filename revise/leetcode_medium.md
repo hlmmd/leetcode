@@ -4938,6 +4938,43 @@ public:
 
 ## [1024. Video Stitching](https://leetcode.com/problems/video-stitching/)
 
+区间拼接
+
+```cpp
+class Solution
+{
+public:
+    int videoStitching(vector<vector<int>> &clips, int T)
+    {
+
+        auto comp = [](vector<int> &p1, vector<int> &p2) {
+            if (p1[0] == p2[0])
+                return p1[1] < p2[1];
+            return p1[0] < p2[0];
+        };
+
+        sort(clips.begin(), clips.end(), comp);
+
+        int curmax = 0, count = 1, nextmax = 0;
+
+        for (int i = 0; i < clips.size(); i++)
+        {
+            if (curmax < clips[i][0])
+            {
+                if (nextmax < clips[i][0])
+                    return -1;
+                curmax = nextmax;
+                count++;
+            }
+            nextmax = max(nextmax, clips[i][1]);
+            if (nextmax >= T)
+                return count;
+        }
+        return -1;
+    }
+};
+```
+
 ## [1026. Maximum Difference Between Node and Ancestor](https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/)
 
 ## [1027. Longest Arithmetic Sequence](https://leetcode.com/problems/longest-arithmetic-sequence/)
