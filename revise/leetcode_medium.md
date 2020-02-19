@@ -5007,6 +5007,25 @@ public:
 
 ## [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/)
 
+题意同最长公共子序列
+
+```cpp
+class Solution
+{
+public:
+    int maxUncrossedLines(vector<int> &A, vector<int> &B)
+    {
+
+        int m = A.size(), n = B.size(), dp[m + 1][n + 1];
+        memset(dp, 0, sizeof(dp));
+        for (int i = 1; i <= m; ++i)
+            for (int j = 1; j <= n; ++j)
+                dp[i][j] = A[i - 1] == B[j - 1] ? dp[i - 1][j - 1] + 1 : max(dp[i][j - 1], dp[i - 1][j]);
+        return dp[m][n];
+    }
+};
+```
+
 ## [1038. Binary Search Tree to Greater Sum Tree](https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/)
 
 ## [1039. Minimum Score Triangulation of Polygon](https://leetcode.com/problems/minimum-score-triangulation-of-polygon/)
