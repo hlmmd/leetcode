@@ -5030,6 +5030,31 @@ public:
 
 ## [1039. Minimum Score Triangulation of Polygon](https://leetcode.com/problems/minimum-score-triangulation-of-polygon/)
 
+class Solution
+{
+public:
+    int minScoreTriangulation(vector<int> &A)
+    {
+        vector<vector<int>> dp(A.size(), vector<int>(A.size(), 0));
+
+        for (int len = 2; len < A.size(); len++)
+        {
+            for (int i = 0; i + len < A.size(); i++)
+            {
+                int j = i + len;
+                dp[i][j] = INT_MAX;
+                for (int k = i + 1; k < j; k++)
+                {
+                    dp[i][j] = min(dp[i][j], A[i] * A[k] * A[j] + dp[i][k] + dp[k][j]);
+                }
+
+            }
+        }
+
+        return dp[0][A.size() - 1];
+    }
+};
+
 ## [1043. Partition Array for Maximum Sum](https://leetcode.com/problems/partition-array-for-maximum-sum/)
 
 ## [1048. Longest String Chain](https://leetcode.com/problems/longest-string-chain/)
