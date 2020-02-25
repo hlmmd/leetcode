@@ -5057,6 +5057,31 @@ public:
 
 ## [1043. Partition Array for Maximum Sum](https://leetcode.com/problems/partition-array-for-maximum-sum/)
 
+dp.求最大值的时候从右往左求，这样可以直接计算curmax*length的值
+
+```cpp
+class Solution
+{
+public:
+    int maxSumAfterPartitioning(vector<int> &A, int K)
+    {
+
+        vector<int> dp(A.size(), 0);
+
+        for (int i = 0; i < A.size(); i++)
+        {
+            int curmax = 0;
+            for (int k = 0; k < K && (i >= k); k++)
+            {
+                curmax = max(curmax, A[i - k]);
+                dp[i] = max(dp[i], ((i >= 1 + k) ? dp[i - 1 - k] : 0) + (k + 1) * curmax);
+            }
+        }
+        return dp.back();
+    }
+};
+```
+
 ## [1048. Longest String Chain](https://leetcode.com/problems/longest-string-chain/)
 
 ## [1049. Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)
