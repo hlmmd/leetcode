@@ -5107,6 +5107,30 @@ public:
 
 ## [1049. Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)
 
+等同于拆分成两个子集，其和最接近
+
+```cpp
+class Solution
+{
+public:
+    int lastStoneWeightII(vector<int> A)
+    {
+        bitset<1501> dp = {1};
+        int sumA = 0;
+        for (int a : A)
+        {
+            sumA += a;
+            for (int i = min(1500, sumA); i >= a; --i)
+                dp[i] = dp[i] + dp[i - a];
+        }
+        for (int i = sumA / 2; i > 0; --i)
+            if (dp[i])
+                return sumA - i - i;
+        return 0;
+    }
+};
+```
+
 ## [1052. Grumpy Bookstore Owner](https://leetcode.com/problems/grumpy-bookstore-owner/)
 
 ## [1054. Distant Barcodes](https://leetcode.com/problems/distant-barcodes/)
