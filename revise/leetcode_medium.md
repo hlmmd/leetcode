@@ -5133,6 +5133,28 @@ public:
 
 ## [1052. Grumpy Bookstore Owner](https://leetcode.com/problems/grumpy-bookstore-owner/)
 
+滑动窗口
+
+```cpp
+class Solution
+{
+public:
+    int maxSatisfied(vector<int> &cs, vector<int> &grumpy, int X)
+    {
+        auto satisfied = 0, m_add_satisfied = 0, add_satisfied = 0;
+        for (auto i = 0; i < cs.size(); ++i)
+        {
+            satisfied += grumpy[i] ? 0 : cs[i];
+            add_satisfied += grumpy[i] ? cs[i] : 0;
+            if (i >= X)
+                add_satisfied -= grumpy[i - X] ? cs[i - X] : 0;
+            m_add_satisfied = max(m_add_satisfied, add_satisfied);
+        }
+        return satisfied + m_add_satisfied;
+    }
+};
+```
+
 ## [1054. Distant Barcodes](https://leetcode.com/problems/distant-barcodes/)
 
 ## [1072. Flip Columns For Maximum Number of Equal Rows](https://leetcode.com/problems/flip-columns-for-maximum-number-of-equal-rows/)
