@@ -5157,6 +5157,34 @@ public:
 
 ## [1054. Distant Barcodes](https://leetcode.com/problems/distant-barcodes/)
 
+按出现次数排序
+
+```cpp
+class Solution
+{
+public:
+    vector<int> rearrangeBarcodes(vector<int> &b, int pos = 0)
+    {
+        unordered_map<int, int> m;
+        set<pair<int, int>> s;
+        for (auto n : b)
+            ++m[n];
+        for (auto it = begin(m); it != end(m); ++it)
+            s.insert({it->second, it->first});
+        for (auto it = s.rbegin(); it != s.rend(); ++it)
+        {
+            for (auto cnt = 0; cnt < it->first; ++cnt, pos += 2)
+            {
+                if (pos >= b.size())
+                    pos = 1;
+                b[pos] = it->second;
+            }
+        }
+        return b;
+    }
+};
+```
+
 ## [1072. Flip Columns For Maximum Number of Equal Rows](https://leetcode.com/problems/flip-columns-for-maximum-number-of-equal-rows/)
 
 ## [1073. Adding Two Negabinary Numbers](https://leetcode.com/problems/adding-two-negabinary-numbers/)
