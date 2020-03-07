@@ -5193,6 +5193,10 @@ dfs
 
 ## [1081. Smallest Subsequence of Distinct Characters](https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/)
 
+***
+
+stack
+
 ## [1091. Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
 
 ## [1094. Car Pooling](https://leetcode.com/problems/car-pooling/)
