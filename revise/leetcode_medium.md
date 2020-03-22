@@ -5242,6 +5242,10 @@ public:
 
 ## [1124. Longest Well-Performing Interval](https://leetcode.com/problems/longest-well-performing-interval/)
 
+>8则+1，小于8 -1
+
+求最长的1、-1子数组，使得和>=1。对于+1，res直接加1，如果res小于等于0，就寻找和为socre-1的，可以得到一个socre和为1的子数组
+
 ## [1129. Shortest Path with Alternating Colors](https://leetcode.com/problems/shortest-path-with-alternating-colors/)
 
 ## [1130. Minimum Cost Tree From Leaf Values](https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/)
