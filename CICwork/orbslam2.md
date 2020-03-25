@@ -118,4 +118,22 @@ Camera.cy: 622.046
 
 生成的KeyFrameTrajectory.txt文件记录关键帧，此时相机坐标，相机四元式
 
+## 寻找最匹配关键帧
 
+在运行orb_slam后，生成的KeyFrameTrajectory.txt记录了关键帧，使用ransac算法对两个视频的关键帧进行循环匹配，找到相似度最高的两张图片
+
+## 匹配MapPoint，关联坐标
+
+将视频2中的图片放入视频1中，得到对应的描述子和世界坐标。在视频2中也进行相应的操作，将结果输出到文件。
+
+## 读取MapPoint，进行匹配
+
+使用ransac算法，将坐标进行关联
+
+## 使用SVD算法，获得旋转矩阵R(3*3)和平移矩阵t(3*1)
+
+[p' = R*PT+t](https://medium.com/machine-learning-world/linear-algebra-points-matching-with-svd-in-3d-space-2553173e8fed)
+
+## 使用R、t将视频1的坐标进行转换
+
+## 画三维坐标点图，进行比较
