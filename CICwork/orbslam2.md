@@ -134,6 +134,12 @@ Camera.cy: 622.046
 
 [p' = R*PT+t](https://medium.com/machine-learning-world/linear-algebra-points-matching-with-svd-in-3d-space-2553173e8fed)
 
+参考svd.py
+
 ## 使用R、t将视频1的坐标进行转换
 
+参考transform.py
+
 ## 画三维坐标点图，进行比较
+
+参考draw.py
