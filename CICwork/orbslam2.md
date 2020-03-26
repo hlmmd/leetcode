@@ -118,22 +118,6 @@ Camera.cy: 622.046
 
 生成的KeyFrameTrajectory.txt文件记录关键帧，此时相机坐标，相机四元式
 
-<<<<<<< HEAD
-## 寻找最匹配关键帧
-
-在运行orb_slam后，生成的KeyFrameTrajectory.txt记录了关键帧，使用ransac算法对两个视频的关键帧进行循环匹配，找到相似度最高的两张图片
-
-## 匹配MapPoint，关联坐标
-
-将视频2中的图片放入视频1中，得到对应的描述子和世界坐标。在视频2中也进行相应的操作，将结果输出到文件。
-
-## 读取MapPoint，进行匹配
-
-使用ransac算法，将坐标进行关联
-
-## 使用SVD算法，获得旋转矩阵R(3*3)和平移矩阵t(3*1)
-
-=======
 points.txt记录所有的MapPoint坐标
 
 ## 寻找最匹配关键帧
@@ -225,13 +209,10 @@ pip install numpy
 pip install matplotlib
 ```
 
->>>>>>> 3340893e0f457e2dd9ee97650165a8693afebe7a
 [p' = R*PT+t](https://medium.com/machine-learning-world/linear-algebra-points-matching-with-svd-in-3d-space-2553173e8fed)
 
 参考svd.py
 
-<<<<<<< HEAD
-=======
 输出rotation maxtrix、translation maxtrix 和MSE
 
 ```cpp
@@ -244,31 +225,20 @@ pip install matplotlib
 ('RMSE:', 0.27144931727710353)
 ```
 
->>>>>>> 3340893e0f457e2dd9ee97650165a8693afebe7a
+将Rc写入Rc.txt，tc写入tc.txt
+
 ## 使用R、t将视频1的坐标进行转换
 
 参考transform.py
 
-<<<<<<< HEAD
-## 画三维坐标点图，进行比较
+读取points-1.txt、Rc、tc
 
-参考draw.py
-=======
-需要修改Rc和Tc矩阵的值，修改为上一步得到的结果
-
-```python
-Rc = np.mat( [[ 0.45502858,  0.82279156, -0.34053346],
-        [-0.86786103,  0.49540269,  0.03732843],
-        [ 0.19941471,  0.27855022,  0.93949111]])
-
-tc = np.mat( [[ 0.37559066],
-        [-0.47055007],
-        [ 0.1718546 ]])
-```
+将point-1.txt中每个点使用Rc、Rt进行转换，输出到transed.txt
 
 ## 画三维坐标点图，进行比较
 
 参考draw.py
 
 可以从各个角度观察转换后两个点集是否重合，以此判断转换矩阵是否合理。
->>>>>>> 3340893e0f457e2dd9ee97650165a8693afebe7a
+
+![](../.asset/orbslamresult.png)
