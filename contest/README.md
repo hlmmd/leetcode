@@ -100,6 +100,111 @@ public:
 };
 ```
 
-### [1425. Constrained Subset Sum](https://leetcode.com/problems/constrained-subset-sum/)
+### [1425. Constrained Subsequence Sum](https://leetcode.com/problems/constrained-subsequence-sum)
 
 题都没看 //fix me
+
+## Weekly Contest 187
+
+2020.5.3
+
+### [1436. Destination City](https://leetcode.com/problems/destination-city/)
+
+找出不作为出发点的那一个城市。用set即可
+
+```cpp
+class Solution
+{
+public:
+    string destCity(vector<vector<string>> &paths)
+    {
+
+        set<string> start;
+        for (int i = 0; i < paths.size(); i++)
+        {
+            start.insert(paths[i][0]);
+        }
+
+        for (int i = 0; i < paths.size(); i++)
+        {
+            if (start.find(paths[i][1]) == start.end())
+            {
+                return paths[i][1];
+            }
+        }
+        return "";
+    }
+};
+```
+
+### [1437. Check If All 1's Are at Least Length K Places Away](https://leetcode.com/problems/check-if-all-1s-are-at-least-length-k-places-away)
+
+straight forward.找出01字符串中1最小间隔
+
+```cpp
+class Solution
+{
+public:
+    bool kLengthApart(vector<int> &nums, int k)
+    {
+
+        int pre = -1, cur = 0;
+
+        int mindist = nums.size();
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] == 1)
+            {
+                cur = i;
+                if (pre != -1)
+                {
+                    mindist = min(mindist, cur - pre - 1);
+                }
+                pre = cur;
+            }
+        }
+
+        return mindist >= k;
+    }
+};
+```
+
+### [1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit](https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/)
+
+吃饭了，没做出来。
+
+其实只需要找到子序列的最大值和最小值就行。
+
+用两个deque
+
+[](https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/discuss/609771/JavaC%2B%2BPython-Deques-O(N))
+
+```cpp
+int longestSubarray(vector<int> &A, int limit)
+{
+    deque<int> maxd, mind;
+    int i = 0, j;
+    for (j = 0; j < A.size(); ++j)
+    {
+        while (!maxd.empty() && A[j] > maxd.back())
+            maxd.pop_back();
+        while (!mind.empty() && A[j] < mind.back())
+            mind.pop_back();
+        maxd.push_back(A[j]);
+        mind.push_back(A[j]);
+        if (maxd.front() - mind.front() > limit)
+        {
+            if (maxd.front() == A[i])
+                maxd.pop_front();
+            if (mind.front() == A[i])
+                mind.pop_front();
+            ++i;
+        }
+    }
+    return j - i;
+}
+```
+
+### [1439. Find the Kth Smallest Sum of a Matrix With Sorted Rows](https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/)
+
+一个m*n矩阵，每一行都是有序的，从每行中取一个数，得到一个子序列和。求所有可能取到的子序列和中第k大的数
