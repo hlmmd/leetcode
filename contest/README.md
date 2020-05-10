@@ -208,3 +208,78 @@ int longestSubarray(vector<int> &A, int limit)
 ### [1439. Find the Kth Smallest Sum of a Matrix With Sorted Rows](https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/)
 
 一个m*n矩阵，每一行都是有序的，从每行中取一个数，得到一个子序列和。求所有可能取到的子序列和中第k大的数
+
+## 2020.5.10
+
+### [1441. Build an Array With Stack Operations](https://leetcode.com/problems/build-an-array-with-stack-operations/)
+
+因为target是有序的，直接求解就行
+
+```cpp
+class Solution
+{
+public:
+    vector<string> buildArray(vector<int> &target, int n)
+    {
+
+        int index = 0;
+        int arrhead = 1;
+        vector<int> temp;
+        vector<string> ret;
+        while (1)
+        {
+            if (target == temp)
+                break;
+            if (target[index] > arrhead)
+            {
+                ret.push_back("Push");
+                ret.push_back("Pop");
+                arrhead++;
+            }
+            else
+            {
+                ret.push_back("Push");
+                temp.push_back(arrhead);
+                index++;
+                arrhead++;
+            }
+        }
+        return ret;
+    }
+};
+```
+
+### [1442. Count Triplets That Can Form Two Arrays of Equal XOR](https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/)
+
+求一段亦或为0的字串。利用前缀亦或，用unoreder_map保存之前的运算结果。
+
+```cpp
+class Solution
+{
+public:
+    int countTriplets(vector<int> &arr)
+    {
+        int ret = 0;
+        unordered_map<int, vector<int>> mymap;
+        int t = 0;
+        mymap[0].push_back(0);
+        for (int i = 0; i < arr.size(); i++)
+        {
+            t ^= arr[i];
+            if (mymap.find(t) != mymap.end())
+            {
+                for (int j = 0; j < mymap[t].size(); j++)
+                {
+                    ret += i - mymap[t][j];
+                }
+            }
+            mymap[t].push_back(i + 1);
+        }
+        return ret;
+    }
+};
+```
+
+### [1443. Minimum Time to Collect All Apples in a Tree](https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/)
+
+### [1444. Number of Ways of Cutting a Pizza](https://leetcode.com/problems/number-of-ways-of-cutting-a-pizza/)
