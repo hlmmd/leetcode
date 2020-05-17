@@ -284,3 +284,59 @@ public:
 
 ### [1444. Number of Ways of Cutting a Pizza](https://leetcode.com/problems/number-of-ways-of-cutting-a-pizza/)
 
+## 2020.5.17 contest 189
+
+### [1450. Number of Students Doing Homework at a Given Time](https://leetcode.com/problems/number-of-students-doing-homework-at-a-given-time/)
+
+```cpp
+class Solution
+{
+public:
+    int busyStudent(vector<int> &startTime, vector<int> &endTime, int queryTime)
+    {
+
+        int count = 0;
+        for (int i = 0; i < startTime.size(); i++)
+        {
+            if (startTime[i] <= queryTime && endTime[i] >= queryTime)
+                count++;
+        }
+        return count;
+    }
+};
+```
+
+### [1451. Rearrange Words in a Sentence](https://leetcode.com/problems/rearrange-words-in-a-sentence/)
+
+```cpp
+class Solution
+{
+public:
+    string arrangeWords(string text)
+    {
+        stringstream ss;
+        ss << text;
+        multimap<size_t, string> maps;
+        while (ss >> text)
+        {
+            transform(text.begin(), text.end(), text.begin(), ::tolower);
+            maps.insert({text.length(), text});
+        }
+
+        string ret = "";
+        for (auto it = maps.begin(); it != maps.end(); ++it)
+        {
+            ret += it->second + " ";
+        }
+
+        ret[0] += 'A' - 'a';
+
+        ret.pop_back();
+        return ret;
+    }
+};
+```
+
+### [1452. People Whose List of Favorite Companies Is Not a Subset of Another List](https://leetcode.com/problems/people-whose-list-of-favorite-companies-is-not-a-subset-of-another-list/)
+
+### [1453. Maximum Number of Darts Inside of a Circular Dartboard](https://leetcode.com/problems/maximum-number-of-darts-inside-of-a-circular-dartboard/)
