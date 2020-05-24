@@ -340,3 +340,156 @@ public:
 ### [1452. People Whose List of Favorite Companies Is Not a Subset of Another List](https://leetcode.com/problems/people-whose-list-of-favorite-companies-is-not-a-subset-of-another-list/)
 
 ### [1453. Maximum Number of Darts Inside of a Circular Dartboard](https://leetcode.com/problems/maximum-number-of-darts-inside-of-a-circular-dartboard/)
+
+## 2020.5.24
+
+weekly contest 190
+
+### [1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence](https://leetcode.com/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/)
+
+又是一个需要split的题，学习python迫在眉睫。
+
+```cpp
+class Solution
+{
+public:
+    int isPrefixOfWord(string sentence, string searchWord)
+    {
+        int flag = false;
+        stringstream ss;
+        ss << sentence;
+        int count = 0;
+        while (ss >> sentence)
+        {
+            count++;
+            if (sentence.length() < searchWord.length())
+                continue;
+            for (int i = 0; i < searchWord.length(); i++)
+            {
+                if (sentence[i] != searchWord[i])
+                {
+                    flag = false;
+                    break;
+                }
+                flag = true;
+            }
+            if (flag)
+                return count;
+        }
+
+        return -1;
+    }
+};
+```
+
+### [1456. Maximum Number of Vowels in a Substring of Given Length](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/)
+
+滑动窗口
+
+```cpp
+class Solution
+{
+public:
+    int maxVowels(string s, int k)
+    {
+        int ret = 0;
+        set<char> vowel = {'a', 'e', 'i', 'o', 'u'};
+        int count = 0;
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (vowel.find(s[i]) != vowel.end())
+            {
+                count++;
+            }
+            if (i >= k && vowel.find(s[i - k]) != vowel.end())
+                count--;
+            ret = max(ret, count);
+        }
+
+        return ret;
+    }
+};
+```
+
+### [1457. Pseudo-Palindromic Paths in a Binary Tree](https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree)
+
+到子节点最多只有一个val出现了奇数次
+
+```cpp
+class Solution
+{
+public:
+    unordered_map<int, int> count;
+    int ret;
+    int pseudoPalindromicPaths(TreeNode *root)
+    {
+        helper(root);
+        return ret;
+    }
+
+    void helper(TreeNode *root)
+    {
+        if (root == NULL)
+            return;
+
+        if (count.find(root->val) == count.end())
+            count[root->val] = 1;
+        else
+            count[root->val]++;
+        if (root->left == NULL && root->right == NULL)
+        {
+            int x = 0;
+            for (auto it = count.begin(); it != count.end(); it++)
+            {
+                if (it->second % 2 != 0)
+                    x++;
+            }
+            if (x <= 1)
+                ret++;
+
+            count[root->val]--;
+            return;
+        }
+
+        helper(root->left);
+        helper(root->right);
+
+        count[root->val]--;
+    }
+};
+```
+
+### [1458. Max Dot Product of Two Subsequences](https://leetcode.com/problems/max-dot-product-of-two-subsequences/)
+
+最大子序列点积,DP
+
+```cpp
+class Solution
+{
+public:
+    int maxDotProduct(vector<int> &nums1, vector<int> &nums2)
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+
+        vector<vector<int>> dp(m, vector<int>(n));
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                dp[i][j] = nums1[i] * nums2[j];
+                if (i > 0 && j > 0)
+                    dp[i][j] = max(dp[i][j], dp[i - 1][j - 1] + max(nums1[i] * nums2[j], 0));
+                if (i > 0)
+                    dp[i][j] = max(dp[i][j], dp[i - 1][j]);
+                if (j > 0)
+                    dp[i][j] = max(dp[i][j], dp[i][j - 1]);
+            }
+        }
+
+        return dp[m - 1][n - 1];
+    }
+};
+```
