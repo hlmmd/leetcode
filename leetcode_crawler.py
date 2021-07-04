@@ -1,5 +1,4 @@
 import requests
-import bs4
 import json
 import re
 import time
